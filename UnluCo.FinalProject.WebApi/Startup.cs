@@ -40,7 +40,15 @@ namespace UnluCo.FinalProject.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UnluCo.FinalProject.WebApi", Version = "v1" });
             });
             services.AddDbContext<FinalDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:ConnStr"]));
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<FinalDbContext>();
+           
+
+            //Lockout user
+            services.AddIdentity<User, IdentityRole>(option =>
+            {
+                option.Lockout.AllowedForNewUsers = true;
+                option.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+                option.Lockout.MaxFailedAccessAttempts = 3;
+            }).AddEntityFrameworkStores<FinalDbContext>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<UserManager<User>>();

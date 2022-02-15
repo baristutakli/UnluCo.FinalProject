@@ -31,13 +31,29 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginModel model)
         {
+         // user locked out çalıştı bu kısmı düzenlemen gerek  
             var user = await _userService.FindByEmailAsync(model.Email);
-            if (await _userService.CheckUser(user, model))
+            if (!await _userManager.IsLockedOutAsync(user))
             {
-                TokenGenerator generator = new TokenGenerator(_userManager, _configuration);
-                var token = await generator.GenerateToken(user);
-                return Ok(token);
+                if (await _userService.CheckUser(user, model))
+                {
+                    TokenGenerator generator = new TokenGenerator(_userManager, _configuration);
+                    var token = await generator.GenerateToken(user);
+                    return Ok(token);
+                }
             }
+
+
+             await _userManager.SetLockoutEnabledAsync(user, true);
+            await _userManager.AccessFailedAsync(user);
+           
+            if (await _userManager.GetAccessFailedCountAsync(user)>=3)
+            {
+
+                await _userManager.IsLockedOutAsync(user);
+            }
+           
+          
             return Unauthorized();
         }
 
