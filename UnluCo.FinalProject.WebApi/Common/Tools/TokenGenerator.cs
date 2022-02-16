@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Models;
 
-namespace UnluCo.FinalProject.WebApi.Application.Tools
+namespace UnluCo.FinalProject.WebApi.Common.Tools
 {
     public class TokenGenerator
     {

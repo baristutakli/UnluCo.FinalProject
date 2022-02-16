@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -24,20 +25,20 @@ namespace UnluCo.FinalProject.WebApi.Common.Repositories
             _dbcontext.Set<TEntity>().Remove(entity);
         }
 
-        public async Task<ICollection<TEntity>> Get(Expression<Func<TEntity, bool>> filter)
+        public async Task<TEntity> Get(Expression<Func<TEntity, bool>> filter)
         {
-          
-           return  filter == null ? await _dbcontext.Set<TEntity>().ToList() :  .Where(filter).ToListAsync();
+
+            return await _dbcontext.Set<TEntity>().Where(filter).SingleOrDefaultAsync();
         }
 
-        public Task<List<TEntity>> GetAll(Expression<Func<TEntity, bool>> filter = null)
+        public async  Task<ICollection<TEntity>> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            return filter == null ? await _dbcontext.Set<TEntity>().ToListAsync() : await _dbcontext.Set<TEntity>().Where(filter).ToListAsync();
         }
 
-        public Task<TEntity> GetById(int id)
+        public async Task<TEntity> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _dbcontext.Set<TEntity>().FindAsync(id);
         }
 
         public void Update(TEntity entity)

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
-using UnluCo.FinalProject.WebApi.Application.Tools;
+using UnluCo.FinalProject.WebApi.Common.Tools;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Controllers
