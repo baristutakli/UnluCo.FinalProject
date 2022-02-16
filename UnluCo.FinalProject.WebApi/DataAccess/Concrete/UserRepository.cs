@@ -4,52 +4,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using UnluCo.FinalProject.WebApi.Common.Repositories;
 using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.DataAccess.Concrete
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository :Repository<User>, IUserRepository
     {
-        private readonly FinalDbContext _dbcontext;
-        private readonly DbSet<User> _dbSet;
-        public UserRepository(FinalDbContext context)
+        public UserRepository(FinalDbContext context):base(context)
         {
-            _dbcontext = context;
-            _dbSet = _dbcontext.Set<User>();
-        }
-        public async Task<int> Add(User user)
-        {
-            await _dbSet.AddAsync(user);
-            return await _dbcontext.SaveChangesAsync();
+
         }
 
-        public async Task<int> Delete(User user)
+        public async Task<User> GetUserWithOffers(string id)
         {
-            _dbSet.Remove(user);
-            return await _dbcontext.SaveChangesAsync();
+            return await _dbcontext.Set<User>().Include("Offers").SingleAsync(x=>x.Id==id);
         }
 
-        public async  Task<List<User>> Get(Expression<Func<User, bool>> filter)
+        public async  Task<User> GetUserWithProducts(string id)
         {
-            return await _dbSet.Where(filter).ToListAsync();
+            return await _dbcontext.Set<User>().Include("Products").SingleAsync(x => x.Id == id);
         }
-
-        public Task<List<User>> GetAll(Expression<Func<User, bool>> filter = null)
+        public async Task<User> GetUserWithAll(string id)
         {
-            return filter == null ? _dbSet.ToListAsync(): _dbSet.Where(filter).ToListAsync();
-   
-        }
-
-        public Task<User> GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<int> Update(User user)
-        {
-            _dbSet.Update(user);
-            return await _dbcontext.SaveChangesAsync();
+            return await _dbcontext.Set<User>().Include("Products").Include("Offers").SingleAsync(x => x.Id == id);
         }
     }
 }
