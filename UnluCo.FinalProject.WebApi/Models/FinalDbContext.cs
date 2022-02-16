@@ -13,6 +13,8 @@ namespace UnluCo.FinalProject.WebApi.Models
         {
 
         }
-      
+        
+        DbSet<Product> Products { get; set; }
+
     }
 }
