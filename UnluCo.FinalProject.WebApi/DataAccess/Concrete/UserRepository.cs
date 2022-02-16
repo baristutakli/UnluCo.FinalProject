@@ -30,7 +30,7 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Concrete
             return await _dbcontext.SaveChangesAsync();
         }
 
-        public async  Task<IList<User>> Get(Expression<Func<User, bool>> filter)
+        public async  Task<List<User>> Get(Expression<Func<User, bool>> filter)
         {
             return await _dbSet.Where(filter).ToListAsync();
         }

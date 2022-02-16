@@ -14,6 +14,6 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Abstract
         Task<int> Update(User user);
         Task<List<User>> GetAll(Expression<Func<User, bool>> filter = null);
         Task<User> GetById(int id);
-        Task<IList<User>> Get(Expression<Func<User, bool>> filter);
+        Task<List<User>> Get(Expression<Func<User, bool>> filter);
     }
 }
