@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.Concrete;
+using UnluCo.FinalProject.WebApi.Common.DependencyResolver;
 using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
 using UnluCo.FinalProject.WebApi.DataAccess.Concrete;
 using UnluCo.FinalProject.WebApi.Models;
@@ -44,11 +45,7 @@ namespace UnluCo.FinalProject.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UnluCo.FinalProject.WebApi", Version = "v1" });
             });
 
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IBrandRepository, BrandRepository>();
-            services.AddScoped<IColorRepository, ColorRepository>();
-            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddServices();
 
             services.AddDbContext<UserDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:ConnStr"]));
            
@@ -61,8 +58,6 @@ namespace UnluCo.FinalProject.WebApi
                 option.Lockout.MaxFailedAccessAttempts = 3;
             }).AddEntityFrameworkStores<UserDbContext>();
 
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<UserManager<User>>();
 
             // Adding Authentication  
             services.AddAuthentication(options =>
