@@ -12,6 +12,6 @@ namespace UnluCo.FinalProject.WebApi.Application.ViewModels.OffersViewModel
         public int? Amount { get; set; }
         public int? Percentage { get; set; }
         public int ProductId { get; set; }
-        public bool IsActive { get; set; };
+        public bool IsActive { get; set; }
     }
 }
