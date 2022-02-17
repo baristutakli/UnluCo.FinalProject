@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class FinalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220217061414_m6")]
+    partial class m6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -448,7 +450,7 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                         .WithMany()
                         .HasForeignKey("ColorId");
 
-                    b.HasOne("UnluCo.FinalProject.WebApi.Models.User", "User")
+                    b.HasOne("UnluCo.FinalProject.WebApi.Models.User", null)
                         .WithMany("Products")
                         .HasForeignKey("UserId");
 
@@ -457,8 +459,6 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Color");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("UnluCo.FinalProject.WebApi.Models.Category", b =>

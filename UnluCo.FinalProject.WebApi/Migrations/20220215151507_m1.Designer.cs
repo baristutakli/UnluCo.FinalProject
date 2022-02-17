@@ -9,7 +9,7 @@ using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Migrations
 {
-    [DbContext(typeof(FinalDbContext))]
+    [DbContext(typeof(UserDbContext))]
     [Migration("20220215151507_m1")]
     partial class m1
     {

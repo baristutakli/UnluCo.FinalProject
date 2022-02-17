@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.Concrete;
+using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
+using UnluCo.FinalProject.WebApi.DataAccess.Concrete;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi
@@ -34,13 +37,18 @@ namespace UnluCo.FinalProject.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UnluCo.FinalProject.WebApi", Version = "v1" });
             });
-            services.AddDbContext<FinalDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:ConnStr"]));
-           
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
+            services.AddDbContext<UserDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:ConnStr"]));
+            services.AddDbContext<MainDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:ConnStr"]));
 
             //Lockout user
             services.AddIdentity<User, IdentityRole>(option =>
@@ -48,7 +56,7 @@ namespace UnluCo.FinalProject.WebApi
                 option.Lockout.AllowedForNewUsers = true;
                 option.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
                 option.Lockout.MaxFailedAccessAttempts = 3;
-            }).AddEntityFrameworkStores<FinalDbContext>();
+            }).AddEntityFrameworkStores<UserDbContext>();
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<UserManager<User>>();

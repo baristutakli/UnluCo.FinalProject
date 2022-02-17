@@ -12,7 +12,7 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Concrete
 {
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        public CategoryRepository(FinalDbContext context):base(context)
+        public CategoryRepository(UserDbContext context):base(context)
         {
 
         }

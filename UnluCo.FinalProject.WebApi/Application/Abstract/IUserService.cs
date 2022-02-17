@@ -15,5 +15,6 @@ namespace UnluCo.FinalProject.WebApi.Application.Abstract
         public Task<bool> CheckUser(User user, UserLoginModel model);
         public Task<bool> CreateAdminRole(User user, string role);
         public Task<User> FindByEmailAsync(string username);
+        public Task<User> Deneme();
     }
 }

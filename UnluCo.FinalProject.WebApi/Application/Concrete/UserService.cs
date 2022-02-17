@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
+using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Application.Concrete
@@ -12,10 +14,13 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public UserService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly IUserRepository _userRepository;
+        public UserService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager,IUserRepository userRepository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _userRepository = userRepository;
+      
         }
 
         public async Task<IdentityResult> CreateUser(RegisterUserModel model)
@@ -45,12 +50,19 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         public async Task<User> FindByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
+            Deneme();
             return user;
         }
 
         public async Task<bool> CheckUser(User user, UserLoginModel model)
         {
             return user != null && await _userManager.CheckPasswordAsync(user, model.Password);
+        }
+
+        public async  Task<User> Deneme()
+        {
+            var reusult = await _userRepository.GetUserWithProducts("fff2e426-8fb9-4aa5-b5b7-34e18037734a");
+            return reusult;
         }
 
         public async Task<bool> CreateAdminRole(User user, string role)

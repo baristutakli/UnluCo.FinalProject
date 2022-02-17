@@ -10,8 +10,8 @@ namespace UnluCo.FinalProject.WebApi.Common.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected readonly FinalDbContext _dbcontext;
-        public Repository(FinalDbContext dbContext)
+        protected readonly UserDbContext _dbcontext;
+        public Repository(UserDbContext dbContext)
         {
             _dbcontext = dbContext;
         }

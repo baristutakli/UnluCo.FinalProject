@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    partial class FinalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220217060050_m5")]
+    partial class m5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,14 +238,9 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Offers");
                 });
@@ -338,6 +335,9 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int?>("OffersId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -366,6 +366,8 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("OffersId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -427,10 +429,6 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                         .WithMany("Offers")
                         .HasForeignKey("ProductId");
 
-                    b.HasOne("UnluCo.FinalProject.WebApi.Models.User", null)
-                        .WithMany("Offers")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Product");
                 });
 
@@ -448,7 +446,7 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                         .WithMany()
                         .HasForeignKey("ColorId");
 
-                    b.HasOne("UnluCo.FinalProject.WebApi.Models.User", "User")
+                    b.HasOne("UnluCo.FinalProject.WebApi.Models.User", null)
                         .WithMany("Products")
                         .HasForeignKey("UserId");
 
@@ -457,8 +455,15 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Color");
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("UnluCo.FinalProject.WebApi.Models.User", b =>
+                {
+                    b.HasOne("UnluCo.FinalProject.WebApi.Models.Offer", "Offers")
+                        .WithMany()
+                        .HasForeignKey("OffersId");
+
+                    b.Navigation("Offers");
                 });
 
             modelBuilder.Entity("UnluCo.FinalProject.WebApi.Models.Category", b =>
@@ -473,8 +478,6 @@ namespace UnluCo.FinalProject.WebApi.Migrations
 
             modelBuilder.Entity("UnluCo.FinalProject.WebApi.Models.User", b =>
                 {
-                    b.Navigation("Offers");
-
                     b.Navigation("Products");
                 });
 #pragma warning restore 612, 618

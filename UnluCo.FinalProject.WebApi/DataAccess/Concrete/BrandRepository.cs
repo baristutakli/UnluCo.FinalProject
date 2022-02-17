@@ -12,7 +12,7 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Concrete
 {
     public class BrandRepository : Repository<Brand>, IBrandRepository
     {
-        public BrandRepository(FinalDbContext context):base(context)
+        public BrandRepository(UserDbContext context):base(context)
         {
 
         }

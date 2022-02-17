@@ -14,7 +14,6 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Abstract
         public Task<User> GetUserWithOffers(string id);
 
         public Task<User> GetUserWithAll(string id);
-
     }
     
 }

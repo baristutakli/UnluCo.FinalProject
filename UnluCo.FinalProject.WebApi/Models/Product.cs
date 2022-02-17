@@ -6,7 +6,7 @@ using UnluCo.FinalProject.WebApi.Common.Entity;
 using System.ComponentModel.DataAnnotations;
 namespace UnluCo.FinalProject.WebApi.Models
 {
-    public class Product:BaseEntity
+    public class Product : BaseEntity
     {
         public bool IsOfferable { get; set; } = false;
         [Required]
@@ -16,11 +16,13 @@ namespace UnluCo.FinalProject.WebApi.Models
         [MaxLength(500)]
         public string Description { get; set; }
         [Required]
-        public Decimal Price { get; set; }
+        public int Price { get; set; }
         public bool IsSold { get; set; } = false;
         public Color Color { get; set; }
         public Brand Brand { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual ICollection<Offer> Offer { get; set; }
+        public Category Category { get; set; }
+        public ICollection<Offer> Offers { get; set; }
+        public User User { get; set; }
+
     }
 }

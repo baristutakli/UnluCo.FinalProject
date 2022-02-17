@@ -10,19 +10,19 @@ using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.DataAccess.Concrete
 {
-    public class UserRepository :Repository<User>, IUserRepository
+    public class UserRepository: Repository<User>, IUserRepository
     {
-        public UserRepository(FinalDbContext context):base(context)
+        public UserRepository(UserDbContext context) : base(context)
         {
 
         }
 
         public async Task<User> GetUserWithOffers(string id)
         {
-            return await _dbcontext.Set<User>().Include("Offers").SingleAsync(x=>x.Id==id);
+            return await _dbcontext.Set<User>().Include("Offers").SingleAsync(x => x.Id == id);
         }
 
-        public async  Task<User> GetUserWithProducts(string id)
+        public async Task<User> GetUserWithProducts(string id)
         {
             return await _dbcontext.Set<User>().Include("Products").SingleAsync(x => x.Id == id);
         }
