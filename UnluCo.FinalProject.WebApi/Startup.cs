@@ -46,6 +46,9 @@ namespace UnluCo.FinalProject.WebApi
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped<IColorRepository, ColorRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddDbContext<UserDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:ConnStr"]));
            
