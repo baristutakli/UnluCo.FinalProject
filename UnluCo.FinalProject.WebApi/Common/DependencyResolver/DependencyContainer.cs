@@ -8,6 +8,7 @@ using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.Concrete;
 using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
 using UnluCo.FinalProject.WebApi.DataAccess.Concrete;
+using UnluCo.FinalProject.WebApi.DataAccess.UnitOfWorks;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Common.DependencyResolver
@@ -22,8 +23,11 @@ namespace UnluCo.FinalProject.WebApi.Common.DependencyResolver
             services.AddScoped<IColorRepository, ColorRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
 
-
+            // Authentication 
             services.AddScoped<UserManager<User>>();
+
+            // Unit Of Work
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
         }
     }

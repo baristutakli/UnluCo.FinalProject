@@ -30,7 +30,11 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.UnitOfWorks
         {
             _dbcontext = context;
             IProductRepository = new ProductRepository(_dbcontext);
-
+            Brands = new BrandRepository(_dbcontext);
+            Colors = new ColorRepository(_dbcontext);
+            Offers = new OfferRepository(_dbcontext);
+            Categories = new CategoryRepository(_dbcontext);
+            Users = new UserRepository(_dbcontext);
         }
         public int Complete()
         {

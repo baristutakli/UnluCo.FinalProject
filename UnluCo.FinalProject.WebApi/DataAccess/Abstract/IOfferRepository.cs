@@ -10,6 +10,7 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Abstract
 {
     public interface IOfferRepository: IRepository<Offer>
     {
-        public Task<List<Offer>> GetProductsByOffer(Expression<Func<Offer, bool>> filter = null);
+        public Task<Offer> GetOffer(Expression<Func<Offer, bool>> filter);
+        public Task<List<Offer>> GetOffers(Expression<Func<Offer, bool>> filter = null);
     }
 }
