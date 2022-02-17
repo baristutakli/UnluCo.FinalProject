@@ -50,7 +50,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         public async Task<User> FindByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            Deneme();
+           
             return user;
         }
 
@@ -59,11 +59,6 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             return user != null && await _userManager.CheckPasswordAsync(user, model.Password);
         }
 
-        public async  Task<User> Deneme()
-        {
-            var reusult = await _userRepository.GetUserWithProducts("fff2e426-8fb9-4aa5-b5b7-34e18037734a");
-            return reusult;
-        }
 
         public async Task<bool> CreateAdminRole(User user, string role)
         {

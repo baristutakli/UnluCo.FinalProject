@@ -73,25 +73,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Deneme()
-        {
-            var result = await _userService.Deneme();
 
 
-            return Ok(SerialiObjcet(result));
-            // return Ok();
-        }
-        private string SerialiObjcet(object value)
-        {
-            var newObject = JsonConvert.SerializeObject(value, Formatting.Indented,
-            new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            }
-        );
-            return newObject;
-        }
 
 
         //[Authorize(Roles = Roles.Admin)]

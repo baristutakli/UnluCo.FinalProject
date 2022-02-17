@@ -48,7 +48,7 @@ namespace UnluCo.FinalProject.WebApi
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddDbContext<UserDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:ConnStr"]));
-            services.AddDbContext<MainDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:ConnStr"]));
+           
 
             //Lockout user
             services.AddIdentity<User, IdentityRole>(option =>
