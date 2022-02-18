@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace UnluCo.FinalProject.WebApi.Application.ViewModels.ColorsViewModel
 {
-    public class UpdateColorViewModel
+    public class DeleteColorViewModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public bool IsActive { get; set; } = true;
     }
 }

@@ -26,7 +26,7 @@ namespace UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel
         public ColorViewModel Color { get; set; }
         public BrandViewModel Brand { get; set; }
         public Category Category { get; set; }
-        public ICollection<OfferViewModel> Offers { get; set; }
+        public ICollection<CreateOfferViewModel> Offers { get; set; }
         public User User { get; set; }
     }
 }

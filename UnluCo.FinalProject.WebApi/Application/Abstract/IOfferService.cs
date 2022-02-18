@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using UnluCo.FinalProject.WebApi.Application.ViewModels.OffersViewModel;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Application.Abstract
 {
     public interface IOfferService
     {
-        void Add(Offer offer);
-        void Delete(Offer offer);
-        void Update(Offer offer);
-        Task<List<Offer>> GetAll(Expression<Func<Offer, bool>> filter = null);
-        Task<Offer> Get(Expression<Func<Offer, bool>> filter);
-        Task<Offer> GetById(int id);
+        void Add(CreateOfferViewModel offerViewModel);
+        void Delete(DeleteOfferViewModel deleteOfferViewModel);
+        void Update(UpdateOfferViewModel updateOfferViewModel);
+        Task<List<CreateOfferViewModel>> GetAll(Expression<Func<Offer, bool>> filter = null);
+        Task<CreateOfferViewModel> Get(Expression<Func<Offer, bool>> filter);
+        Task<CreateOfferViewModel> GetById(int id);
 
     }
 }

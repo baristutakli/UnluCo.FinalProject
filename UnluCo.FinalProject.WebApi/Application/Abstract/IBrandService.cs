@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using UnluCo.FinalProject.WebApi.Application.ViewModels.BrandsViewModel;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Application.Abstract
 {
     public interface IBrandService
     {
-        void Add(Brand product);
-        void Delete(Brand product);
-        void Update(Brand product);
-        Task<List<Brand>> GetAll(Expression<Func<Brand, bool>> filter = null);
-        Task<Brand> Get(Expression<Func<Brand, bool>> filter);
-        Task<Brand> GetById(int id);
+        void Add(BrandViewModel brandViewModel);
+        void Delete(DeleteBrandViewModel deleteBrandViewModel);
+        void Update(UpdateBrandViewModel updateBrandViewModel);
+        Task<List<Brand>> GetAll(Expression<Func<BrandViewModel, bool>> filter = null);
+        Task<BrandViewModel> Get(Expression<Func<Brand, bool>> filter);
+        Task<BrandViewModel> GetById(int id);
 
     }
 }
