@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -14,39 +15,52 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
     public class BrandService : IBrandService
     {
         private readonly IUnitOfWork _unitOfwork;
+        private readonly IMapper _mapper;
 
-        public BrandService(IUnitOfWork unitOfwork)
+        public BrandService(IUnitOfWork unitOfwork,IMapper mapper)
         {
             _unitOfwork = unitOfwork;
+            _mapper = mapper;
         }
         public void Add(BrandViewModel brandViewModel)
         {
-            throw new NotImplementedException();
+            var brand =_mapper.Map<Brand>(brandViewModel);
+            _unitOfwork.Brands.Add(brand);
         }
 
         public void Delete(DeleteBrandViewModel deleteBrandViewModel)
         {
-            throw new NotImplementedException();
+            var brand =_unitOfwork.Brands.GetById(deleteBrandViewModel.Id).Result;
+            _unitOfwork.Brands.Delete(brand);
+            
         }
 
         public Task<BrandViewModel> Get(Expression<Func<Brand, bool>> filter)
         {
-            throw new NotImplementedException();
+            var brand = _unitOfwork.Brands.Get(filter).Result;
+            var brandViewModel=_mapper.Map<BrandViewModel>(brand);
+            return Task.FromResult(brandViewModel);
         }
 
-        public Task<List<Brand>> GetAll(Expression<Func<BrandViewModel, bool>> filter = null)
+        public Task<List<BrandViewModel>> GetAll(Expression<Func<BrandViewModel, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            var brands = _unitOfwork.Brands.GetAll().Result;
+            
+            var brandViewList = _mapper.Map<List<Brand>, List<BrandViewModel>>(brands);
+            return Task.FromResult(brandViewList);
         }
 
         public Task<BrandViewModel> GetById(int id)
         {
-            throw new NotImplementedException();
+            var brand = _unitOfwork.Brands.GetById(id).Result;
+            var brandViewModel = _mapper.Map<BrandViewModel>(brand);
+            return Task.FromResult(brandViewModel);
         }
 
         public void Update(UpdateBrandViewModel updateBrandViewModel)
         {
-            throw new NotImplementedException();
+           var brand= _mapper.Map<Brand>(updateBrandViewModel);
+            _unitOfwork.Brands.Update(brand);
         }
     }
 }

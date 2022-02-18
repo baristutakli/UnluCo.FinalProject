@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -14,39 +15,51 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
     public class ColorService : IColorService
     {
         private readonly IUnitOfWork _unitOfwork;
-
-        public ColorService(IUnitOfWork unitOfwork)
+        private readonly IMapper _mapper;
+        public ColorService(IUnitOfWork unitOfwork, IMapper mapper)
         {
             _unitOfwork = unitOfwork;
+            _mapper = mapper;
         }
         public void Add(ColorViewModel colorViewModel)
         {
-            throw new NotImplementedException();
+            var color = _mapper.Map<Color>(colorViewModel);
+            _unitOfwork.Colors.Add(color);
         }
 
         public void Delete(DeleteColorViewModel deleteColorViewModel)
         {
-            throw new NotImplementedException();
+            var color = _unitOfwork.Colors.GetById(deleteColorViewModel.Id).Result;
+            _unitOfwork.Colors.Delete(color);
+
         }
 
         public Task<ColorViewModel> Get(Expression<Func<Color, bool>> filter)
         {
-            throw new NotImplementedException();
+            var color = _unitOfwork.Colors.Get(filter).Result;
+            var colorViewModel = _mapper.Map<ColorViewModel>(color);
+            return Task.FromResult(colorViewModel);
         }
 
         public Task<List<ColorViewModel>> GetAll(Expression<Func<Color, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            var colors = _unitOfwork.Colors.GetAll(filter).Result;
+
+            var colorViewList = _mapper.Map<List<Color>, List<ColorViewModel>>(colors);
+            return Task.FromResult(colorViewList);
         }
 
         public Task<ColorViewModel> GetById(int id)
         {
-            throw new NotImplementedException();
+            var color = _unitOfwork.Colors.GetById(id).Result;
+            var colorViewModel = _mapper.Map<ColorViewModel>(color);
+            return Task.FromResult(colorViewModel);
         }
 
         public void Update(UpdateColorViewModel updateColorViewModel)
         {
-            throw new NotImplementedException();
+            var color = _mapper.Map<Color>(updateColorViewModel);
+            _unitOfwork.Colors.Update(color);
         }
     }
 }

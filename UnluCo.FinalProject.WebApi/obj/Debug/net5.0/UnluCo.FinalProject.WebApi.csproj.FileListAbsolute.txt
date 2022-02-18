@@ -69,3 +69,4 @@ C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\obj\D
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\obj\Debug\net5.0\ref\UnluCo.FinalProject.WebApi.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\obj\Debug\net5.0\UnluCo.FinalProject.WebApi.pdb
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\obj\Debug\net5.0\UnluCo.FinalProject.WebApi.genruntimeconfig.cache
+C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\obj\Debug\net5.0\UnluCo.FinalProject.WebApi.csproj.AssemblyReference.cache

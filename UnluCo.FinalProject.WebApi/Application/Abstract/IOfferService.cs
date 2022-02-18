@@ -14,9 +14,9 @@ namespace UnluCo.FinalProject.WebApi.Application.Abstract
         void Add(CreateOfferViewModel offerViewModel);
         void Delete(DeleteOfferViewModel deleteOfferViewModel);
         void Update(UpdateOfferViewModel updateOfferViewModel);
-        Task<List<CreateOfferViewModel>> GetAll(Expression<Func<Offer, bool>> filter = null);
-        Task<CreateOfferViewModel> Get(Expression<Func<Offer, bool>> filter);
-        Task<CreateOfferViewModel> GetById(int id);
+        Task<List<OfferViewModel>> GetAll(Expression<Func<Offer, bool>> filter = null);
+        Task<OfferViewModel> Get(Expression<Func<Offer, bool>> filter);
+        Task<OfferViewModel> GetById(int id);
 
     }
 }

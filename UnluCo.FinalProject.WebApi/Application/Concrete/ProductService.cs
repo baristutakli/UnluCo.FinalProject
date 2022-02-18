@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,39 +14,51 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
     public class ProductService : IProductService
     {
         private readonly IUnitOfWork _unitOfwork;
-
-        public ProductService(IUnitOfWork unitOfwork)
+        private readonly IMapper _mapper;
+        public ProductService(IUnitOfWork unitOfwork, IMapper mapper)
         {
             _unitOfwork = unitOfwork;
+            _mapper = mapper;
         }
-        public void Add(ProductViewModel productViewModel)
+        public void Add(CreateProductViewModel productViewModel)
         {
-            throw new NotImplementedException();
+            var product = _mapper.Map<Product>(productViewModel);
+            _unitOfwork.Products.Add(product);
         }
 
         public void Delete(DeleteProductViewModel deleteProductViewModel)
         {
-            throw new NotImplementedException();
+            var product = _unitOfwork.Products.GetById(deleteProductViewModel.Id).Result;
+            _unitOfwork.Products.Delete(product);
+
         }
 
         public Task<ProductViewModel> Get(Expression<Func<Product, bool>> filter)
         {
-            throw new NotImplementedException();
+            var product = _unitOfwork.Products.Get(filter).Result;
+            var productViewModel = _mapper.Map<ProductViewModel>(product);
+            return Task.FromResult(productViewModel);
         }
 
         public Task<List<ProductViewModel>> GetAll(Expression<Func<Product, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            var products = _unitOfwork.Products.GetAll(filter).Result;
+
+            var productViewList = _mapper.Map<List<Product>, List<ProductViewModel>>(products);
+            return Task.FromResult(productViewList);
         }
 
         public Task<ProductViewModel> GetById(int id)
         {
-            throw new NotImplementedException();
+            var product = _unitOfwork.Products.GetById(id).Result;
+            var productViewModel = _mapper.Map<ProductViewModel>(product);
+            return Task.FromResult(productViewModel);
         }
 
         public void Update(UpdateProductViewModel updateProductViewModel)
         {
-            throw new NotImplementedException();
+            var product = _mapper.Map<Product>(updateProductViewModel);
+            _unitOfwork.Products.Update(product);
         }
     }
 }

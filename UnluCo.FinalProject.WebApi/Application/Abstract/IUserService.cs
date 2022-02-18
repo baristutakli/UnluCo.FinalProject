@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using UnluCo.FinalProject.WebApi.Application.ViewModels.UsersViewModel;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Application.Abstract
 {
     public interface IUserService
     {
-        void Add(User user);
-        void Delete(User user);
-        void Update(User user);
-        Task<List<User>> GetAll(Expression<Func<User, bool>> filter = null);
-        Task<User> Get(Expression<Func<User, bool>> filter);
-        Task<User> GetById(int id);
+        void Add(UserViewModel userViewModel);
+        void Delete(DeleteUserViewModel deleteUserViewModel);
+        void Update(UserViewModel updateUserViewModel);
+        Task<List<UserViewModel>> GetAll(Expression<Func<User, bool>> filter = null);
+        Task<UserViewModel> Get(Expression<Func<User, bool>> filter);
+        Task<UserViewModel> GetById(int id);
 
     }
 }

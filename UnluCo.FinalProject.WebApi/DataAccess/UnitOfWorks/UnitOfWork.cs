@@ -10,7 +10,7 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.UnitOfWorks
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public IProductRepository Developers{get;private set;}
+        public IProductRepository Products{get;private set;}
 
         public IColorRepository Colors{get;private set;}
 
@@ -35,6 +35,7 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.UnitOfWorks
             Offers = new OfferRepository(_dbcontext);
             Categories = new CategoryRepository(_dbcontext);
             Users = new UserRepository(_dbcontext);
+            Products = new ProductRepository(_dbcontext);
         }
         public int Complete()
         {

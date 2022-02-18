@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -14,39 +15,51 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
     public class OfferService : IOfferService
     {
         private readonly IUnitOfWork _unitOfwork;
-
-        public OfferService(IUnitOfWork unitOfwork)
+        private readonly IMapper _mapper;
+        public OfferService(IUnitOfWork unitOfwork, IMapper mapper)
         {
             _unitOfwork = unitOfwork;
+            _mapper = mapper;
         }
         public void Add(CreateOfferViewModel offerViewModel)
         {
-            throw new NotImplementedException();
+            var offer = _mapper.Map<Offer>(offerViewModel);
+            _unitOfwork.Offers.Add(offer);
         }
 
         public void Delete(DeleteOfferViewModel deleteOfferViewModel)
         {
-            throw new NotImplementedException();
+            var offer = _unitOfwork.Offers.GetById(deleteOfferViewModel.Id).Result;
+            _unitOfwork.Offers.Delete(offer);
+
         }
 
-        public Task<CreateOfferViewModel> Get(Expression<Func<Offer, bool>> filter)
+        public Task<OfferViewModel> Get(Expression<Func<Offer, bool>> filter)
         {
-            throw new NotImplementedException();
+            var offer = _unitOfwork.Offers.Get(filter).Result;
+            var offerViewModel = _mapper.Map<OfferViewModel>(offer);
+            return Task.FromResult(offerViewModel);
         }
 
-        public Task<List<CreateOfferViewModel>> GetAll(Expression<Func<Offer, bool>> filter = null)
+        public Task<List<OfferViewModel>> GetAll(Expression<Func<Offer, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            var offers = _unitOfwork.Offers.GetAll(filter).Result;
+
+            var offerViewList = _mapper.Map<List<Offer>, List<OfferViewModel>>(offers);
+            return Task.FromResult(offerViewList);
         }
 
-        public Task<CreateOfferViewModel> GetById(int id)
+        public Task<OfferViewModel> GetById(int id)
         {
-            throw new NotImplementedException();
+            var offer = _unitOfwork.Offers.GetById(id).Result;
+            var offerViewModel = _mapper.Map<OfferViewModel>(offer);
+            return Task.FromResult(offerViewModel);
         }
 
         public void Update(UpdateOfferViewModel updateOfferViewModel)
         {
-            throw new NotImplementedException();
+            var offer = _mapper.Map<Offer>(updateOfferViewModel);
+            _unitOfwork.Offers.Update(offer);
         }
     }
 }

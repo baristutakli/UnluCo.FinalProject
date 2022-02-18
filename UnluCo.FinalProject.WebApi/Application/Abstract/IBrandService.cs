@@ -14,7 +14,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Abstract
         void Add(BrandViewModel brandViewModel);
         void Delete(DeleteBrandViewModel deleteBrandViewModel);
         void Update(UpdateBrandViewModel updateBrandViewModel);
-        Task<List<Brand>> GetAll(Expression<Func<BrandViewModel, bool>> filter = null);
+        Task<List<BrandViewModel>> GetAll(Expression<Func<BrandViewModel, bool>> filter = null);
         Task<BrandViewModel> Get(Expression<Func<Brand, bool>> filter);
         Task<BrandViewModel> GetById(int id);
 

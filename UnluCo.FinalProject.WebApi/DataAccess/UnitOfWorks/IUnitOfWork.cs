@@ -8,7 +8,7 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.UnitOfWorks
 {
     public interface IUnitOfWork:IDisposable
     {
-        IProductRepository Developers { get; }
+        IProductRepository Products{ get; }
         IColorRepository Colors { get; }
         IBrandRepository Brands { get; }
         IOfferRepository Offers { get; }
