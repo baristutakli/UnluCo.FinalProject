@@ -10,8 +10,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly IAuthenticateService _userService;
+        public UserController(IAuthenticateService userService)
         {
             _userService = userService;
         }

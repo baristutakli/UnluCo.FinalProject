@@ -1,77 +1,43 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
-using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Application.Concrete
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IUserRepository _userRepository;
-        public UserService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager,IUserRepository userRepository)
+        public void Add(User user)
         {
-            _userManager = userManager;
-            _roleManager = roleManager;
-            _userRepository = userRepository;
-      
+            throw new NotImplementedException();
         }
 
-        public async Task<IdentityResult> CreateUser(RegisterUserModel model)
+        public void Delete(User user)
         {
-            User user = new User()
-            {
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.UserName
-            };
-            var result = await _userManager.CreateAsync(user, model.Password);
-            return result;
+            throw new NotImplementedException();
         }
 
-        public async Task<RegisterAdminResponse> CreateAdmin(RegisterUserModel model)
+        public Task<User> Get(Expression<Func<User, bool>> filter)
         {
-            User user = new User()
-            {
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.UserName
-            };
-            var result = await _userManager.CreateAsync(user, model.Password);
-            return new RegisterAdminResponse { Result = result, User = user };
+            throw new NotImplementedException();
         }
 
-        public async Task<User> FindByEmailAsync(string email)
+        public Task<List<User>> GetAll(Expression<Func<User, bool>> filter = null)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-           
-            return user;
+            throw new NotImplementedException();
         }
 
-        public async Task<bool> CheckUser(User user, UserLoginModel model)
+        public Task<User> GetById(int id)
         {
-            return user != null && await _userManager.CheckPasswordAsync(user, model.Password);
+            throw new NotImplementedException();
         }
 
-
-        public async Task<bool> CreateAdminRole(User user, string role)
+        public void Update(User user)
         {
-            if (!await _roleManager.RoleExistsAsync(role))
-                await _roleManager.CreateAsync(new IdentityRole(role));
-            if (!await _roleManager.RoleExistsAsync(Roles.User))
-                await _roleManager.CreateAsync(new IdentityRole(Roles.User));
-
-            if (await _roleManager.RoleExistsAsync(role))
-            {
-                await _userManager.AddToRoleAsync(user, role);
-            }
-            return true;
+            throw new NotImplementedException();
         }
     }
 }

@@ -18,10 +18,10 @@ namespace UnluCo.FinalProject.WebApi.Controllers
     public class AuthenticateController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
-        private readonly IUserService _userService;
+        private readonly IAuthenticateService _userService;
         private readonly IConfiguration _configuration;
 
-        public AuthenticateController(IUserService userService, UserManager<User> userManager, IConfiguration configuration)
+        public AuthenticateController(IAuthenticateService userService, UserManager<User> userManager, IConfiguration configuration)
         {
             _userService = userService;
             _userManager = userManager;

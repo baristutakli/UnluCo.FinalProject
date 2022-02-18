@@ -17,7 +17,7 @@ namespace UnluCo.FinalProject.WebApi.Common.DependencyResolver
     {
         public static void AddServices(this IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthenticateService, AuthenticateService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<IColorRepository, ColorRepository>();
