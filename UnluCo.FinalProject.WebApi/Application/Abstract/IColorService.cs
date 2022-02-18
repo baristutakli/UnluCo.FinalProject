@@ -11,7 +11,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Abstract
 {
     public interface IColorService
     {
-        void Add(ColorViewModel colorViewModel);
+        void Add(CreateColorViewModel createColorViewModel);
         void Delete(DeleteColorViewModel deleteColorViewModel);
         void Update(UpdateColorViewModel updateColorViewModel);
         Task<List<ColorViewModel>> GetAll(Expression<Func<Color, bool>> filter = null);

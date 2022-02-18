@@ -21,16 +21,18 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             _unitOfwork = unitOfwork;
             _mapper = mapper;
         }
-        public void Add(ColorViewModel colorViewModel)
+        public void Add(CreateColorViewModel colorViewModel)
         {
             var color = _mapper.Map<Color>(colorViewModel);
             _unitOfwork.Colors.Add(color);
+            _unitOfwork.Complete();
         }
 
         public void Delete(DeleteColorViewModel deleteColorViewModel)
         {
             var color = _unitOfwork.Colors.GetById(deleteColorViewModel.Id).Result;
             _unitOfwork.Colors.Delete(color);
+            _unitOfwork.Complete();
 
         }
 
@@ -59,7 +61,9 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         public void Update(UpdateColorViewModel updateColorViewModel)
         {
             var color = _mapper.Map<Color>(updateColorViewModel);
+            
             _unitOfwork.Colors.Update(color);
+            _unitOfwork.Complete();
         }
     }
 }

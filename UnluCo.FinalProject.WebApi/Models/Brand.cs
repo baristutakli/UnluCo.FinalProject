@@ -8,6 +8,6 @@ namespace UnluCo.FinalProject.WebApi.Models
 {
     public class Brand:BaseEntity
     {
-        public int Name { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -22,17 +22,19 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             _unitOfwork = unitOfwork;
             _mapper = mapper;
         }
-        public void Add(BrandViewModel brandViewModel)
+        public void Add(CreateBrandViewModel brandViewModel)
         {
             var brand =_mapper.Map<Brand>(brandViewModel);
             _unitOfwork.Brands.Add(brand);
+            _unitOfwork.Complete();
         }
 
         public void Delete(DeleteBrandViewModel deleteBrandViewModel)
         {
             var brand =_unitOfwork.Brands.GetById(deleteBrandViewModel.Id).Result;
             _unitOfwork.Brands.Delete(brand);
-            
+            _unitOfwork.Complete();
+
         }
 
         public Task<BrandViewModel> Get(Expression<Func<Brand, bool>> filter)
@@ -57,10 +59,11 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             return Task.FromResult(brandViewModel);
         }
 
-        public void Update(UpdateBrandViewModel updateBrandViewModel)
+        public void Update(int id,UpdateBrandViewModel updateBrandViewModel)
         {
            var brand= _mapper.Map<Brand>(updateBrandViewModel);
             _unitOfwork.Brands.Update(brand);
+            _unitOfwork.Complete();
         }
     }
 }

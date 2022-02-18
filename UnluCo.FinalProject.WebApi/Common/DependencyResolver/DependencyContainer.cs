@@ -17,11 +17,12 @@ namespace UnluCo.FinalProject.WebApi.Common.DependencyResolver
     {
         public static void AddServices(this IServiceCollection services)
         {
-            services.AddScoped<IAuthenticateService, AuthenticateService>();
+            
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<IColorRepository, ColorRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOfferRepository, OfferRepository>();
 
             // Authentication 
             services.AddScoped<UserManager<User>>();
@@ -29,6 +30,14 @@ namespace UnluCo.FinalProject.WebApi.Common.DependencyResolver
             // Unit Of Work
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+
+            // Services
+            services.AddScoped<IAuthenticateService, AuthenticateService>();
+            services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IColorService, ColorService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOfferService, OfferService>();
         }
     }
 }

@@ -24,12 +24,14 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var user = _mapper.Map<User>(userViewModel);
             _unitOfwork.Users.Add(user);
+            _unitOfwork.Complete();
         }
 
         public void Delete(DeleteUserViewModel deleteUserViewModel)
         {
             var user = _unitOfwork.Users.GetById(deleteUserViewModel.Id).Result;
             _unitOfwork.Users.Delete(user);
+            _unitOfwork.Complete();
 
         }
 
@@ -59,6 +61,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var user = _mapper.Map<User>(updateUserViewModel);
             _unitOfwork.Users.Update(user);
+            _unitOfwork.Complete();
         }
     }
 }

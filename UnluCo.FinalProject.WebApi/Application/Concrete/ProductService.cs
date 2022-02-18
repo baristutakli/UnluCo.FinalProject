@@ -24,12 +24,14 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var product = _mapper.Map<Product>(productViewModel);
             _unitOfwork.Products.Add(product);
+            _unitOfwork.Complete();
         }
 
         public void Delete(DeleteProductViewModel deleteProductViewModel)
         {
             var product = _unitOfwork.Products.GetById(deleteProductViewModel.Id).Result;
             _unitOfwork.Products.Delete(product);
+            _unitOfwork.Complete();
 
         }
 
@@ -59,6 +61,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var product = _mapper.Map<Product>(updateProductViewModel);
             _unitOfwork.Products.Update(product);
+            _unitOfwork.Complete();
         }
     }
 }

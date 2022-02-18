@@ -25,12 +25,14 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var offer = _mapper.Map<Offer>(offerViewModel);
             _unitOfwork.Offers.Add(offer);
+            _unitOfwork.Complete();
         }
 
         public void Delete(DeleteOfferViewModel deleteOfferViewModel)
         {
             var offer = _unitOfwork.Offers.GetById(deleteOfferViewModel.Id).Result;
             _unitOfwork.Offers.Delete(offer);
+            _unitOfwork.Complete();
 
         }
 
@@ -60,6 +62,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var offer = _mapper.Map<Offer>(updateOfferViewModel);
             _unitOfwork.Offers.Update(offer);
+            _unitOfwork.Complete();
         }
     }
 }

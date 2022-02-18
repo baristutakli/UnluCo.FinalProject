@@ -10,8 +10,8 @@ using UnluCo.FinalProject.WebApi.Models;
 namespace UnluCo.FinalProject.WebApi.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20220217061414_m6")]
-    partial class m6
+    [Migration("20220218161749_m1")]
+    partial class m1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -165,8 +165,8 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -450,7 +450,7 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                         .WithMany()
                         .HasForeignKey("ColorId");
 
-                    b.HasOne("UnluCo.FinalProject.WebApi.Models.User", null)
+                    b.HasOne("UnluCo.FinalProject.WebApi.Models.User", "User")
                         .WithMany("Products")
                         .HasForeignKey("UserId");
 
@@ -459,6 +459,8 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Color");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("UnluCo.FinalProject.WebApi.Models.Category", b =>
