@@ -11,5 +11,6 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Abstract
     public interface ICategoryRepository: IRepository<Category>
     {
         public Task<List<Category>> GetProductsByCategory(Expression<Func<Category, bool>> filter = null);
+        public Task<Category> GetProductsByASpecificCategory(Expression<Func<Category, bool>> filter);
     }
 }

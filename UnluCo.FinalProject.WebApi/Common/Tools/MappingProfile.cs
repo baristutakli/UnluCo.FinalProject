@@ -32,8 +32,11 @@ namespace UnluCo.FinalProject.WebApi.Common.Tools
 
             CreateMap<CreateCategoryViewModel, Category>().ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.Now));
             CreateMap<UpdateCategoryViewModel, Category>();
-            CreateMap<Category, CategoryViewModel>();
             CreateMap<Category, CategoryTitleViewModel>();
+            CreateMap<Category, CategoryViewModel>().ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Products));
+      
+              
+            
 
             //Offer
 

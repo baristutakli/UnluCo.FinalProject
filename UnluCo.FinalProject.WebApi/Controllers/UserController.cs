@@ -5,9 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
+using UnluCo.FinalProject.WebApi.Application.ViewModels.UsersViewModel;
 
 namespace UnluCo.FinalProject.WebApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -16,44 +19,28 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             _userService = userService;
         }
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var users = _userService.GetAll();
+            return Ok(users);
         }
 
-        // GET api/<BrandsController>/5
+        // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var user = _userService.GetById(id);
+            return Ok(user);
         }
 
-        // POST api/<BrandsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
 
-        // PUT api/<BrandsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<BrandsController>/5
+        // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-        }
-        private string SerialiObjcet(object value)
-        {
-            var newObject = JsonConvert.SerializeObject(value, Formatting.Indented,
-            new JsonSerializerSettings()
-            {
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            }
-        );
-            return newObject;
+            DeleteUserViewModel deleteUser = new DeleteUserViewModel() { Id = id };
+            _userService.Delete(deleteUser);
+            return Ok();
         }
     }
 }

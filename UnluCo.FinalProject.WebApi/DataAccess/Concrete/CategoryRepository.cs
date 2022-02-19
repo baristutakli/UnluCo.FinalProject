@@ -16,11 +16,14 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Concrete
         {
 
         }
+        public async Task<Category> GetProductsByASpecificCategory(Expression<Func<Category, bool>> filter)
+        {
+            return await _dbcontext.Set<Category>().Include(c => c.Products).SingleOrDefaultAsync(filter) ;
+        }
 
         public async Task<List<Category>> GetProductsByCategory(Expression<Func<Category, bool>> filter = null)
         {
-            return filter == null ? await _dbcontext.Set<Category>().Include("Products").ToListAsync() : await _dbcontext.Set<Category>().Include("Products").Where(filter).ToListAsync();
-
+            return filter == null ? await _dbcontext.Set<Category>().Include(c=>c.Products).ToListAsync() : await _dbcontext.Set<Category>().Include(c => c.Products).Where(filter).ToListAsync();
         }
     }
 }

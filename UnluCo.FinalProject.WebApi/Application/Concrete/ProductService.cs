@@ -37,14 +37,14 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
 
         public Task<ProductViewModel> Get(Expression<Func<Product, bool>> filter)
         {
-            var product = _unitOfwork.Products.Get(filter).Result;
+            var product = _unitOfwork.Products.GetProductDetails(filter).Result;
             var productViewModel = _mapper.Map<ProductViewModel>(product);
             return Task.FromResult(productViewModel);
         }
 
         public Task<List<ProductViewModel>> GetAll(Expression<Func<Product, bool>> filter = null)
         {
-            var products = _unitOfwork.Products.GetAll(filter).Result;
+            var products = _unitOfwork.Products.GetProductsDetails(filter).Result;
 
             var productViewList = _mapper.Map<List<Product>, List<ProductViewModel>>(products);
             return Task.FromResult(productViewList);
@@ -52,7 +52,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
 
         public Task<ProductViewModel> GetById(int id)
         {
-            var product = _unitOfwork.Products.GetById(id).Result;
+            var product = _unitOfwork.Products.GetProductDetails(p=>p.Id==id).Result;
             var productViewModel = _mapper.Map<ProductViewModel>(product);
             return Task.FromResult(productViewModel);
         }
