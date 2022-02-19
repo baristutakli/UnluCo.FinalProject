@@ -50,6 +50,10 @@ namespace UnluCo.FinalProject.WebApi
 
             services.AddDbContext<UserDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:ConnStr"]));
 
+            //Mail settings
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient<IEmailService, MailService>();
+
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));
 

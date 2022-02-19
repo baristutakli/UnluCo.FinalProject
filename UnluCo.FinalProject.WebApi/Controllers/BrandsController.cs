@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.BrandsViewModel;
+using UnluCo.FinalProject.WebApi.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,9 +16,11 @@ namespace UnluCo.FinalProject.WebApi.Controllers
     public class BrandsController : ControllerBase
     {
         private IBrandService _brandService;
+      
         public BrandsController(IBrandService brandService)
         {
             _brandService = brandService;
+          
         }
         // GET: api/<BrandsController>
         [HttpGet]
