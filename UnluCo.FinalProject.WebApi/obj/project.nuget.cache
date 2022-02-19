@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "QouhRTqRjdDJ/shnm44yVUNfyOBPOziEdnC1nBnrDkhSt7pjmr6uCMjCvA/dAKYqMHynrZPNqBTmt8KBtr87aw==",
+  "dgSpecHash": "d5z7P6ppZQ24WQWSeIXz0FE6+WrjxZ8gsLTkHQ8x1k+D9SfZq0pwA6LmPpq1whqSN4hdhb/4L/jNvjM8zpEe+g==",
   "success": true,
   "projectFilePath": "C:\\Users\\kbez1\\source\\repos\\UnluCo.FinalProject\\UnluCo.FinalProject.WebApi\\UnluCo.FinalProject.WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kbez1\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\kbez1\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
+    "C:\\Users\\kbez1\\.nuget\\packages\\fluentvalidation\\10.3.6\\fluentvalidation.10.3.6.nupkg.sha512",
+    "C:\\Users\\kbez1\\.nuget\\packages\\fluentvalidation.aspnetcore\\10.3.6\\fluentvalidation.aspnetcore.10.3.6.nupkg.sha512",
+    "C:\\Users\\kbez1\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\10.3.6\\fluentvalidation.dependencyinjectionextensions.10.3.6.nupkg.sha512",
     "C:\\Users\\kbez1\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\kbez1\\.nuget\\packages\\mailkit\\2.6.0\\mailkit.2.6.0.nupkg.sha512",
     "C:\\Users\\kbez1\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.13\\microsoft.aspnetcore.authentication.jwtbearer.5.0.13.nupkg.sha512",
