@@ -23,6 +23,7 @@ namespace UnluCo.FinalProject.WebApi.Common.DependencyResolver
             services.AddScoped<IColorRepository, ColorRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOfferRepository, OfferRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             // Authentication 
             services.AddScoped<UserManager<User>>();
@@ -38,6 +39,7 @@ namespace UnluCo.FinalProject.WebApi.Common.DependencyResolver
             services.AddScoped<IColorService, ColorService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOfferService, OfferService>();
+            services.AddScoped<ICategoryService, CategoryService>();
         }
     }
 }

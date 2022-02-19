@@ -30,7 +30,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var offer = _offerService.GetById(id);
+            var offer = _offerService.Get(p=>p.Id==id);
             return Ok(offer);
         }
 

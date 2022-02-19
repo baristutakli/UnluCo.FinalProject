@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.BrandsViewModel;
+using UnluCo.FinalProject.WebApi.Application.ViewModels.CategoriesViewModel;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.ColorsViewModel;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.OffersViewModel;
 using UnluCo.FinalProject.WebApi.Models;
@@ -25,8 +26,8 @@ namespace UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel
         public bool IsSold { get; set; } = false;
         public ColorViewModel Color { get; set; }
         public BrandViewModel Brand { get; set; }
-        public Category Category { get; set; }
-        public ICollection<CreateOfferViewModel> Offers { get; set; }
+        public CategoryTitleViewModel Category { get; set; }
+        public List<OfferViewModel> Offers { get; set; }
         public User User { get; set; }
     }
 }

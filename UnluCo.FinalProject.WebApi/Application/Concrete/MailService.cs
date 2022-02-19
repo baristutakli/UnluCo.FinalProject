@@ -26,7 +26,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             email.To.Add(MailboxAddress.Parse(mailRequest.ToEmail));
             email.Subject = mailRequest.Subject;
             var builder = new BodyBuilder();
-
+            
             builder.HtmlBody = mailRequest.Body;
             email.Body = builder.ToMessageBody();
             using var smtp = new MailKit.Net.Smtp.SmtpClient();

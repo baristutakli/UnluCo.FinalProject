@@ -61,7 +61,8 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
 
         public void Update(int id,UpdateBrandViewModel updateBrandViewModel)
         {
-           var brand= _mapper.Map<Brand>(updateBrandViewModel);
+            var selectedBrand = _unitOfwork.Brands.GetById(id).Result;
+           var brand= _mapper.Map(updateBrandViewModel,selectedBrand);
             _unitOfwork.Brands.Update(brand);
             _unitOfwork.Complete();
         }

@@ -11,7 +11,7 @@ namespace UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel
 {
     public class CreateProductViewModel
     {
-        public int Id { get; set; }
+    
         public DateTime CreatedAt { get; set; }
         public bool IsActive { get; set; }
         public bool IsOfferable { get; set; }

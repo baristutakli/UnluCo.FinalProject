@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.OffersViewModel;
+using UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel;
 using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
 using UnluCo.FinalProject.WebApi.DataAccess.UnitOfWorks;
 using UnluCo.FinalProject.WebApi.Models;
@@ -38,14 +39,15 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
 
         public Task<OfferViewModel> Get(Expression<Func<Offer, bool>> filter)
         {
-            var offer = _unitOfwork.Offers.Get(filter).Result;
-            var offerViewModel = _mapper.Map<OfferViewModel>(offer);
-            return Task.FromResult(offerViewModel);
+            var offer = _unitOfwork.Offers.GetOffer(filter).Result;
+            var vm = _mapper.Map<OfferViewModel>(offer);
+            //var offerViewModel = _mapper.Map(offer);
+            return Task.FromResult(vm);
         }
 
         public Task<List<OfferViewModel>> GetAll(Expression<Func<Offer, bool>> filter = null)
         {
-            var offers = _unitOfwork.Offers.GetAll(filter).Result;
+            var offers = _unitOfwork.Offers.GetOffers(filter).Result;
 
             var offerViewList = _mapper.Map<List<Offer>, List<OfferViewModel>>(offers);
             return Task.FromResult(offerViewList);
