@@ -75,3 +75,6 @@ C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\D
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\BouncyCastle.Crypto.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\obj\Debug\net5.0\UnluCo.FinalProject.WebApi.csproj.AssemblyReference.cache
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\RabbitMQ.Client.dll
+C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\FluentValidation.dll
+C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\FluentValidation.AspNetCore.dll
+C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\FluentValidation.DependencyInjectionExtensions.dll

@@ -20,12 +20,14 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IAuthenticateService _userService;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
-        public AuthenticateController(IAuthenticateService userService, UserManager<User> userManager, IConfiguration configuration)
+        public AuthenticateController(IAuthenticateService userService, UserManager<User> userManager, IConfiguration configuration, IEmailService emailService)
         {
             _userService = userService;
             _userManager = userManager;
             _configuration = configuration;
+            _emailService = emailService;
         }
 
         [HttpPost]
@@ -38,6 +40,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             {
                 if (await _userService.CheckUser(user, model))
                 {
+                    
                     TokenGenerator generator = new TokenGenerator(_userManager, _configuration);
                     var token = await generator.GenerateToken(user);
                     return Ok(token);
@@ -50,7 +53,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
 
             if (await _userManager.GetAccessFailedCountAsync(user) >= 3)
             {
-
+                MailRequest mail = new MailRequest() { Body = "Blocked", Status = false, Subject = "Access denied", ToEmail = user.Email };
+                    _emailService.SendEmailIntoQueue(mail);
                 await _userManager.IsLockedOutAsync(user);
             }
 

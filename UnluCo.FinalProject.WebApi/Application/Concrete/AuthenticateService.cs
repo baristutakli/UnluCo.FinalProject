@@ -14,10 +14,12 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+       
         public AuthenticateService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+          
            
         }
 

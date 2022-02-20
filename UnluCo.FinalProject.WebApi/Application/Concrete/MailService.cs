@@ -14,12 +14,14 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
     public class MailService:IEmailService
     {
         private readonly MailSettings _mailSettings;
-        public MailService(IOptions<MailSettings> mailSettings)
+        private readonly IRabbitMQService _rabbitMQService;
+        public MailService(IOptions<MailSettings> mailSettings,IRabbitMQService rabbitMQService)
         {
             _mailSettings = mailSettings.Value;
+            _rabbitMQService = rabbitMQService;
         }
 
-        public async Task SendEmailAsync(MailRequest mailRequest)
+        public void  SendEmailIntoQueue(MailRequest mailRequest)
         {
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
@@ -29,11 +31,23 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             
             builder.HtmlBody = mailRequest.Body;
             email.Body = builder.ToMessageBody();
-            using var smtp = new MailKit.Net.Smtp.SmtpClient();
-            smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-            smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
-            await smtp.SendAsync(email);
-            smtp.Disconnect(true);
+
+            try
+            {
+                _rabbitMQService.Publish(email);
+            }
+            catch (Exception)
+            {
+
+                throw new Exception(message: "Kuyruğa eklenemedi");
+            }
+            
+            
+            //using var smtp = new MailKit.Net.Smtp.SmtpClient();
+            //smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
+            //smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+            //await smtp.SendAsync(email);
+            //smtp.Disconnect(true);
         }
     }
 }

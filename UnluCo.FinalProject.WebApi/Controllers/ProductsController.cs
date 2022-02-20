@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
@@ -42,6 +43,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             return Ok();
         }
 
+       
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UpdateProductViewModel updateProductViewModel)

@@ -52,8 +52,8 @@ namespace UnluCo.FinalProject.WebApi
 
             //Mail settings
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
-            services.AddTransient<IEmailService, MailService>();
-
+            services.AddScoped<IEmailService, MailService>();
+            services.AddScoped<IRabbitMQService, RabbitMQService>();
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));
 
