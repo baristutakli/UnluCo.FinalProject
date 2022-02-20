@@ -26,7 +26,7 @@ namespace UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel
         public bool IsSold { get; set; } = false;
         public UpdateColorViewModel Color { get; set; }
         public UpdateBrandViewModel Brand { get; set; }
-        public UpdateCategoryViewModel Category { get; set; }
+        public CreateCategoryViewModel Category { get; set; }
         public ICollection<CreateOfferViewModel> Offers { get; set; }
         public UserViewModel User { get; set; }
     }

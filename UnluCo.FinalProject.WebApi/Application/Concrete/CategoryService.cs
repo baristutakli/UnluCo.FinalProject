@@ -60,7 +60,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             return Task.FromResult(categoryViewModel);
         }
 
-        public void Update(int id,UpdateCategoryViewModel updateCategoryViewModel)
+        public void Update(int id,CreateCategoryViewModel updateCategoryViewModel)
         {
            var category= _mapper.Map<Category>(updateCategoryViewModel);
             _unitOfwork.Categories.Update(category);

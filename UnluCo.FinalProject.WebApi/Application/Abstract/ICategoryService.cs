@@ -13,7 +13,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Abstract
     {
         void Add(CreateCategoryViewModel categoryViewModel);
         void Delete(DeleteCategoryViewModel deleteCategoryViewModel);
-        void Update(int id,UpdateCategoryViewModel updateCategoryViewModel);
+        void Update(int id,CreateCategoryViewModel updateCategoryViewModel);
         Task<List<CategoryViewModel>> GetAll(Expression<Func<CategoryViewModel, bool>> filter = null);
         Task<CategoryViewModel> Get(Expression<Func<Category, bool>> filter);
         Task<CategoryViewModel> GetById(int id);

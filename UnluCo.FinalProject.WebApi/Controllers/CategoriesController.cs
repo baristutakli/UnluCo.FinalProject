@@ -48,7 +48,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
 
         // PUT api/<CategoriesController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UpdateCategoryViewModel updateCategoryViewModel)
+        public IActionResult Put(int id, [FromBody] CreateCategoryViewModel updateCategoryViewModel)
         {
             _brandService.Update(id,updateCategoryViewModel);
             return Ok();

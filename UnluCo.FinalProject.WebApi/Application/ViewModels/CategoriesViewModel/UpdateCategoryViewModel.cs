@@ -6,7 +6,7 @@ using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Application.ViewModels.CategoriesViewModel
 {
-    public class UpdateCategoryViewModel
+    public class CreateCategoryViewModel
     {
         public int Id { get; set; }
         public bool IsActive { get; set; } = true;
