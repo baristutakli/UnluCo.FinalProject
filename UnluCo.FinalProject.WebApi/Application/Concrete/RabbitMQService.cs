@@ -1,12 +1,16 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MimeKit;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
+using UnluCo.FinalProject.WebApi.Common.Tools;
+using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Application.Concrete
 {
@@ -20,7 +24,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             _factory = new ConnectionFactory() { Uri = new Uri(_configuration.GetSection("RabbitMqSettings:URL").Value) };
         }
 
-        public void Publish(MimeMessage email)
+        public void Publish(MailRequest mailRequest)
         {
 
             IConnection connection = _factory.CreateConnection();
@@ -31,8 +35,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
                                  exclusive: false,
                                  autoDelete: false,
                                  arguments: null);
-
-            var body = Encoding.UTF8.GetBytes(System.Text.Json.JsonSerializer.Serialize(email));
+            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(mailRequest,formatting:Formatting.Indented));
 
             channel.BasicPublish(exchange: "",
                  routingKey: "Mails",

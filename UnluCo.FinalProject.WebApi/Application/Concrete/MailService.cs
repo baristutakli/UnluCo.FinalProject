@@ -11,43 +11,39 @@ using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Application.Concrete
 {
-    public class MailService:IEmailService
+    public class MailService : IEmailService
     {
         private readonly MailSettings _mailSettings;
         private readonly IRabbitMQService _rabbitMQService;
-        public MailService(IOptions<MailSettings> mailSettings,IRabbitMQService rabbitMQService)
+        public MailService(IOptions<MailSettings> mailSettings, IRabbitMQService rabbitMQService)
         {
             _mailSettings = mailSettings.Value;
             _rabbitMQService = rabbitMQService;
         }
 
-        public void  SendEmailIntoQueue(MailRequest mailRequest)
+        // Call RabitMQService and publish 
+        public void SendEmailIntoQueue(MailRequest mailRequest)
         {
-            var email = new MimeMessage();
-            email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-            email.To.Add(MailboxAddress.Parse(mailRequest.ToEmail));
-            email.Subject = mailRequest.Subject;
-            var builder = new BodyBuilder();
-            
-            builder.HtmlBody = mailRequest.Body;
-            email.Body = builder.ToMessageBody();
+            var mail = new MailMessage();
+            mail.Sender= new MailAddress(_mailSettings.Mail,"s");
+            mail.To.Add( new MailAddress(mailRequest.ToEmail, "ss"));
+            mail.Subject = mailRequest.Subject;
+            mail.Body = mailRequest.Body;
+            mail.From = new MailAddress(_mailSettings.Mail, "ss");
+            mail.BodyEncoding = System.Text.Encoding.UTF8;
 
             try
             {
-                _rabbitMQService.Publish(email);
+                _rabbitMQService.Publish(mailRequest);
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw new Exception(message: "Kuyruğa eklenemedi");
+                throw new Exception(message:e.Message);
             }
-            
-            
-            //using var smtp = new MailKit.Net.Smtp.SmtpClient();
-            //smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-            //smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
-            //await smtp.SendAsync(email);
-            //smtp.Disconnect(true);
+
         }
+
+
     }
 }

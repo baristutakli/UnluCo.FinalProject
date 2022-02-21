@@ -38,6 +38,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             var user = await _userService.FindByEmailAsync(model.Email);
             if (!await _userManager.IsLockedOutAsync(user))
             {
+
                 if (await _userService.CheckUser(user, model))
                 {
                     
@@ -50,11 +51,11 @@ namespace UnluCo.FinalProject.WebApi.Controllers
 
             await _userManager.SetLockoutEnabledAsync(user, true);
             await _userManager.AccessFailedAsync(user);
-
+          
             if (await _userManager.GetAccessFailedCountAsync(user) >= 3)
             {
-                MailRequest mail = new MailRequest() { Body = "Blocked", Status = false, Subject = "Access denied", ToEmail = user.Email };
-                    _emailService.SendEmailIntoQueue(mail);
+                MailRequest mail2 = new MailRequest() { Body = "Blocked", Status = false, Subject = "Access denied", ToEmail = user.Email };
+                _emailService.SendEmailIntoQueue(mail2);
                 await _userManager.IsLockedOutAsync(user);
             }
 

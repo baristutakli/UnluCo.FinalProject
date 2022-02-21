@@ -7,5 +7,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="NETCore.MailKit" Version="2.0.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UnluCo.FinalProject.WebApi\UnluCo.FinalProject.WebApi.csproj" />
   </ItemGroup>
 </Project>

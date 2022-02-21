@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace UnluCo.FinalProject.WebApi.Models
 {
+    [Serializable]
     public class MailRequest
     {
         public string ToEmail { get; set; }

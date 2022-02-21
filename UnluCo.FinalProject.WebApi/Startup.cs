@@ -45,7 +45,7 @@ namespace UnluCo.FinalProject.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UnluCo.FinalProject.WebApi", Version = "v1" });
             });
 
-
+            // Dependencies
             services.AddServices();
 
             services.AddDbContext<UserDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:ConnStr"]));
@@ -101,6 +101,8 @@ namespace UnluCo.FinalProject.WebApi
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

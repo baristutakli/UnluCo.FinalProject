@@ -9,7 +9,11 @@ C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\D
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\UnluCo.FinalProject.WebApi.pdb
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\AutoMapper.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\FluentValidation.dll
+C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\FluentValidation.AspNetCore.dll
+C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\FluentValidation.DependencyInjectionExtensions.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\Humanizer.dll
+C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\MailKit.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -32,8 +36,12 @@ C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\D
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\Microsoft.OpenApi.dll
+C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\MimeKit.dll
+C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\NETCore.MailKit.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\BouncyCastle.Crypto.dll
+C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\RabbitMQ.Client.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -69,12 +77,4 @@ C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\obj\D
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\obj\Debug\net5.0\ref\UnluCo.FinalProject.WebApi.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\obj\Debug\net5.0\UnluCo.FinalProject.WebApi.pdb
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\obj\Debug\net5.0\UnluCo.FinalProject.WebApi.genruntimeconfig.cache
-C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\MailKit.dll
-C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\MimeKit.dll
-C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\NETCore.MailKit.dll
-C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\BouncyCastle.Crypto.dll
 C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\obj\Debug\net5.0\UnluCo.FinalProject.WebApi.csproj.AssemblyReference.cache
-C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\RabbitMQ.Client.dll
-C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\FluentValidation.dll
-C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\FluentValidation.AspNetCore.dll
-C:\Users\kbez1\source\repos\UnluCo.FinalProject\UnluCo.FinalProject.WebApi\bin\Debug\net5.0\FluentValidation.DependencyInjectionExtensions.dll
