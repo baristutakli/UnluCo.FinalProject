@@ -40,6 +40,8 @@ namespace UnluCo.FinalProject.WebApi.Common.DependencyResolver
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOfferService, OfferService>();
             services.AddScoped<ICategoryService, CategoryService>();
+
+
         }
     }
 }

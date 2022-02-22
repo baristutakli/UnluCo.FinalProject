@@ -62,9 +62,7 @@ namespace BackgroundWorker
                     email = new MailMessage() { Body = data.Body, From = new MailAddress("tutaklibaris@gmail.com") , Subject = data.Subject, Sender = new MailAddress("tutaklibaris@gmail.com") };
                     email.To.Add(new MailAddress(data.ToEmail));
 
-                    var deneme = _mailSettings.Mail;
-
-                  //  await SendEmail(email);
+                    await SendEmail(email);
              
                 };
                

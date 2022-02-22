@@ -41,7 +41,8 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var brand = _unitOfwork.Brands.Get(filter).Result;
             var brandViewModel=_mapper.Map<BrandViewModel>(brand);
-            return Task.FromResult(brandViewModel);
+            
+            return  Task.FromResult(brandViewModel);
         }
 
         public Task<List<BrandViewModel>> GetAll(Expression<Func<BrandViewModel, bool>> filter = null)

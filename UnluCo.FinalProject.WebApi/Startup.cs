@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.Concrete;
 using UnluCo.FinalProject.WebApi.Common.DependencyResolver;
+using UnluCo.FinalProject.WebApi.Common.Loggers;
 using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
 using UnluCo.FinalProject.WebApi.DataAccess.Concrete;
 using UnluCo.FinalProject.WebApi.Models;
@@ -45,7 +46,7 @@ namespace UnluCo.FinalProject.WebApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UnluCo.FinalProject.WebApi", Version = "v1" });
             });
 
-            // Dependencies
+            // Dependencies under Common/DependencyResolver
             services.AddServices();
 
             services.AddDbContext<UserDbContext>(_ => _.UseSqlServer(Configuration["ConnectionStrings:ConnStr"]));
@@ -56,6 +57,9 @@ namespace UnluCo.FinalProject.WebApi
             services.AddScoped<IRabbitMQService, RabbitMQService>();
             // AutoMapper
             services.AddAutoMapper(typeof(Startup));
+
+            // Logger
+            services.AddSingleton<ILoggerService, ConsoleLogger>();
 
             //Lockout user
             services.AddIdentity<User, IdentityRole>(option =>

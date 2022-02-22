@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
+using UnluCo.FinalProject.WebApi.Application.Validators.Brands;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.BrandsViewModel;
 using UnluCo.FinalProject.WebApi.Models;
 
@@ -27,7 +30,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         public IActionResult Get()
         {
             var brands = _brandService.GetAll();
-            return Ok(brands);
+            
+            return brands == null? StatusCode((int)HttpStatusCode.InternalServerError):Ok(brands);
         }
 
         // GET api/<BrandsController>/5
@@ -35,13 +39,15 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         public IActionResult Get(int id)
         {
            var brand= _brandService.GetById(id);
-            return Ok(brand);
+            return brand == null ? NoContent() : Ok(brand);
         }
 
         // POST api/<BrandsController>
         [HttpPost]
         public IActionResult Post([FromBody] CreateBrandViewModel createBrandViewModel)
         {
+            CreateBrandViewValidator validator = new CreateBrandViewValidator();
+            validator.ValidateAndThrow(createBrandViewModel);
             _brandService.Add(createBrandViewModel);
             return Ok();
         }
@@ -50,6 +56,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UpdateBrandViewModel updateBrandViewModel)
         {
+            UpdateBrandViewValidator validator = new UpdateBrandViewValidator();
+            validator.ValidateAndThrow(updateBrandViewModel);
             _brandService.Update(id,updateBrandViewModel);
             return Ok();
         }
@@ -58,7 +66,9 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            DeleteBrandViewModel deleteBrand = new DeleteBrandViewModel() { Id=id};  
+            DeleteBrandViewModel deleteBrand = new DeleteBrandViewModel() { Id = id };
+            DeleteBrandViewValidator validator = new DeleteBrandViewValidator();
+            validator.ValidateAndThrow(deleteBrand);
             _brandService.Delete(deleteBrand);
             return Ok();
         }

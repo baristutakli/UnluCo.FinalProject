@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnluCo.FinalProject.WebApi", "UnluCo.FinalProject.WebApi\UnluCo.FinalProject.WebApi.csproj", "{E0F871AE-2992-4D00-B304-D089759FDF27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackgroundWorker", "BackgroundWorker\BackgroundWorker.csproj", "{060693B2-2976-4525-AF67-F7AA5BEE7A92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackgroundWorker", "BackgroundWorker\BackgroundWorker.csproj", "{060693B2-2976-4525-AF67-F7AA5BEE7A92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnluCo.FinalProject.BlazorUI", "UnluCo.FinalProject.BlazorUI\UnluCo.FinalProject.BlazorUI.csproj", "{65B8BBEE-EE33-497A-BD9B-D38D2E7EA744}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{060693B2-2976-4525-AF67-F7AA5BEE7A92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{060693B2-2976-4525-AF67-F7AA5BEE7A92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{060693B2-2976-4525-AF67-F7AA5BEE7A92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65B8BBEE-EE33-497A-BD9B-D38D2E7EA744}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65B8BBEE-EE33-497A-BD9B-D38D2E7EA744}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65B8BBEE-EE33-497A-BD9B-D38D2E7EA744}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65B8BBEE-EE33-497A-BD9B-D38D2E7EA744}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -36,6 +36,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         {
             // user locked out çalıştı bu kısmı düzenlemen gerek  
             var user = await _userService.FindByEmailAsync(model.Email);
+
             if (!await _userManager.IsLockedOutAsync(user))
             {
 
