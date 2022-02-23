@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,15 +24,18 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var products = _productService.GetAll();
-            return Ok(products);
+            var products = _productService.GetAll().Result;
+            return Ok(JsonConvert.SerializeObject(products, Formatting.Indented, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }));
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var product = _productService.GetById(id);
+            var product = _productService.GetById(id).Result;
             return Ok(product);
         }
 

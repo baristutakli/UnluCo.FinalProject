@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel;
 using UnluCo.FinalProject.WebApi.Common.Repositories;
 using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
 using UnluCo.FinalProject.WebApi.Models;
@@ -24,6 +25,5 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Concrete
         {
             return  await _dbcontext.Set<Product>().Include(p => p.Color).Include(p => p.Brand).Include(p => p.Category).Include(p => p.User).Include(p => p.Offers).FirstOrDefaultAsync(filter) ;
         }
-
     }
 }

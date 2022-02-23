@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +27,11 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var categorys = _categoryService.GetAll();
-            return Ok(categorys);
+            var categories = _categoryService.GetAll().Result;
+            return Ok(JsonConvert.SerializeObject(categories, Formatting.Indented, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }));
         }
 
         // GET api/<CategoriesController>/5
@@ -36,7 +40,10 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         {
            var category= _categoryService.GetById(id).Result;
 
-            return Ok(System.Text.Json.JsonSerializer.Serialize(category));
+            return Ok(JsonConvert.SerializeObject(category, Formatting.Indented, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }));
         }
 
         // POST api/<CategoriesController>

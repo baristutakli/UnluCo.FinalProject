@@ -3,22 +3,56 @@
 @using Newtonsoft.Json
 <h3>Categories</h3>
 
-@if (VM is null)
+@if (categories is null)
 {
     <p>
-        asdlkasfklnknlafsklnasf
+        Loading...
 
     </p>
-    <button class="btn btn-primary" @onclick="Callme">Click me</button>
+
 
 }
 else
 {
     <hr />
 
+    <div class="col">
+        @foreach (var item in categories)
+        {
+            <div class="row bg-light">
+                <p class="col-3 m-1">Category Id: @item.Id</p>
+                <p class="col-3 m-1">Active: @item.IsActive</p>
+                <p class="col-3 m-1">Category Name: @item.Title</p>
+
+            </div>
+            @if (@item.Products.Count > 0)
+            {
+    <div class="row bg-light">
+        @foreach (var product in @item.Products)
+        {
+
+            <p class="col-2 m-1">Id: @product.Id</p>
+            <p class="col-2 m-1">Name: @product.Name</p>
+            <p class="col-2 m-1">Price: @product.Price</p>
+            <p class="col-2 m-1">Color: @product.Color.Name</p>
+            <p class="col-2 m-1">Category: @product.Category.Title</p>
+            <p class="col-2 m-1">Brand: @product.Brand.Name</p>
+            <p class="col-2 m-1">User: @product.User.UserName</p>
+            <hr class="bg-white" />
+        }
+
+    </div>
+            }
+            <hr class="bg-dark"/>
+
+        }
+
+    </div>
+
+
     <p>
-        <button class="btn btn-primary" @onclick="Callme">Click ME 2</button>
-        @VM.Title
+
+
 
     </p>
 }
@@ -26,21 +60,23 @@ else
 @code {
 
 
-    public CategoryModelView VM { get; set; }
+    public List<CategoryModelView> categories { get; set; }
 
     HttpClient client = new HttpClient();
 
-    public async void Callme()
+    //public async void Callme()
+    //{
+    //    var category = await client.GetAsync("http://localhost:19383/api/Categories/");
+    //    VM = JsonConvert.DeserializeObject<CategoryModelView>(await category.Content.ReadAsStringAsync());
+    //}
+
+    protected override async Task OnInitializedAsync()
     {
-        var category = await client.GetAsync("http://localhost:19383/api/Categories/1");
-        VM = JsonConvert.DeserializeObject<CategoryModelView>(await category.Content.ReadAsStringAsync());
+        var category = await client.GetAsync("http://localhost:19383/api/Categories");
+        categories = JsonConvert.DeserializeObject<List<CategoryModelView>>(await category.Content.ReadAsStringAsync()).ToList();
+
     }
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    // If any authorization available
-
-    //}
 
 
 
@@ -50,3 +86,42 @@ else
 
 }
 
+
+
+@*<table>
+    <tr>
+        <th>Id</th>
+        <th>IsActive</th>
+        <th>Title</th>
+    </tr>
+    @foreach (var item in categories)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.IsActive</td>
+            <td>@item.Title</td>
+            @if (@item.Products.Count > 0)
+            {
+                <td>
+
+                    <ul style="list-style-type: none">
+
+                        @foreach (var product in @item.Products)
+                        {
+                            <li>Id: @product.Id</li>
+                            <li>Name: @product.Name</li>
+                            <li>Price: @product.Price</li>
+                            <li>Color: @product.Color.Name</li>
+                            <li>Category: @product.Category.Title</li>
+                            <li>Brand: @product.Brand.Name</li>
+                            <li>User: @product.User.UserName</li>
+                        }
+                    </ul>
+
+
+                </td>
+            }
+
+        </tr>
+    }
+</table>*@

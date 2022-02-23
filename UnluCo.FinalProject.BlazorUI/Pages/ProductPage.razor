@@ -1,0 +1,70 @@
+﻿@page "/products/{id:int}"
+@inherits ProductViewModel
+@using Newtonsoft.Json
+<h3>Products</h3>
+
+@if (Product is null)
+{
+    <p>
+        Loading...
+
+    </p>
+}
+else
+{
+<div class="col">
+
+
+    <div class="row bg-light">
+        <div class="col">
+
+        </div>
+        <p class="col-2 m-1">Id: @Product.Id</p>
+        <p class="col-2 m-1">Name: @Product.Name</p>
+        <p class="col-2 m-1">Price: @Product.Price</p>
+        <p class="col-2 m-1">Color: @Product.Color.Name</p>
+        <p class="col-2 m-1">Category: @Product.Category.Title</p>
+        <p class="col-2 m-1">Brand: @Product.Brand.Name</p>
+        <p class="col-2 m-1">User: @Product.User.UserName</p>
+        <hr class="bg-dark" />
+
+        <hr class="bg-dark" />
+    </div>
+    @if (Product.Offers.Count > 0)
+    {
+        <h4 class="row">Offers</h4>
+
+        @foreach (var item in Product.Offers)
+        {
+            <div class="row bg-white">
+                <ul>
+                    <li>Offer Id: @item.Id</li>
+                    <li>Amout: @item.Amount</li>
+                </ul>
+            </div>
+            <hr class="bg-dark" />
+        }
+
+    }
+
+</div>
+  
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public ProductViewModel Product { get; set; }
+
+    HttpClient client = new HttpClient();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var product = await client.GetAsync($"http://localhost:19383/api/products/{Id}");
+        Product = JsonConvert.DeserializeObject<ProductViewModel>(await product.Content.ReadAsStringAsync());
+    }
+
+}
+
