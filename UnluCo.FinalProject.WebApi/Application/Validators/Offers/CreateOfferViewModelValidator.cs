@@ -11,9 +11,12 @@ namespace UnluCo.FinalProject.WebApi.Application.Validators.Offers
     {
         public CreateOfferViewModelValidator()
         {
+            
             RuleFor(vm => vm.Amount).GreaterThanOrEqualTo(0);
             RuleFor(vm => vm.Percentage).GreaterThanOrEqualTo(0);
             RuleFor(vm => vm.ProductViewModel).NotNull();
+            RuleFor(vm => vm.ProductViewModel.IsOfferable != false);
+            RuleFor(vm => vm.ProductViewModel.IsSold == false);
         }
     }
 }
