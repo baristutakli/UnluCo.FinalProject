@@ -27,7 +27,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(string id)
         {
             var user = _userService.GetById(id);
             return Ok(user);

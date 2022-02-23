@@ -50,9 +50,9 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             return Task.FromResult(userViewList);
         }
 
-        public Task<UserViewModel> GetById(int id)
+        public Task<UserViewModel> GetById(string id)
         {
-            var user = _unitOfwork.Users.GetById(id).Result;
+            var user = _unitOfwork.Users.GetUserWithAll(id).Result;
             var userViewModel = _mapper.Map<UserViewModel>(user);
             return Task.FromResult(userViewModel);
         }

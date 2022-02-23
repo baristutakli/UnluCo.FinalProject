@@ -16,7 +16,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Abstract
         void Update(UserViewModel updateUserViewModel);
         Task<List<UserViewModel>> GetAll(Expression<Func<User, bool>> filter = null);
         Task<UserViewModel> Get(Expression<Func<User, bool>> filter);
-        Task<UserViewModel> GetById(int id);
+        Task<UserViewModel> GetById(string id);
 
     }
 }

@@ -81,9 +81,6 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         }
 
 
-
-
-
         //[Authorize(Roles = Roles.Admin)]
         [HttpPost]
         [Route("register-admin")]

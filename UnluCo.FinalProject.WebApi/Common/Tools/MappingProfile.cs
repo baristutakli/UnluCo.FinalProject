@@ -35,7 +35,6 @@ namespace UnluCo.FinalProject.WebApi.Common.Tools
             CreateMap<Category, CategoryTitleViewModel>();
             CreateMap<Category, CategoryViewModel>().ForMember(dest => dest.Products, opt => opt.MapFrom(src => src.Products));
       
-              
             
 
             //Offer
