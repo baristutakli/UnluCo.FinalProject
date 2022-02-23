@@ -24,6 +24,15 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         }
         public void Add(CreateOfferViewModel offerViewModel)
         {
+            if (offerViewModel.Percentage != null || (offerViewModel.Percentage==0 && offerViewModel.Amount !=null))
+            {
+                offerViewModel.Amount =Convert.ToInt32( (offerViewModel.Percentage * offerViewModel.ProductViewModel.Price)/100);
+            }
+            if (offerViewModel.Amount == offerViewModel.ProductViewModel.Price)
+            {
+                offerViewModel.ProductViewModel.IsSold = true;
+                offerViewModel.ProductViewModel.IsOfferable = false;
+            }
             var offer = _mapper.Map<Offer>(offerViewModel);
             _unitOfwork.Offers.Add(offer);
             _unitOfwork.Complete();

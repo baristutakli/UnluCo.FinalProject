@@ -15,34 +15,35 @@ namespace UnluCo.FinalProject.WebApi.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private ICategoryService _brandService;
+        private ICategoryService _categoryService;
       
-        public CategoriesController(ICategoryService brandService)
+        public CategoriesController(ICategoryService categoryService)
         {
-            _brandService = brandService;
+            _categoryService = categoryService;
           
         }
         // GET: api/<CategoriesController>
         [HttpGet]
         public IActionResult Get()
         {
-            var brands = _brandService.GetAll();
-            return Ok(brands);
+            var categorys = _categoryService.GetAll();
+            return Ok(categorys);
         }
 
         // GET api/<CategoriesController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-           var brand= _brandService.GetById(id);
-            return Ok(brand);
+           var category= _categoryService.GetById(id).Result;
+
+            return Ok(System.Text.Json.JsonSerializer.Serialize(category));
         }
 
         // POST api/<CategoriesController>
         [HttpPost]
         public IActionResult Post([FromBody] CreateCategoryViewModel createCategoryViewModel)
         {
-            _brandService.Add(createCategoryViewModel);
+            _categoryService.Add(createCategoryViewModel);
             return Ok();
         }
 
@@ -50,7 +51,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] CreateCategoryViewModel updateCategoryViewModel)
         {
-            _brandService.Update(id,updateCategoryViewModel);
+            _categoryService.Update(id,updateCategoryViewModel);
             return Ok();
         }
 
@@ -59,7 +60,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         public IActionResult Delete(int id)
         {
             DeleteCategoryViewModel deleteCategory = new DeleteCategoryViewModel() { Id=id};  
-            _brandService.Delete(deleteCategory);
+            _categoryService.Delete(deleteCategory);
             return Ok();
         }
     }
