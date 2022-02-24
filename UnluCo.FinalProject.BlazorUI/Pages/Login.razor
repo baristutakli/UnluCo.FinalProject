@@ -1,0 +1,75 @@
+﻿@page "/login"
+@inherits UserLoginModel
+@using Newtonsoft.Json
+
+
+@if (@Model is null)
+{
+
+    <p>loading...</p>
+
+}
+else
+{
+
+<EditForm Model="@Model" OnValidSubmit="@LoginAccount">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label for="Email">Email</label>
+        <InputText id="Email" @bind-Value="Model.Email" class="form-control"/>
+        <ValidationMessage For="() => Model.Email" />
+    </div>
+    <div class="mb-3">
+        <label for="Password">Password</label>
+        <InputText id="Password" @bind-Value="Model.Password" type="password" class="form-control" />
+        <ValidationMessage For="() => Model.Password" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+    <p>@MyToken.Token </p>
+}
+
+
+
+@code {
+    public UserLoginModel Model { get; set; }
+    public TokenView MyToken = new TokenView();
+
+    HttpClient client = new HttpClient();
+
+    protected override void OnInitialized()
+    {
+        Model = new UserLoginModel();
+    }
+
+    public async void LoginAccount()
+    {
+
+        var request = new HttpRequestMessage();
+        request.RequestUri = new Uri("http://localhost:19383/api/Authenticate/login");
+        request.Method = HttpMethod.Post;
+
+        request.Headers.Add("Accept", "*/*");
+
+        var bodyString = JsonConvert.SerializeObject(Model);
+
+        var content = new StringContent(bodyString, System.Text.Encoding.UTF8, "application/json");
+        request.Content = content;
+
+        var response = await client.SendAsync(request);
+        if (response.Headers.Contains("Token"))
+        {
+            var result = response.Headers.GetValues("Token").First();
+            MyToken = JsonConvert.DeserializeObject<TokenView>(result);
+
+        }
+
+        //await response.Content.ReadAsStringAsync();
+
+    }
+
+}
+
+

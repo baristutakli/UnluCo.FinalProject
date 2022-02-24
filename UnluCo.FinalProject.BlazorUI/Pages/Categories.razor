@@ -1,5 +1,6 @@
 ﻿@page "/categories"
 @inherits CategoryModelView
+@inject NavigationManager NavManager
 @using Newtonsoft.Json
 <h3>Categories</h3>
 
@@ -23,7 +24,6 @@ else
                 <p class="col-3 m-1">Category Id: @item.Id</p>
                 <p class="col-3 m-1">Active: @item.IsActive</p>
                 <p class="col-3 m-1">Category Name: @item.Title</p>
-
             </div>
             @if (@item.Products.Count > 0)
             {
@@ -39,22 +39,17 @@ else
             <p class="col-2 m-1">Brand: @product.Brand.Name</p>
             <p class="col-2 m-1">User: @product.User.UserName</p>
             <hr class="bg-white" />
-        }
+            <button @onclick="() => NavigateToProductPage(product.Id)">Detail</button>
+                }
 
-    </div>
+        </div>
             }
-            <hr class="bg-dark"/>
+            <hr class="bg-dark" />
 
         }
 
     </div>
 
-
-    <p>
-
-
-
-    </p>
 }
 
 @code {
@@ -77,6 +72,11 @@ else
 
     }
 
+    public void NavigateToProductPage(int id)
+    {
+         NavManager.NavigateTo($"/products/{id}"); 
+    }
+
 
 
 
@@ -88,40 +88,3 @@ else
 
 
 
-@*<table>
-    <tr>
-        <th>Id</th>
-        <th>IsActive</th>
-        <th>Title</th>
-    </tr>
-    @foreach (var item in categories)
-    {
-        <tr>
-            <td>@item.Id</td>
-            <td>@item.IsActive</td>
-            <td>@item.Title</td>
-            @if (@item.Products.Count > 0)
-            {
-                <td>
-
-                    <ul style="list-style-type: none">
-
-                        @foreach (var product in @item.Products)
-                        {
-                            <li>Id: @product.Id</li>
-                            <li>Name: @product.Name</li>
-                            <li>Price: @product.Price</li>
-                            <li>Color: @product.Color.Name</li>
-                            <li>Category: @product.Category.Title</li>
-                            <li>Brand: @product.Brand.Name</li>
-                            <li>User: @product.User.UserName</li>
-                        }
-                    </ul>
-
-
-                </td>
-            }
-
-        </tr>
-    }
-</table>*@

@@ -1,5 +1,6 @@
 ﻿@page "/products"
 @inherits ProductViewModel
+@inject NavigationManager NavManager
 @using Newtonsoft.Json
 <h3>Products</h3>
 
@@ -12,12 +13,12 @@
 }
 else
 {
-    <div class="col">
-        @foreach (var product in Products)
-        {
-            
-    <div class="row bg-light">
-       
+<div class="col">
+    @foreach (var product in Products)
+    {
+
+        <div class="row bg-light">
+
             <p class="col-2 m-1">Id: @product.Id</p>
             <p class="col-2 m-1">Name: @product.Name</p>
             <p class="col-2 m-1">Price: @product.Price</p>
@@ -25,11 +26,13 @@ else
             <p class="col-2 m-1">Category: @product.Category.Title</p>
             <p class="col-2 m-1">Brand: @product.Brand.Name</p>
             <p class="col-2 m-1">User: @product.User.UserName</p>
-    </div>
-            }
 
-    </div>
-  
+        </div>
+        <button @onclick="() => NavigateToProductPage(product.Id)">Detail</button>
+    }
+
+</div>
+
 }
 
 @code {
@@ -43,7 +46,11 @@ else
     protected override async Task OnInitializedAsync()
     {
         var products = await client.GetAsync("http://localhost:19383/api/products");
-       Products = JsonConvert.DeserializeObject<List<ProductViewModel>>(await products.Content.ReadAsStringAsync()).ToList();
+        Products = JsonConvert.DeserializeObject<List<ProductViewModel>>(await products.Content.ReadAsStringAsync()).ToList();
+    }
+    public void NavigateToProductPage(int id)
+    {
+        NavManager.NavigateTo($"/products/{id}");
     }
 
 }
