@@ -16,9 +16,7 @@ else
 <div class="col">
     @foreach (var product in Products)
     {
-
         <div class="row bg-light">
-
             <p class="col-2 m-1">Id: @product.Id</p>
             <p class="col-2 m-1">Name: @product.Name</p>
             <p class="col-2 m-1">Price: @product.Price</p>
@@ -26,22 +24,17 @@ else
             <p class="col-2 m-1">Category: @product.Category.Title</p>
             <p class="col-2 m-1">Brand: @product.Brand.Name</p>
             <p class="col-2 m-1">User: @product.User.UserName</p>
-
         </div>
         <button @onclick="() => NavigateToProductPage(product.Id)">Detail</button>
     }
-
 </div>
-
 }
 
 @code {
 
-
     public List<ProductViewModel> Products { get; set; }
 
     HttpClient client = new HttpClient();
-
 
     protected override async Task OnInitializedAsync()
     {

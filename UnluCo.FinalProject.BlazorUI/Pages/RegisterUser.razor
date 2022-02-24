@@ -1,0 +1,82 @@
+﻿@page "/register"
+@inherits RegisterUserModel
+@inject NavigationManager NavManager
+@inject IJSRuntime JsRuntime
+@using Newtonsoft.Json
+
+
+@if (@Model is null)
+{
+
+    <p>loading...</p>
+
+}
+else
+{
+
+    <EditForm Model="@Model" OnValidSubmit="@RegisterNewUser">
+        <DataAnnotationsValidator />
+
+        <div class="mb-3">
+            <label for="UserName">UserName</label>
+            <InputText id="UserName" @bind-Value="Model.UserName" class="form-control" />
+            <ValidationMessage For="() => Model.UserName" />
+        </div>
+        <div class="mb-3">
+            <label for="Email">Email</label>
+            <InputText id="Email" @bind-Value="Model.Email" class="form-control" />
+            <ValidationMessage For="() => Model.Email" />
+        </div>
+        <div class="mb-3">
+            <label for="Password">Password</label>
+            <InputText id="Password" @bind-Value="Model.Password" type="password" class="form-control" />
+            <ValidationMessage For="() => Model.Password" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
+
+    <p>@MyToken.Token </p>
+}
+
+
+
+@code {
+    public RegisterUserModel Model { get; set; }
+    public TokenView MyToken = new TokenView();
+
+    HttpClient client = new HttpClient();
+
+    protected override void OnInitialized()
+    {
+        Model = new RegisterUserModel();
+    }
+
+    public async void RegisterNewUser()
+    {
+
+        var request = new HttpRequestMessage();
+        request.RequestUri = new Uri("http://localhost:19383/api/Authenticate/register");
+        request.Method = HttpMethod.Post;
+
+        request.Headers.Add("Accept", "*/*");
+
+        var bodyString = JsonConvert.SerializeObject(Model);
+
+        var content = new StringContent(bodyString, System.Text.Encoding.UTF8, "application/json");
+        request.Content = content;
+
+        var response = await client.SendAsync(request);
+
+
+        var responseMessage = await response.Content.ReadAsStringAsync();
+        Response result = JsonConvert.DeserializeObject<Response>(responseMessage);
+        if (result.Status == "Success")
+        {
+            await JsRuntime.InvokeVoidAsync("alert", result.Message);
+            
+        }
+
+        NavManager.NavigateTo($"/");
+    }
+
+}
