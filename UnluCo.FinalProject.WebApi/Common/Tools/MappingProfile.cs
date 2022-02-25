@@ -60,8 +60,9 @@ namespace UnluCo.FinalProject.WebApi.Common.Tools
  
 
             CreateMap<UpdateProductViewModel, Product>();
-            CreateMap<Product, ProductViewModel>();
-            CreateMap<ProductViewModel,Product >();
+            CreateMap<Product, ProductViewModel>()
+                .ForPath(dest => dest.UploadedFile, opt => opt.MapFrom(src => src.ProductPicture));
+            CreateMap<ProductViewModel, Product>();
 
             // User
             CreateMap<User, UserViewModel>();

@@ -19,11 +19,11 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Concrete
         }
         public async Task<List<Product>> GetProductsDetails(Expression<Func<Product, bool>> filter = null)
         {
-            return filter == null ? await _dbcontext.Set<Product>().Include(p=>p.Color).Include(p=>p.Brand).Include(p=>p.Category).Include(p=>p.User).Include(p=>p.Offers).ToListAsync() : await _dbcontext.Set<Product>().Include(p => p.Color).Include(p => p.Brand).Include(p => p.Category).Include(p => p.User).Include(p => p.Offers).Where(filter).ToListAsync();
+            return filter == null ? await _dbcontext.Set<Product>().Include(p=>p.Color).Include(p=>p.Brand).Include(p=>p.Category).Include(p=>p.User).Include(p=>p.Offers).Include(p=>p.ProductPicture).ToListAsync() : await _dbcontext.Set<Product>().Include(p => p.Color).Include(p => p.Brand).Include(p => p.Category).Include(p => p.User).Include(p => p.Offers).Include(p => p.ProductPicture).Where(filter).ToListAsync();
         }
         public async Task<Product> GetProductDetails(Expression<Func<Product, bool>> filter)
         {
-            return  await _dbcontext.Set<Product>().Include(p => p.Color).Include(p => p.Brand).Include(p => p.Category).Include(p => p.User).Include(p => p.Offers).FirstOrDefaultAsync(filter) ;
+            return  await _dbcontext.Set<Product>().Include(p => p.Color).Include(p => p.Brand).Include(p => p.Category).Include(p => p.User).Include(p => p.Offers).Include(p => p.ProductPicture).FirstOrDefaultAsync(filter) ;
         }
     }
 }

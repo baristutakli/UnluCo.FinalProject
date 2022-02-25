@@ -9,6 +9,7 @@ using UnluCo.FinalProject.WebApi.Models;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.CategoriesViewModel;
+using System.Net.Http;
 
 namespace UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel
 {
@@ -29,6 +30,6 @@ namespace UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel
         public BrandViewModel Brand { get; set; }
         public CategoryTitleViewModel Category { get; set; }
         public string UserId { get; set; }
-        public IFormFile ProductImage { get; set; }
+        public UploadedFile ProductImage { get; set; }
     }
 }

@@ -30,5 +30,6 @@ namespace UnluCo.FinalProject.BlazorUI
         public CategoryTitleViewModel Category { get; set; }
         public List<OfferViewModel> Offers { get; set; }
         public User User { get; set; }
+        public UploadedFile UploadedFile { get; set; }
     }
 }

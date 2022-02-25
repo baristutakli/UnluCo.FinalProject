@@ -26,7 +26,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         }
         public void Add(CreateProductViewModel productViewModel)
         {
-            var uniqueFileName = UploadedFile(productViewModel);
+            var uniqueFileName = productViewModel.ProductImage;
 
             Product product = new Product()
             {
@@ -42,10 +42,11 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             product.Category = _unitOfwork.Categories.GetById(productViewModel.Category.Id).Result;
             product.Brand = _unitOfwork.Brands.GetById(productViewModel.Brand.Id).Result;
             product.User = _unitOfwork.Users.Get(u => u.Id == productViewModel.UserId).Result;
-            if (uniqueFileName is not null)
-            {
-                product.ProductPicture = uniqueFileName;
-            }
+            product.ProductPicture = productViewModel.ProductImage;
+            //if (uniqueFileName is not null)
+            //{
+            //    product.ProductPicture = uniqueFileName;
+            //}
             _unitOfwork.Products.Add(product);
             _unitOfwork.Complete();
         }
@@ -53,17 +54,17 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             string uniqueFileName = null;
 
-            if (model.ProductImage != null)
-            {
+            //if (model.ProductImage != null)
+            //{
 
-                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProductImage.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    model.ProductImage.CopyTo(fileStream);
-                }
-            }
+            //    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+            //    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProductImage.FileName;
+            //    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            //    using (var fileStream = new FileStream(filePath, FileMode.Create))
+            //    {
+            //        model.ProductImage.CopyTo(fileStream);
+            //    }
+            //}
             return uniqueFileName;
         }
 
