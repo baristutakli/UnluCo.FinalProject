@@ -1,0 +1,158 @@
+﻿@page "/products/create"
+@inherits CreateProductViewModel
+@using Newtonsoft.Json
+
+@if (Model is null)
+{
+
+}
+else
+{
+<EditForm Model="@Model" class="col-6 mx-auto">
+    <h3>Create product</h3>
+    <hr />
+    <div class="form-group row">
+        <label for="active" class="col-sm-2 col-form-label">
+            Active
+        </label>
+        <div class="col-1 ml-2" style="min-height:10px;">
+            <InputCheckbox id="IsActive" @bind-Value="Model.IsActive" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="offerable" class="col-sm-2 col-form-label">
+            Offerable
+        </label>
+        <div class="col-1 ml-2">
+            <InputCheckbox id="IsOfferable" @bind-Value="Model.IsOfferable" class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="sold" class="col-sm-2 col-form-label">
+            Sold
+        </label>
+        <div class="col-1 ml-2">
+            <InputCheckbox id="IsSold" @bind-Value="Model.IsSold" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">
+            Name
+        </label>
+        <div class="col-sm-6">
+            <InputText id="nameInput" class="form-control" placeholder="Name"
+                       @bind-Value="Model.Name" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">
+            Description
+        </label>
+        <div class="col-sm-10">
+            <InputTextArea id="descriptionInput" class="form-control" placeholder="Description"
+                           @bind-Value="Model.Description" style="min-height:200px" />
+        </div>
+    </div>
+    <div class="form-group row">
+            <label for="price" class="col-sm-2 col-form-label">
+                Price
+            </label>
+            <div class="col-sm-10">
+                <InputText id="priceInput" class="form-control" placeholder="Last Name"
+                           @bind-Value="Price" />
+            </div>
+     </div>
+    @if (Categories.Count > 0)
+    {
+        <div class="row mt-2">
+            <div class="col-2 mt-2">
+                Category:
+            </div>
+            <div class="col-6">
+                <select class="form-control">
+
+                    @foreach (var category in Categories)
+                    {
+                        <option value="@category.Id"> @category.Title </option>
+                    }
+                </select>
+            </div>
+        </div>
+    }
+    @if (Brands.Count > 0)
+    {
+        <div class="row mt-2">
+            <div class="col-2 mt-2">
+                Brand:
+            </div>
+            <div class="col-6">
+                <select class="form-control">
+
+                    @foreach (var brand in Brands)
+                    {
+                        <option value="@brand.Id"> @brand.Name </option>
+                    }
+                </select>
+            </div>
+        </div>
+    }
+    @if (Colors.Count > 0)
+    {
+        <div class="row mt-2">
+            <div class="col-2 mt-2">
+                Color:
+            </div>
+            <div class="col-6">
+                <select class="form-control">
+                    @foreach (var color in Colors)
+                    {
+                        <option value="@color.Id"> @color.Name </option>
+                    }
+                </select>
+            </div>
+        </div>
+
+    }
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+}
+
+@code {
+    public string Price { get; set; }
+
+    public List<ColorViewModel> Colors { get; set; }
+    public List<BrandViewModel> Brands { get; set; }
+    public List<CategoryTitleViewModel> Categories { get; set; }
+
+
+    HttpClient client = new HttpClient();
+
+    public CreateProductViewModel Model { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var categoriesRequest = await client.GetAsync("http://localhost:19383/api/Categories/titles");
+        Categories = JsonConvert.DeserializeObject<List<CategoryTitleViewModel>>(await categoriesRequest.Content.ReadAsStringAsync()).ToList();
+
+
+        var brandsRequest = await client.GetAsync("http://localhost:19383/api/brands");
+        Brands = JsonConvert.DeserializeObject<List<BrandViewModel>>(await brandsRequest.Content.ReadAsStringAsync()).ToList();
+
+        var colorsRequest = await client.GetAsync("http://localhost:19383/api/colors");
+        Colors = JsonConvert.DeserializeObject<List<ColorViewModel>>(await colorsRequest.Content.ReadAsStringAsync()).ToList();
+
+
+        Model = new CreateProductViewModel();
+    }
+
+    public void Register()
+    {
+        Model.Price = Convert.ToInt32(Price);
+    }
+
+
+}
