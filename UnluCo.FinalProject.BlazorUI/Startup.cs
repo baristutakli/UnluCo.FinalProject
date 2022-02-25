@@ -10,7 +10,9 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Tewr.Blazor.FileReader;
 using UnluCo.FinalProject.BlazorUI.Data;
 using UnluCo.FinalProject.WebApi.Models;
 
@@ -33,7 +35,8 @@ namespace UnluCo.FinalProject.BlazorUI
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddDbContext<UserDbContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=FinalProject;Integrated Security=True;Trusted_Connection=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
-
+          //  services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5011/api/") });
+            services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
             // For Identity  
 
         }
