@@ -24,16 +24,23 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         }
         public void Add(CreateOfferViewModel offerViewModel)
         {
-            if (offerViewModel.Percentage != null || (offerViewModel.Percentage==0 && offerViewModel.Amount !=null))
+            var product= _unitOfwork.Products.GetById(offerViewModel.ProductId).Result;
+            if (product is not null)
             {
-                offerViewModel.Amount =Convert.ToInt32( (offerViewModel.Percentage * offerViewModel.ProductViewModel.Price)/100);
+                if (offerViewModel.Percentage != 0 && offerViewModel.Amount ==0)
+                {
+                    offerViewModel.Amount = Convert.ToInt32((offerViewModel.Percentage * product.Price) / 100);
+                }
+                if (offerViewModel.Amount == product.Price)
+                {
+                    product.IsSold = true;
+                    product.IsOfferable = false;
+                }
+
             }
-            if (offerViewModel.Amount == offerViewModel.ProductViewModel.Price)
-            {
-                offerViewModel.ProductViewModel.IsSold = true;
-                offerViewModel.ProductViewModel.IsOfferable = false;
-            }
+       
             var offer = _mapper.Map<Offer>(offerViewModel);
+            offer.Product = product;
             _unitOfwork.Offers.Add(offer);
             _unitOfwork.Complete();
         }
@@ -69,10 +76,26 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             return Task.FromResult(offerViewModel);
         }
 
-        public void Update(UpdateOfferViewModel updateOfferViewModel)
+        public void Update(UpdateOfferViewModel offerViewModel)
         {
-            var offer = _mapper.Map<Offer>(updateOfferViewModel);
-            _unitOfwork.Offers.Update(offer);
+            var product = _unitOfwork.Products.GetById(offerViewModel.ProductId).Result;
+            if (product is not null)
+            {
+                if (offerViewModel.Percentage != 0 && offerViewModel.Amount == 0)
+                {
+                    offerViewModel.Amount = Convert.ToInt32((offerViewModel.Percentage * product.Price) / 100);
+                }
+                if (offerViewModel.Amount == product.Price)
+                {
+                    product.IsSold = true;
+                    product.IsOfferable = false;
+                }
+
+            }
+
+            var offer = _mapper.Map<Offer>(offerViewModel);
+            offer.Product = product;
+            _unitOfwork.Offers.Add(offer);
             _unitOfwork.Complete();
         }
     }

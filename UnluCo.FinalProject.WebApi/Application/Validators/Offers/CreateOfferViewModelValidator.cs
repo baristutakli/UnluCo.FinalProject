@@ -14,9 +14,8 @@ namespace UnluCo.FinalProject.WebApi.Application.Validators.Offers
             
             RuleFor(vm => vm.Amount).GreaterThanOrEqualTo(0);
             RuleFor(vm => vm.Percentage).GreaterThanOrEqualTo(0);
-            RuleFor(vm => vm.ProductViewModel).NotNull();
-            RuleFor(vm => vm.ProductViewModel.IsOfferable != false);
-            RuleFor(vm => vm.ProductViewModel.IsSold == false);
+            RuleFor(vm => vm.ProductId).NotNull().GreaterThan(0);
+           
         }
     }
 }

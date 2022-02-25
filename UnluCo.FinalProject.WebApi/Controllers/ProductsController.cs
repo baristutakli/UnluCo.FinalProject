@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -7,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
+using UnluCo.FinalProject.WebApi.Application.Validators.Products;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel;
 
 namespace UnluCo.FinalProject.WebApi.Controllers
@@ -43,6 +45,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CreateProductViewModel createProductViewModel)
         {
+            CreateProductViewModelValidator validator = new CreateProductViewModelValidator();
+            validator.ValidateAndThrow(createProductViewModel);
             _productService.Add(createProductViewModel);
             return Ok();
         }

@@ -17,6 +17,6 @@ namespace UnluCo.FinalProject.WebApi.Application.Abstract
         Task<List<CategoryViewModel>> GetAll(Expression<Func<CategoryViewModel, bool>> filter = null);
         Task<CategoryViewModel> Get(Expression<Func<Category, bool>> filter);
         Task<CategoryViewModel> GetById(int id);
-
+        Task<List<CategoryTitleViewModel>> GetAllTitles(Expression<Func<CategoryTitleViewModel, bool>> filter = null);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -13,19 +15,59 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
 {
     public class ProductService : IProductService
     {
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IUnitOfWork _unitOfwork;
         private readonly IMapper _mapper;
-        public ProductService(IUnitOfWork unitOfwork, IMapper mapper)
+        public ProductService(IUnitOfWork unitOfwork, IMapper mapper, IWebHostEnvironment hostingEnvironment)
         {
             _unitOfwork = unitOfwork;
             _mapper = mapper;
+            _hostingEnvironment = hostingEnvironment;
         }
         public void Add(CreateProductViewModel productViewModel)
         {
-            var product = _mapper.Map<Product>(productViewModel);
+            var uniqueFileName = UploadedFile(productViewModel);
+
+            Product product = new Product()
+            {
+                IsActive = productViewModel.IsActive,
+                IsOfferable = productViewModel.IsOfferable,
+                IsSold = productViewModel.IsSold,
+                Name = productViewModel.Name,
+                Price = productViewModel.Price,
+                Description = productViewModel.Description,
+                CreatedAt = DateTime.Parse(DateTime.Now.ToShortDateString())
+            };
+            product.Color = _unitOfwork.Colors.GetById(productViewModel.Color.Id).Result;
+            product.Category = _unitOfwork.Categories.GetById(productViewModel.Category.Id).Result;
+            product.Brand = _unitOfwork.Brands.GetById(productViewModel.Brand.Id).Result;
+            product.User = _unitOfwork.Users.Get(u => u.Id == productViewModel.UserId).Result;
+            if (uniqueFileName is not null)
+            {
+                product.ProductPicture = uniqueFileName;
+            }
             _unitOfwork.Products.Add(product);
             _unitOfwork.Complete();
         }
+        private string UploadedFile(CreateProductViewModel model)
+        {
+            string uniqueFileName = null;
+
+            if (model.ProductImage != null)
+            {
+
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProductImage.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.ProductImage.CopyTo(fileStream);
+                }
+            }
+            return uniqueFileName;
+        }
+
+
 
         public void Delete(DeleteProductViewModel deleteProductViewModel)
         {
@@ -52,14 +94,27 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
 
         public Task<ProductViewModel> GetById(int id)
         {
-            var product = _unitOfwork.Products.GetProductDetails(p=>p.Id==id).Result;
+            var product = _unitOfwork.Products.GetProductDetails(p => p.Id == id).Result;
             var productViewModel = _mapper.Map<ProductViewModel>(product);
             return Task.FromResult(productViewModel);
         }
 
-        public void Update(UpdateProductViewModel updateProductViewModel)
+        public void Update(UpdateProductViewModel productViewModel)
         {
-            var product = _mapper.Map<Product>(updateProductViewModel);
+            Product product = new Product()
+            {
+                IsActive = productViewModel.IsActive,
+                IsOfferable = productViewModel.IsOfferable,
+                IsSold = productViewModel.IsSold,
+                Name = productViewModel.Name,
+                Price = productViewModel.Price,
+                Description = productViewModel.Description,
+            };
+            product.Color = _unitOfwork.Colors.GetById(productViewModel.Color.Id).Result;
+            product.Category = _unitOfwork.Categories.GetById(productViewModel.Category.Id).Result;
+            product.Brand = _unitOfwork.Brands.GetById(productViewModel.Brand.Id).Result;
+            product.User = _unitOfwork.Users.Get(u => u.Id == productViewModel.UserId).Result;
+           
             _unitOfwork.Products.Update(product);
             _unitOfwork.Complete();
         }

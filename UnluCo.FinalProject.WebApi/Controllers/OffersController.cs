@@ -41,10 +41,6 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CreateOfferViewModel createOfferViewModel)
         {
-            if (createOfferViewModel.ProductViewModel.IsOfferable==false)
-            {
-                return BadRequest();
-            }
 
             CreateOfferViewModelValidator validator = new CreateOfferViewModelValidator();
             validator.ValidateAndThrow(createOfferViewModel);

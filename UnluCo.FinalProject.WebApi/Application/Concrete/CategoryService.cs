@@ -52,6 +52,13 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             var categoryViewList = _mapper.Map<List<Category>, List<CategoryViewModel>>(categorys);
             return Task.FromResult(categoryViewList);
         }
+        public Task<List<CategoryTitleViewModel>> GetAllTitles(Expression<Func<CategoryTitleViewModel, bool>> filter = null)
+        {
+            var categorys = _unitOfwork.Categories.GetAll().Result;
+
+            var categoryViewList = _mapper.Map<List<Category>, List<CategoryTitleViewModel>>(categorys);
+            return Task.FromResult(categoryViewList);
+        }
 
         public Task<CategoryViewModel> GetById(int id)
         {

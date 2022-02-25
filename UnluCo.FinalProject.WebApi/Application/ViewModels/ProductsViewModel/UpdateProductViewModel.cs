@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel
     public class UpdateProductViewModel
     {
         public int Id { get; set; }
-        public bool IsActive { get; set; } 
+        public bool IsActive { get; set; }
         public bool IsOfferable { get; set; }
 
         public string Name { get; set; }
@@ -24,10 +25,10 @@ namespace UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel
 
         public int Price { get; set; }
         public bool IsSold { get; set; } = false;
-        public UpdateColorViewModel Color { get; set; }
-        public UpdateBrandViewModel Brand { get; set; }
-        public CreateCategoryViewModel Category { get; set; }
-        public ICollection<CreateOfferViewModel> Offers { get; set; }
-        public UserViewModel User { get; set; }
+        public ColorViewModel Color { get; set; }
+        public BrandViewModel Brand { get; set; }
+        public CategoryTitleViewModel Category { get; set; }
+        public string UserId { get; set; }
+        public IFormFile ProductImage { get; set; }
     }
 }

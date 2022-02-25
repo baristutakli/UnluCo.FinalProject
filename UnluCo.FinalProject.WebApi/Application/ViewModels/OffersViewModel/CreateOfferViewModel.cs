@@ -10,6 +10,6 @@ namespace UnluCo.FinalProject.WebApi.Application.ViewModels.OffersViewModel
     {
         public int? Amount { get; set; }
         public int? Percentage { get; set; }
-        public ProductViewModel ProductViewModel { get; set; }
+        public int ProductId{ get; set; }
     }
 }

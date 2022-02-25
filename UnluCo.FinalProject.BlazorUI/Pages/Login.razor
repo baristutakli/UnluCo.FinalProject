@@ -1,5 +1,10 @@
 ﻿@page "/login"
 @inherits UserLoginModel
+@inject NavigationManager NavManager
+@inject IJSRuntime JsRuntime
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage Storage
+
 @using Newtonsoft.Json
 
 
@@ -11,24 +16,24 @@
 }
 else
 {
+    <EditForm Model="@Model" OnValidSubmit="@LoginAccount">
+        <DataAnnotationsValidator />
 
-<EditForm Model="@Model" OnValidSubmit="@LoginAccount">
-    <DataAnnotationsValidator />
-
-    <div class="mb-3">
-        <label for="Email">Email</label>
-        <InputText id="Email" @bind-Value="Model.Email" class="form-control"/>
-        <ValidationMessage For="() => Model.Email" />
-    </div>
-    <div class="mb-3">
-        <label for="Password">Password</label>
-        <InputText id="Password" @bind-Value="Model.Password" type="password" class="form-control" />
-        <ValidationMessage For="() => Model.Password" />
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</EditForm>
+        <div class="mb-3">
+            <label for="Email">Email</label>
+            <InputText id="Email" @bind-Value="Model.Email" class="form-control" />
+            <ValidationMessage For="() => Model.Email" />
+        </div>
+        <div class="mb-3">
+            <label for="Password">Password</label>
+            <InputText id="Password" @bind-Value="Model.Password" type="password" class="form-control" />
+            <ValidationMessage For="() => Model.Password" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </EditForm>
 
     <p>@MyToken.Token </p>
+
 }
 
 
@@ -42,6 +47,7 @@ else
     protected override void OnInitialized()
     {
         Model = new UserLoginModel();
+
     }
 
     public async void LoginAccount()
@@ -66,10 +72,13 @@ else
 
         }
 
-        //await response.Content.ReadAsStringAsync();
+        await Storage.SetAsync("token", MyToken);
 
+        await response.Content.ReadAsStringAsync();
+        await JsRuntime.InvokeVoidAsync("alert", "Success");
     }
 
 }
 
 
+//https://www.c-sharpcorner.com/article/custom-inputfile-with-progress-using-blazor-webassembly-asp-net-core-api/

@@ -19,7 +19,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Validators.Products
             RuleFor(vm => vm.Color).NotNull();
             RuleFor(vm => vm.Brand).NotNull();
             RuleFor(vm => vm.Category).NotNull();
-            RuleFor(vm => vm.User).NotNull();
+            RuleFor(vm => vm.UserId).NotNull();
         }
     }
 }

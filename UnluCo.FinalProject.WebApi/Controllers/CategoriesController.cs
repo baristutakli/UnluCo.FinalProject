@@ -33,6 +33,16 @@ namespace UnluCo.FinalProject.WebApi.Controllers
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             }));
         }
+        [HttpGet("titles")]
+        //[Route("/titles")]
+        public IActionResult GetTitles()
+        {
+            var categories = _categoryService.GetAllTitles().Result;
+            return Ok(JsonConvert.SerializeObject(categories, Formatting.Indented, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }));
+        }
 
         // GET api/<CategoriesController>/5
         [HttpGet("{id}")]

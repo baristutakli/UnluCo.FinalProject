@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,12 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var brands = _brandService.GetAll();
-            
-            return brands == null? StatusCode((int)HttpStatusCode.InternalServerError):Ok(brands);
+            var brands = _brandService.GetAll().Result;
+            return Ok(JsonConvert.SerializeObject(brands, Formatting.Indented, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }));
+           // return brands == null? StatusCode((int)HttpStatusCode.InternalServerError):Ok(brands);
         }
 
         // GET api/<BrandsController>/5

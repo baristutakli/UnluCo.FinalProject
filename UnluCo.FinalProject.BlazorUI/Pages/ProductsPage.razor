@@ -13,9 +13,10 @@
 }
 else
 {
-<div class="col">
-    @foreach (var product in Products)
-    {
+    <button @onclick="() => NavigateToCreateProductPage()" class="btn btn-primary">Create a product</button>
+    <div class="col">
+        @foreach (var product in Products)
+        {
         <div class="row bg-light">
             <p class="col-2 m-1">Id: @product.Id</p>
             <p class="col-2 m-1">Name: @product.Name</p>
@@ -23,11 +24,12 @@ else
             <p class="col-2 m-1">Color: @product.Color.Name</p>
             <p class="col-2 m-1">Category: @product.Category.Title</p>
             <p class="col-2 m-1">Brand: @product.Brand.Name</p>
-            <p class="col-2 m-1">User: @product.User.UserName</p>
+            @*<p class="col-2 m-1">User: @product.User.UserName</p>*@
+            <button @onclick="() => NavigateToProductPage(product.Id)" class="btn btn-primary">Detail</button>
         </div>
-        <button @onclick="() => NavigateToProductPage(product.Id)">Detail</button>
-    }
-</div>
+            
+        }
+    </div>
 }
 
 @code {
@@ -45,6 +47,11 @@ else
     {
         NavManager.NavigateTo($"/products/{id}");
     }
+    public void NavigateToCreateProductPage()
+    {
+        NavManager.NavigateTo($"/products/create");
+    }
+
 
 }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,11 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var colors = _colorService.GetAll();
-            return Ok(colors);
+            var colors = _colorService.GetAll().Result;
+            return Ok(JsonConvert.SerializeObject(colors, Formatting.Indented, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }));
         }
 
         // GET api/<ColorsController>/5
