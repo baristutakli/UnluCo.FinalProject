@@ -24,22 +24,26 @@ else
             </div>
             @if (@item.Products.Count > 0)
             {
-    <div class="row bg-light">
-        @foreach (var product in @item.Products)
-        {
+                <div class="row bg-light"><h5 class="m-auto">Products of This Category</h5></div>
+                <div class="container-fluid">
 
-            <p class="col-2 m-1">Id: @product.Id</p>
-            <p class="col-2 m-1">Name: @product.Name</p>
-            <p class="col-2 m-1">Price: @product.Price</p>
-            <p class="col-2 m-1">Color: @product.Color.Name</p>
-            <p class="col-2 m-1">Category: @product.Category.Title</p>
-            <p class="col-2 m-1">Brand: @product.Brand.Name</p>
-            <p class="col-2 m-1">User: @product.User.UserName</p>
-            <hr class="bg-white" />
-            <button @onclick="() => NavigateToProductPage(product.Id)">Detail</button>
-                }
+                    @foreach (var product in @item.Products)
+                    {
+                        <div class="row bg-white mt-2 mb-2">
+                            <p class="col-1 m-1">Id: @product.Id</p>
+                            <p class="col-2 m-1">Name: @product.Name</p>
+                            <p class="col-2 m-1">Price: @product.Price</p>
+                            <p class="col-2 m-1">Color: @product.Color.Name</p>
+                            <p class="col-3 m-1">Category: @product.Category.Title</p>
+                            <p class="col-4 m-1">Brand: @product.Brand.Name</p>
+                            @*<p class="col-2 m-1">User: @product.User.UserName</p>*@
+                            <hr class="bg-white" />
+                            <button class="btn btn-primary btn-sm" @onclick="() => NavigateToProductPage(product.Id)">Detail</button>
+                        </div>
+                        <hr>
+                    }
 
-        </div>
+                </div>
             }
             <hr class="bg-dark" />
 
@@ -47,7 +51,6 @@ else
 
     </div>
 }
-
 @code {
 
 

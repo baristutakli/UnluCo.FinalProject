@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.Validators.Products;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel;
+using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Controllers
 {

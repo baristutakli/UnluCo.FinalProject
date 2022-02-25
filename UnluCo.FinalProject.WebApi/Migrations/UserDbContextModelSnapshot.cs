@@ -222,6 +222,7 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("Amount")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -289,8 +290,8 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProductPicture")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("ProductPictureId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -303,9 +304,35 @@ namespace UnluCo.FinalProject.WebApi.Migrations
 
                     b.HasIndex("ColorId");
 
+                    b.HasIndex("ProductPictureId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("UnluCo.FinalProject.WebApi.Models.UploadedFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte[]>("FileContent")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UploadedFile");
                 });
 
             modelBuilder.Entity("UnluCo.FinalProject.WebApi.Models.User", b =>
@@ -451,6 +478,10 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                         .WithMany()
                         .HasForeignKey("ColorId");
 
+                    b.HasOne("UnluCo.FinalProject.WebApi.Models.UploadedFile", "ProductPicture")
+                        .WithMany()
+                        .HasForeignKey("ProductPictureId");
+
                     b.HasOne("UnluCo.FinalProject.WebApi.Models.User", "User")
                         .WithMany("Products")
                         .HasForeignKey("UserId");
@@ -460,6 +491,8 @@ namespace UnluCo.FinalProject.WebApi.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Color");
+
+                    b.Navigation("ProductPicture");
 
                     b.Navigation("User");
                 });

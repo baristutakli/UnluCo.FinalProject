@@ -38,7 +38,6 @@ namespace UnluCo.FinalProject.BlazorUI
           //  services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5011/api/") });
             services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
             // For Identity  
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
