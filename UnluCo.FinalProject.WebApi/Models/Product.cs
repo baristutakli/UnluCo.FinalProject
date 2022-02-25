@@ -23,7 +23,7 @@ namespace UnluCo.FinalProject.WebApi.Models
         public Category Category { get; set; }
         public ICollection<Offer> Offers { get; set; }
         public User User { get; set; }
-        public string ProductPicture { get; set; }
+        public UploadedFile ProductPicture { get; set; }
 
     }
 }
