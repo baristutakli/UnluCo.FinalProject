@@ -1,132 +1,145 @@
 ﻿@page "/products/create"
 @inherits CreateProductViewModel
 @using Newtonsoft.Json
-
+@using Microsoft.AspNetCore.Http;
+@using System.IO;
+@using UnluCo.FinalProject.BlazorUI.ViewModels;
 @if (Model is null)
 {
 
 }
 else
 {
-<EditForm Model="@Model" class="col-6 mx-auto">
-    <h3>Create product</h3>
-    <hr />
-    <div class="form-group row">
-        <label for="active" class="col-sm-2 col-form-label">
-            Active
-        </label>
-        <div class="col-1 ml-2" style="min-height:10px;">
-            <InputCheckbox id="IsActive" @bind-Value="Model.IsActive" class="form-control" />
+    <EditForm Model="@Model" class="col-6 mx-auto" OnValidSubmit="@Register">
+        <h3>Create product</h3>
+        <hr />
+        <div class="form-group row">
+            <label for="active" class="col-sm-2 col-form-label">
+                Active
+            </label>
+            <div class="col-1 ml-2" style="min-height:10px;">
+                <InputCheckbox id="IsActive" @bind-Value="Model.IsActive" class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="offerable" class="col-sm-2 col-form-label">
-            Offerable
-        </label>
-        <div class="col-1 ml-2">
-            <InputCheckbox id="IsOfferable" @bind-Value="Model.IsOfferable" class="form-control" />
+        <div class="form-group row">
+            <label for="offerable" class="col-sm-2 col-form-label">
+                Offerable
+            </label>
+            <div class="col-1 ml-2">
+                <InputCheckbox id="IsOfferable" @bind-Value="Model.IsOfferable" class="form-control" />
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="sold" class="col-sm-2 col-form-label">
-            Sold
-        </label>
-        <div class="col-1 ml-2">
-            <InputCheckbox id="IsSold" @bind-Value="Model.IsSold" class="form-control" />
+        <div class="form-group row">
+            <label for="sold" class="col-sm-2 col-form-label">
+                Sold
+            </label>
+            <div class="col-1 ml-2">
+                <InputCheckbox id="IsSold" @bind-Value="Model.IsSold" class="form-control" />
+            </div>
         </div>
-    </div>
 
-    <div class="form-group row">
-        <label for="name" class="col-sm-2 col-form-label">
-            Name
-        </label>
-        <div class="col-sm-6">
-            <InputText id="nameInput" class="form-control" placeholder="Name"
-                       @bind-Value="Model.Name" />
+        <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label">
+                Name
+            </label>
+            <div class="col-sm-6">
+                <InputText id="nameInput" class="form-control" placeholder="Name"
+                           @bind-Value="Model.Name" />
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="name" class="col-sm-2 col-form-label">
-            Description
-        </label>
-        <div class="col-sm-10">
-            <InputTextArea id="descriptionInput" class="form-control" placeholder="Description"
-                           @bind-Value="Model.Description" style="min-height:200px" />
+        <div class="form-group row">
+            <label for="name" class="col-sm-2 col-form-label">
+                Description
+            </label>
+            <div class="col-sm-10">
+                <InputTextArea id="descriptionInput" class="form-control" placeholder="Description"
+                               @bind-Value="Model.Description" style="min-height:200px" />
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
+        <div class="form-group row">
             <label for="price" class="col-sm-2 col-form-label">
                 Price
             </label>
             <div class="col-sm-10">
-                <InputText id="priceInput" class="form-control" placeholder="Last Name"
+                <InputText id="priceInput" class="form-control" placeholder="Price"
                            @bind-Value="Price" />
             </div>
-     </div>
-    @if (Categories.Count > 0)
-    {
-        <div class="row mt-2">
-            <div class="col-2 mt-2">
-                Category:
+        </div>
+        @if (Categories.Count > 0)
+        {
+            <div class="row mt-2">
+                <div class="col-2 mt-2">
+                    Category:
+                </div>
+                <div class="col-6">
+                    <InputSelect id="selectedCategory" @bind-Value="CategoryId" class="form-control">
+                        @foreach (var category in Categories)
+                                {
+                            <option value="@category.Id"> @category.Title </option>
+                                }
+                    </InputSelect>
+                </div>
             </div>
-            <div class="col-6">
-                <select class="form-control">
+        }
+        @if (Brands.Count > 0)
+        {
+            <div class="row mt-2">
+                <div class="col-2 mt-2">
+                    Brand:
+                </div>
+                <div class="col-6">
 
-                    @foreach (var category in Categories)
-                    {
-                        <option value="@category.Id"> @category.Title </option>
-                    }
-                </select>
+                    <InputSelect id="selectedBrand" @bind-Value="BrandId" class="form-control">
+                        @foreach (var brand in Brands)
+                                {
+                            <option value="@brand.Id"> @brand.Name </option>
+                                }
+                    </InputSelect>
+                </div>
+            </div>
+        }
+        @if (Colors.Count > 0)
+        {
+            <div class="row mt-2">
+                <div class="col-2 mt-2">
+                    Color:
+                </div>
+                <div class="col-6">
+                    <InputSelect id="selectedColor" @bind-Value="ColorId" class="form-control">
+                        @foreach (var color in Colors)
+                                {
+                            <option value="@color.Id"> @color.Name </option>
+                                }
+                    </InputSelect>
+                </div>
+            </div>
+
+        }
+        <div class="form-group row">
+            <label for="price" class="col-sm-2 col-form-label">
+                Upload
+            </label>
+            <div class="col-sm-10">
+                <InputFile OnChange="OnInputFileChange"  accept=".jpg, .jpeg, png" />
             </div>
         </div>
-    }
-    @if (Brands.Count > 0)
-    {
-        <div class="row mt-2">
-            <div class="col-2 mt-2">
-                Brand:
-            </div>
-            <div class="col-6">
-                <select class="form-control">
 
-                    @foreach (var brand in Brands)
-                    {
-                        <option value="@brand.Id"> @brand.Name </option>
-                    }
-                </select>
-            </div>
-        </div>
-    }
-    @if (Colors.Count > 0)
-    {
-        <div class="row mt-2">
-            <div class="col-2 mt-2">
-                Color:
-            </div>
-            <div class="col-6">
-                <select class="form-control">
-                    @foreach (var color in Colors)
-                    {
-                        <option value="@color.Id"> @color.Name </option>
-                    }
-                </select>
-            </div>
-        </div>
-
-    }
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-</EditForm>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </EditForm>
 
 }
 
 @code {
     public string Price { get; set; }
+    public int ColorId { get; set; }
+    public int BrandId { get; set; }
+    public int CategoryId { get; set; }
+    public IFormFile selectedImage { get; set; }
 
     public List<ColorViewModel> Colors { get; set; }
     public List<BrandViewModel> Brands { get; set; }
     public List<CategoryTitleViewModel> Categories { get; set; }
-
+    public UploadedFile FileToUpload { get; set; }
 
     HttpClient client = new HttpClient();
 
@@ -148,10 +161,56 @@ else
 
         Model = new CreateProductViewModel();
     }
-
-    public void Register()
+    private async void OnInputFileChange(InputFileChangeEventArgs e)
     {
+        IBrowserFile selectedFile = e.File;
+        Stream stream = selectedFile.OpenReadStream();
+        MemoryStream ms = new MemoryStream();
+        await stream.CopyToAsync(ms);
+        stream.Close();
+
+        FileToUpload = new UploadedFile();
+        FileToUpload.FileName = selectedFile.Name;
+        FileToUpload.FileContent = ms.ToArray();
+        ms.Close();
+
+    }
+
+    public async void Register()
+    {
+
         Model.Price = Convert.ToInt32(Price);
+        Model.Color = new ColorViewModel() { Id = ColorId };
+        Model.Brand = new BrandViewModel() { Id = BrandId };
+        Model.Category = new CategoryTitleViewModel() { Id = CategoryId };
+
+        Model.ProductImage = FileToUpload;
+        var request = new HttpRequestMessage();
+
+
+
+
+        request.RequestUri = new Uri("http://localhost:19383/api/products");
+        request.Method = HttpMethod.Post;
+
+        request.Headers.Add("Accept", "*/*");
+
+        // var bodyString = JsonConvert.SerializeObject(Model);
+        var bodyString = System.Text.Json.JsonSerializer.Serialize(Model);
+
+        var content = new StringContent(bodyString, System.Text.Encoding.UTF8, "application/json");
+        request.Content = content;
+
+        var response = await client.SendAsync(request);
+
+
+        var responseMessage = await response.Content.ReadAsStringAsync();
+        //Response result = JsonConvert.DeserializeObject<Response>(responseMessage);
+        //if (result.Status == "Success")
+        //{
+        //    await JsRuntime.InvokeVoidAsync("alert", result.Message);
+
+        //}
     }
 
 

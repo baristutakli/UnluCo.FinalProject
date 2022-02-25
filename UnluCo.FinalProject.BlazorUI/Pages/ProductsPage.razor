@@ -1,6 +1,7 @@
 ﻿@page "/products"
 @inherits ProductViewModel
 @inject NavigationManager NavManager
+@using UnluCo.FinalProject.BlazorUI.ViewModels;
 @using Newtonsoft.Json
 <h3>Products</h3>
 
@@ -17,17 +18,30 @@ else
     <div class="col">
         @foreach (var product in Products)
         {
-        <div class="row bg-light">
-            <p class="col-2 m-1">Id: @product.Id</p>
-            <p class="col-2 m-1">Name: @product.Name</p>
-            <p class="col-2 m-1">Price: @product.Price</p>
-            <p class="col-2 m-1">Color: @product.Color.Name</p>
-            <p class="col-2 m-1">Category: @product.Category.Title</p>
-            <p class="col-2 m-1">Brand: @product.Brand.Name</p>
-            @*<p class="col-2 m-1">User: @product.User.UserName</p>*@
-            <button @onclick="() => NavigateToProductPage(product.Id)" class="btn btn-primary">Detail</button>
+        <div class="row bg-light mt-2">
+            @if (product.UploadedFile is not null)
+            {
+                <img class="col-2" src="data:image;base64,@System.Convert.ToBase64String(product.UploadedFile.FileContent)" asp-append-version="true" style="height:100px;width:100px">
+            }
+        <div class="col-10">
+            <div class="row">
+                <span class="col-1 m-1">Id: @product.Id</span>
+                <span class="col-3 m-1">Name: @product.Name</span>
+                <span class="col-2 m-1">Price: @product.Price</span>
+                <span class="col-2 m-1">Color: @product.Color.Name</span>
+                <span class="col-3 m-1">Category: @product.Category.Title</span>
+                <span class="col-3 m-1">Brand: @product.Brand.Name</span>
+                <button @onclick="() => NavigateToProductPage(product.Id)" class="btn btn-primary btn-sm">Detail</button>
+            </div>
         </div>
-            
+
+            @*<p class="col-2 m-1">User: @product.User.UserName</p>*@
+
+           
+        </div>
+      
+
+
         }
     </div>
 }
@@ -52,6 +66,14 @@ else
         NavManager.NavigateTo($"/products/create");
     }
 
+    public string ShowImage(UploadedFile uploadedFile)
+    {
+       
+        //Convert byte arry to base64string   
+        string imreBase64Data = Convert.ToBase64String(uploadedFile.FileContent);
+        string imgDataURL = $"data:image/jpg;base64,{imreBase64Data}";
+        return imgDataURL;
+    }
 
 }
 
