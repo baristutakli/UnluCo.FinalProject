@@ -119,7 +119,11 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             var offersToDelete = _unitOfwork.Offers.GetOffers(o => o.Product.Id == offerViewModel.ProductId).Result;
             foreach (var selectedOffer in offersToDelete)
             {
-                _unitOfwork.Offers.Delete(selectedOffer);
+                if (selectedOffer.Id!=offer.Id)
+                {
+                    _unitOfwork.Offers.Delete(selectedOffer);
+                }
+            
             }
             _unitOfwork.Complete();
         }

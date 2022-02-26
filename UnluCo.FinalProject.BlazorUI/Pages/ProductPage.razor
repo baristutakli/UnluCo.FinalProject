@@ -2,6 +2,7 @@
 @inherits ProductViewModel
 @inject NavigationManager NavManager
 @using Newtonsoft.Json
+@inject IJSRuntime JsRuntime
 <h3>Product Page</h3>
 
 @if (Product is null)
@@ -46,11 +47,10 @@ else
             @foreach (var item in Product.Offers)
             {
                 <div class="row bg-white">
-                    <ul>
-                        <li>Offer Id: @item.Id</li>
-                        <li>Amout: @item.Amount</li>
-                        <button @onclick="()=>DeleteOffer(item.Id)" class="btn btn-danger btn-sm">Delete</button>
-                    </ul>
+                    <div class="col-2">Offer Id:@item.Id </div>
+                    <div class="col-2">Amout: @item.Amount </div>
+                    <button @onclick="()=>DeleteOffer(item.Id)" class="btn btn-danger btn-sm mr-1">Delete</button>
+                    <button @onclick="()=>AcceptOffer(item.Id)" class="btn btn-primary btn-sm">Accept</button>
                 </div>
                 <hr class="bg-dark" />
             }
@@ -67,7 +67,7 @@ else
 
     public ProductViewModel Product { get; set; }
     public DeleteOfferViewModel DeleteOfferModel { get; set; }
-
+    public UpdateOfferActivityViewModel AcceptOfferModel { get; set; }
 
     HttpClient client = new HttpClient();
 
@@ -96,8 +96,33 @@ else
         var response = await client.SendAsync(request);
         var responseMessage = await response.Content.ReadAsStringAsync();
 
-         NavManager.NavigateTo($"/products/{Id}");
+        NavManager.NavigateTo($"/products/{Id}");
     }
 
+    public async void AcceptOffer(int id)
+    {
+        AcceptOfferModel = new UpdateOfferActivityViewModel { Id = id, IsActive = false, ProductId = Id };
+        var request = new HttpRequestMessage();
+        request.RequestUri = new Uri($"http://localhost:19383/api/Offers/{id}/Active");
+        request.Method = HttpMethod.Put;
+
+        request.Headers.Add("Accept", "*/*");
+
+
+        var bodyString = System.Text.Json.JsonSerializer.Serialize(AcceptOfferModel);
+
+        var content = new StringContent(bodyString, System.Text.Encoding.UTF8, "application/json");
+        request.Content = content;
+
+        var response = await client.SendAsync(request);
+        var responseMessage = await response.Content.ReadAsStringAsync();
+        Response result = JsonConvert.DeserializeObject<Response>(responseMessage);
+        if (result.Status == "Success")
+        {
+            await JsRuntime.InvokeVoidAsync("alert", result.Message);
+
+        }
+        NavManager.NavigateTo($"/products/{Id}");
+    }
 }
 
