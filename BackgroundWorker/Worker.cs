@@ -33,7 +33,7 @@ namespace BackgroundWorker
         {
             _logger = logger;
             _mailSettings = mailSettings.Value;
-            _factory = new ConnectionFactory() { Uri = new Uri("amqps://adnglxzq:LeEJzhnKAw5eL-NfNoLGyeYaBWJDXUSP@toad.rmq.cloudamqp.com/adnglxzq") };
+            _factory = new ConnectionFactory() { Uri = new Uri("Rabittmq baglanti adresiniz") };
         
         }
 
@@ -59,7 +59,7 @@ namespace BackgroundWorker
                     _logger.LogInformation($"Email: {Encoding.UTF8.GetString(e.Body.ToArray())}");
 
                    var data = JsonConvert.DeserializeObject<MailRequest>(Encoding.UTF8.GetString(e.Body.ToArray()));
-                    email = new MailMessage() { Body = data.Body, From = new MailAddress("tutaklibaris@gmail.com") , Subject = data.Subject, Sender = new MailAddress("tutaklibaris@gmail.com") };
+                    email = new MailMessage() { Body = data.Body, From = new MailAddress("E-posta adresiniz") , Subject = data.Subject, Sender = new MailAddress("E-posta adresiniz") };
                     email.To.Add(new MailAddress(data.ToEmail));
 
                     await SendEmail(email);
@@ -78,7 +78,7 @@ namespace BackgroundWorker
             using var smtp = new SmtpClient() {
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 Port =587 , Host= "smtp.gmail.com", Credentials=new NetworkCredential(
-                "mailadresin", "Sifren"),
+                "mailadresin", "Sifreniz"),
                 EnableSsl = true
             };
         

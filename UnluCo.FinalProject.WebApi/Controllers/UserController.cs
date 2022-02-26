@@ -9,7 +9,7 @@ using UnluCo.FinalProject.WebApi.Application.ViewModels.UsersViewModel;
 
 namespace UnluCo.FinalProject.WebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]s")]
     [ApiController]
     public class UserController : Controller
     {
@@ -21,8 +21,11 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var users = _userService.GetAll();
-            return Ok(users);
+            var users = _userService.GetAll().Result;
+            return Ok(JsonConvert.SerializeObject(users, Formatting.Indented, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }));
         }
 
         // GET api/<UsersController>/5

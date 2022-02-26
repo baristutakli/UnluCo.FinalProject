@@ -9,6 +9,7 @@ using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.Validators.Brands;
 using UnluCo.FinalProject.WebApi.Application.Validators.Offers;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.OffersViewModel;
+using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Controllers
 {
@@ -45,7 +46,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             CreateOfferViewModelValidator validator = new CreateOfferViewModelValidator();
             validator.ValidateAndThrow(createOfferViewModel);
             _offerService.Add(createOfferViewModel);
-            return Ok();
+            return Ok(new Response { Status = "Success", Message = "Created successfully!" });
 
         }
 
@@ -56,7 +57,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             updateOfferActivityViewModel.Id = id;
             validator.ValidateAndThrow(updateOfferActivityViewModel);
             _offerService.Update(updateOfferActivityViewModel);
-            return Ok();
+            return Ok(new Response { Status = "Success", Message = "Accepted!" });
         }
 
 
@@ -79,7 +80,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             DeleteOfferViewModel deleteOffer = new DeleteOfferViewModel() { Id = deleteOfferViewModel.Id };
             validator.ValidateAndThrow(deleteOffer);
             _offerService.Delete(deleteOffer);
-            return Ok();
+            return Ok(new Response { Status = "Success", Message = "Deleted!" });
         }
     }
 }

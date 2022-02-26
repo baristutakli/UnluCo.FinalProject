@@ -45,7 +45,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
                     
                     TokenGenerator generator = new TokenGenerator(_userManager, _configuration);
                     var token = await generator.GenerateToken(user);
-                    HttpContext.Response.Headers.Add("Token",JsonConvert.SerializeObject(token));
+                    
+                    HttpContext.Response.Headers["token"] = JsonConvert.SerializeObject(token.Token);
                     return Ok();
                 }
             }

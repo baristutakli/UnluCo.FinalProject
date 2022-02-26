@@ -4,7 +4,7 @@
 @inject IJSRuntime JsRuntime
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject ProtectedLocalStorage Storage
-
+@using  UnluCo.FinalProject.BlazorUI.Services
 @using Newtonsoft.Json
 
 
@@ -32,7 +32,6 @@ else
         <button type="submit" class="btn btn-primary">Submit</button>
     </EditForm>
 
-    <p>@MyToken.Token </p>
 
 }
 
@@ -40,7 +39,7 @@ else
 
 @code {
     public UserLoginModel Model { get; set; }
-    public TokenView MyToken = new TokenView();
+    public string MyToken = "";
 
     HttpClient client = new HttpClient();
 
@@ -65,18 +64,24 @@ else
         request.Content = content;
 
         var response = await client.SendAsync(request);
-        if (response.Headers.Contains("Token"))
+        if (response.Headers.Contains("token"))
         {
-            var result = response.Headers.GetValues("Token").First();
-            MyToken = JsonConvert.DeserializeObject<TokenView>(result);
+            var result = response.Headers.GetValues("token").First();
+            MyToken = JsonConvert.DeserializeObject<string>(result);
 
+        }
+
+        var claims = JwtParser.ParseClaimsFromJwt(MyToken);
+        @foreach (var item in claims)
+        {
+           await  JsRuntime.InvokeVoidAsync("alert", item.Type+item.Value+item.Issuer+item.OriginalIssuer);
         }
 
         await Storage.SetAsync("token", MyToken);
 
-        await response.Content.ReadAsStringAsync();
-        await JsRuntime.InvokeVoidAsync("alert", "Success");
-    }
+    await response.Content.ReadAsStringAsync();
+    await JsRuntime.InvokeVoidAsync("alert", "Success");
+}
 
 }
 
