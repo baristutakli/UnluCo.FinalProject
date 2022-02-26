@@ -49,6 +49,17 @@ namespace UnluCo.FinalProject.WebApi.Controllers
 
         }
 
+        [HttpPut("{id}/Active")]
+        public IActionResult UpdateOfferActivity(int id, [FromBody] UpdateOfferActivityViewModel updateOfferActivityViewModel)
+        {
+            UpdateOfferActivityViewModelValidator validator = new UpdateOfferActivityViewModelValidator();
+            updateOfferActivityViewModel.Id = id;
+            validator.ValidateAndThrow(updateOfferActivityViewModel);
+            _offerService.Update(updateOfferActivityViewModel);
+            return Ok();
+        }
+
+
         // PUT api/<OffersController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UpdateOfferViewModel updateOfferViewModel)
@@ -62,10 +73,10 @@ namespace UnluCo.FinalProject.WebApi.Controllers
 
         // DELETE api/<OffersController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(DeleteOfferViewModel deleteOfferViewModel)
         {
             DeleteOfferViewModelValidator validator = new DeleteOfferViewModelValidator();
-            DeleteOfferViewModel deleteOffer = new DeleteOfferViewModel() { Id = id };
+            DeleteOfferViewModel deleteOffer = new DeleteOfferViewModel() { Id = deleteOfferViewModel.Id };
             validator.ValidateAndThrow(deleteOffer);
             _offerService.Delete(deleteOffer);
             return Ok();

@@ -51,6 +51,7 @@ namespace UnluCo.FinalProject.WebApi.Common.Tools
                
             CreateMap<OfferViewModel,Offer>();
 
+
             //CreateMap<CreateProductViewModel, Product>()
             //    .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.Now))
             //    .ForPath(dest => _unitOfwork.Colors.GetById(dest.Color.Id).Result, opt => opt.MapFrom(src => src.Color))

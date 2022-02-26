@@ -98,5 +98,30 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             _unitOfwork.Offers.Add(offer);
             _unitOfwork.Complete();
         }
+
+        // Changes offer status
+        public void Update(UpdateOfferActivityViewModel offerViewModel)
+        {
+            var offer = _unitOfwork.Offers.GetById(offerViewModel.Id).Result;
+            var product = _unitOfwork.Products.GetById(offerViewModel.Id).Result;
+            if (product is not null && offerViewModel.IsActive==false)
+            {
+                    product.IsSold = true;
+                    product.IsOfferable = false;
+            }
+
+            offer.Product = product;
+
+            _unitOfwork.Offers.Update(offer);
+
+            _unitOfwork.Complete();
+
+            var offersToDelete = _unitOfwork.Offers.GetOffers(o => o.Product.Id == offerViewModel.ProductId).Result;
+            foreach (var selectedOffer in offersToDelete)
+            {
+                _unitOfwork.Offers.Delete(selectedOffer);
+            }
+            _unitOfwork.Complete();
+        }
     }
 }
