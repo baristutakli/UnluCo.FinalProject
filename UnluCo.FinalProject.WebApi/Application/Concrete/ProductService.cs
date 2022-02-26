@@ -72,7 +72,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
 
         public void Delete(DeleteProductViewModel deleteProductViewModel)
         {
-            var product = _unitOfwork.Products.GetById(deleteProductViewModel.Id).Result;
+            var product = _unitOfwork.Products.GetProductDetails(p=>p.Id==deleteProductViewModel.Id).Result;
             _unitOfwork.Products.Delete(product);
             _unitOfwork.Complete();
 

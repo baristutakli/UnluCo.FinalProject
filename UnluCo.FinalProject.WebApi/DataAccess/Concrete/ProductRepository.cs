@@ -25,5 +25,18 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Concrete
         {
             return  await _dbcontext.Set<Product>().Include(p => p.Color).Include(p => p.Brand).Include(p => p.Category).Include(p => p.User).Include(p => p.Offers).Include(p => p.ProductPicture).FirstOrDefaultAsync(filter) ;
         }
+        public override void Delete(Product product)
+        {
+           
+            if (product.Offers.Count > 0)
+            {
+                foreach (var offer in product.Offers)
+                {
+                    offer.Product = null;
+                    _dbcontext.Set<Offer>().Remove(offer);
+                }
+            }
+            _dbcontext.Set<Product>().Remove(product);
+        }
     }
 }

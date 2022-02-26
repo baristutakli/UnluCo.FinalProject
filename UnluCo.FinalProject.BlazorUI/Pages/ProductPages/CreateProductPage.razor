@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Http;
 @using System.IO;
 @using UnluCo.FinalProject.BlazorUI.ViewModels;
+@inject IJSRuntime JsRuntime
 @if (Model is null)
 {
 
@@ -120,7 +121,7 @@ else
                 Upload
             </label>
             <div class="col-sm-10">
-                <InputFile OnChange="OnInputFileChange"  accept=".jpg, .jpeg, png" />
+                <InputFile OnChange="OnInputFileChange" accept=".jpg, .jpeg, png" />
             </div>
         </div>
 
@@ -205,12 +206,12 @@ else
 
 
         var responseMessage = await response.Content.ReadAsStringAsync();
-        //Response result = JsonConvert.DeserializeObject<Response>(responseMessage);
-        //if (result.Status == "Success")
-        //{
-        //    await JsRuntime.InvokeVoidAsync("alert", result.Message);
+        Response result = JsonConvert.DeserializeObject<Response>(responseMessage);
+        if (result.Status == "Success")
+        {
+            await JsRuntime.InvokeVoidAsync("alert", result.Message);
 
-        //}
+        }
     }
 
 

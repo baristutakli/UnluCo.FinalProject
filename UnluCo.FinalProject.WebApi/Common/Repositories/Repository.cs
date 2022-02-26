@@ -20,7 +20,7 @@ namespace UnluCo.FinalProject.WebApi.Common.Repositories
             _dbcontext.Set<TEntity>().Add(entity);
         }
 
-        public void Delete(TEntity entity)
+        public virtual void Delete(TEntity entity)
         {
             _dbcontext.Set<TEntity>().Remove(entity);
         }

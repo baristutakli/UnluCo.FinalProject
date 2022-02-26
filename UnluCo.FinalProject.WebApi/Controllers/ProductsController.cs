@@ -50,7 +50,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             CreateProductViewModelValidator validator = new CreateProductViewModelValidator();
             validator.ValidateAndThrow(createProductViewModel);
             _productService.Add(createProductViewModel);
-            return Ok();
+            return Ok(new Response { Status = "Success", Message = "Created successfully!" });
         }
 
        
