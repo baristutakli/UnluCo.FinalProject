@@ -1,0 +1,104 @@
+﻿@page "/users"
+@inherits UserViewModel
+@inject NavigationManager NavManager
+@using Newtonsoft.Json
+<h3>Users</h3>
+
+@if (Users is null)
+{
+    <p>
+        Loading...
+    </p>
+}
+else
+{
+    <hr />
+
+    <div class="col">
+        @foreach (var item in Users)
+        {
+            <div class="row bg-light">
+                <p class="col-3 m-1">User name: @item.UserName</p>
+            </div>
+            @if (@item.Products.Count > 0)
+            {
+                <div class="row bg-light"><h5 class="m-auto">User's products</h5></div>
+                <div class="container-fluid">
+
+                    @foreach (var product in @item.Products)
+                    {
+                        <div class="row bg-white mt-2 mb-2">
+                            <p class="col-1 m-1">Id: @product.Id</p>
+                            <p class="col-2 m-1">Name: @product.Name</p>
+                            <p class="col-2 m-1">Price: @product.Price</p>
+                            <p class="col-2 m-1">Color: @product.Color.Name</p>
+                            <p class="col-3 m-1">Category: @product.Category.Title</p>
+                            <p class="col-4 m-1">Brand: @product.Brand.Name</p>
+                            <hr class="bg-white" />
+                            <button class="btn btn-primary btn-sm" @onclick="() => NavigateToProductPage(product.Id)">Detail</button>
+                        </div>
+                        <hr>
+                    }
+
+                </div>
+            }
+            <hr class="bg-dark" />
+            @if (@item.Offers.Count > 0)
+            {
+                <div class="row bg-light"><h5 class="m-auto">User's products</h5></div>
+                <div class="container-fluid">
+
+                    @foreach (var offer in @item.Offers)
+                    {
+                    <div class="row bg-white mt-2 mb-2">
+                        <p class="col-1 m-1">Id: @offer.Id</p>
+                        <p class="col-2 m-1">Amount: @offer.Amount</p>
+                        @if (offer.ProductViewModel is not null)
+                        {
+                            <p class="col-1 m-1">Product Id: @offer.ProductViewModel.Id</p>
+                            <p class="col-2 m-1">Name: @offer.ProductViewModel.Name</p>
+                            <button @onclick="() => NavigateToProductPage(offer.ProductViewModel.Id)" class="btn btn-primary btn-sm">Detail</button>
+                            
+                        }
+                        <hr class="bg-white" />
+
+                    </div>
+                        <hr>
+                    }
+
+                </div>
+            }
+            <hr class="bg-dark" />
+
+        }
+
+    </div>
+}
+
+@code {
+
+
+    public List<UserViewModel> Users { get; set; }
+
+    HttpClient client = new HttpClient();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var user = await client.GetAsync("http://localhost:19383/api/users");
+        Users = JsonConvert.DeserializeObject<List<UserViewModel>>(await user.Content.ReadAsStringAsync()).ToList();
+
+    }
+
+
+
+
+    public void NavigateToProductPage(int id)
+    {
+        NavManager.NavigateTo($"/products/{id}");
+    }
+    //System.Text.Encoding.UTF8.GetString(await category.Content.ReadAsByteArrayAsync())
+}
+
+
+

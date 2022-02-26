@@ -1,5 +1,6 @@
 ﻿@page "/products/{id:int}"
 @inherits ProductViewModel
+@inject NavigationManager NavManager
 @using Newtonsoft.Json
 <h3>Product Page</h3>
 
@@ -12,54 +13,52 @@
 }
 else
 {
-<div class="col">
+    <div class="col">
 
 
-    <div class="row bg-light">
-        <div class="m-auto">
-            @if (Product.UploadedFile is not null)
-            {
-                <img class="col-12 mb-2" src="data:image;base64,@System.Convert.ToBase64String(Product.UploadedFile.FileContent)" asp-append-version="true" style="height:400px;width:400px">
-            }
-        </div>
-
-
-        @*<p class="col-2 m-1">User: @Product.User.UserName</p>*@
-
-
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <span class="col-1 m-1">Id: @Product.Id</span>
-            <span class="col-3 m-1">Name: @Product.Name</span>
-
-            <span class="col-2 m-1">Price: @Product.Price</span>
-            <span class="col-2 m-1">Color: @Product.Color.Name</span>
-            <span class="col-3 m-1">Category: @Product.Category.Title</span>
-            <span class="col-3 m-1">Brand: @Product.Brand.Name</span>
-            <span class="col-12 m-1">Description: @Product.Description</span>
-        </div>
-    </div>
-    <hr class="bg-dark" />
-    @if (Product.Offers.Count > 0)
-    {
-        <h4 class="row">Offers</h4>
-
-        @foreach (var item in Product.Offers)
-        {
-            <div class="row bg-white">
-                <ul>
-                    <li>Offer Id: @item.Id</li>
-                    <li>Amout: @item.Amount</li>
-                </ul>
+        <div class="row bg-light">
+            <div class="m-auto">
+                @if (Product.UploadedFile is not null)
+                {
+                    <img class="col-12 mb-2" src="data:image;base64,@System.Convert.ToBase64String(Product.UploadedFile.FileContent)" asp-append-version="true" style="height:400px;width:400px">
+                }
             </div>
-            <hr class="bg-dark" />
+
+
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <span class="col-1 m-1">Id: @Product.Id</span>
+                <span class="col-3 m-1">Name: @Product.Name</span>
+
+                <span class="col-2 m-1">Price: @Product.Price</span>
+                <span class="col-2 m-1">Color: @Product.Color.Name</span>
+                <span class="col-3 m-1">Category: @Product.Category.Title</span>
+                <span class="col-3 m-1">Brand: @Product.Brand.Name</span>
+                <span class="col-12 m-1">Description: @Product.Description</span>
+            </div>
+        </div>
+        <hr class="bg-dark" />
+        @if (Product.Offers.Count > 0)
+        {
+            <h4 class="row">Offers</h4>
+
+            @foreach (var item in Product.Offers)
+            {
+                <div class="row bg-white">
+                    <ul>
+                        <li>Offer Id: @item.Id</li>
+                        <li>Amout: @item.Amount</li>
+                        <button @onclick="()=>DeleteOffer(item.Id)" class="btn btn-danger btn-sm">Delete</button>
+                    </ul>
+                </div>
+                <hr class="bg-dark" />
+            }
+
         }
 
-    }
+    </div>
 
-</div>
-  
 }
 
 @code {
@@ -67,6 +66,8 @@ else
     public int Id { get; set; }
 
     public ProductViewModel Product { get; set; }
+    public DeleteOfferViewModel DeleteOfferModel { get; set; }
+
 
     HttpClient client = new HttpClient();
 
@@ -75,6 +76,27 @@ else
     {
         var product = await client.GetAsync($"http://localhost:19383/api/products/{Id}");
         Product = JsonConvert.DeserializeObject<ProductViewModel>(await product.Content.ReadAsStringAsync());
+    }
+
+    public async void DeleteOffer(int id)
+    {
+        DeleteOfferModel = new DeleteOfferViewModel() { Id = id };
+        var request = new HttpRequestMessage();
+        request.RequestUri = new Uri($"http://localhost:19383/api/Offers/{id}");
+        request.Method = HttpMethod.Delete;
+
+        request.Headers.Add("Accept", "*/*");
+
+
+        var bodyString = System.Text.Json.JsonSerializer.Serialize(DeleteOfferModel);
+
+        var content = new StringContent(bodyString, System.Text.Encoding.UTF8, "application/json");
+        request.Content = content;
+
+        var response = await client.SendAsync(request);
+        var responseMessage = await response.Content.ReadAsStringAsync();
+
+         NavManager.NavigateTo($"/products/{Id}");
     }
 
 }
