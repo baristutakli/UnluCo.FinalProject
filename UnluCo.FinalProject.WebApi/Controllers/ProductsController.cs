@@ -69,7 +69,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         {
             DeleteProductViewModel deleteProduct = new DeleteProductViewModel() { Id = id };
             _productService.Delete(deleteProduct);
-            return Ok();
+            return Ok(new Response { Status = "Success", Message = "Created successfully!" });
         }
     }
 }

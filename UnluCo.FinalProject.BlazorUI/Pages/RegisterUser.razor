@@ -13,6 +13,43 @@
 }
 else
 {
+    <section class="vh-100 bg-light">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+
+                            <h3 class="mb-5">Sign up</h3>
+
+                            <EditForm Model="@Model" OnValidSubmit="@RegisterNewUser">
+                                <DataAnnotationsValidator />
+                                <div class="form-outline mb-4">
+                                    <label for="UserName" class="form-label">UserName</label>
+                                    <InputText id="UserName" @bind-Value="Model.UserName" class="form-control form-control-lg" />
+                                    <ValidationMessage For="() => Model.UserName" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Email">Email</label>
+                                    <InputText id="Email" @bind-Value="Model.Email" class="form-control" />
+                                    <ValidationMessage For="() => Model.Email" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Password">Password</label>
+                                    <InputText id="Password" @bind-Value="Model.Password" type="password" class="form-control" />
+                                    <ValidationMessage For="() => Model.Password" />
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                            </EditForm>
+
+                            <hr class="my-4">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <EditForm Model="@Model" OnValidSubmit="@RegisterNewUser">
         <DataAnnotationsValidator />
@@ -73,7 +110,7 @@ else
         if (result.Status == "Success")
         {
             await JsRuntime.InvokeVoidAsync("alert", result.Message);
-            
+
         }
 
         NavManager.NavigateTo($"/");

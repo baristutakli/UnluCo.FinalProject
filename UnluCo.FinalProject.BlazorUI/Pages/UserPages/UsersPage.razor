@@ -18,56 +18,51 @@ else
         @foreach (var item in Users)
         {
             <div class="row bg-light">
-                <p class="col-3 m-1">User name: @item.UserName</p>
+                <p class="col-3 m-1">User name:<h3>@item.UserName</h3> </p>
             </div>
+
             @if (@item.Products.Count > 0)
             {
-                <div class="row bg-light"><h5 class="m-auto">User's products</h5></div>
-                <div class="container-fluid">
-
-                    @foreach (var product in @item.Products)
-                    {
-                        <div class="row bg-white mt-2 mb-2">
-                            <p class="col-1 m-1">Id: @product.Id</p>
-                            <p class="col-2 m-1">Name: @product.Name</p>
-                            <p class="col-2 m-1">Price: @product.Price</p>
-                            <p class="col-2 m-1">Color: @product.Color.Name</p>
-                            <p class="col-3 m-1">Category: @product.Category.Title</p>
-                            <p class="col-4 m-1">Brand: @product.Brand.Name</p>
-                            <hr class="bg-white" />
-                            <button class="btn btn-primary btn-sm" @onclick="() => NavigateToProductPage(product.Id)">Detail</button>
-                        </div>
-                        <hr>
-                    }
-
+                <div class="row text-center">
+                    <h4>Offers</h4>
                 </div>
-            }
-            <hr class="bg-dark" />
-            @if (@item.Offers.Count > 0)
-            {
-                <div class="row bg-light"><h5 class="m-auto">User's products</h5></div>
-                <div class="container-fluid">
 
-                    @foreach (var offer in @item.Offers)
-                    {
-                    <div class="row bg-white mt-2 mb-2">
-                        <p class="col-1 m-1">Id: @offer.Id</p>
-                        <p class="col-2 m-1">Amount: @offer.Amount</p>
-                        @if (offer.ProductViewModel is not null)
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Color</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in @item.Products)
                         {
-                            <p class="col-1 m-1">Product Id: @offer.ProductViewModel.Id</p>
-                            <p class="col-2 m-1">Name: @offer.ProductViewModel.Name</p>
-                            <button @onclick="() => NavigateToProductPage(offer.ProductViewModel.Id)" class="btn btn-primary btn-sm">Detail</button>
-                            
+                            <tr>
+                                <td>@product.Id</td>
+                                <td>@product.Name</td>
+                                <td>@product.Price</td>
+                                <td>@product.Category.Title</td>
+                                <td>@product.Color.Name</td>
+                                <td>@product.Brand.Name</td>
+
+                                <td>
+                                    <button class="btn btn-primary btn-sm" @onclick="() => NavigateToProductPage(product.Id)">Detail</button>
+                                </td>
+                            </tr>
+
                         }
-                        <hr class="bg-white" />
 
-                    </div>
-                        <hr>
-                    }
 
-                </div>
+                    </tbody>
+                </table>
+                <hr class="bg-dark" />
             }
+
             <hr class="bg-dark" />
 
         }

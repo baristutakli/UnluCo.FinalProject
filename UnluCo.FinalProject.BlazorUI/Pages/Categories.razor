@@ -2,6 +2,7 @@
 @inherits CategoryModelView
 @inject NavigationManager NavManager
 @using Newtonsoft.Json
+@inject IJSRuntime JsRuntime
 <h3>Categories</h3>
 
 @if (categories is null)
@@ -17,35 +18,52 @@ else
     <div class="col">
         @foreach (var item in categories)
         {
-            <div class="row bg-light">
-                <p class="col-3 m-1">Category Id: @item.Id</p>
-                <p class="col-3 m-1">Active: @item.IsActive</p>
-                <p class="col-3 m-1">Category Name: @item.Title</p>
-            </div>
+            <div class="row bg-light"><h5 class="m-auto">@item.Title</h5></div>
+
             @if (@item.Products.Count > 0)
             {
-                <div class="row bg-light"><h5 class="m-auto">Products of This Category</h5></div>
-                <div class="container-fluid">
-
-                    @foreach (var product in @item.Products)
-                    {
-                        <div class="row bg-white mt-2 mb-2">
-                            <p class="col-1 m-1">Id: @product.Id</p>
-                            <p class="col-2 m-1">Name: @product.Name</p>
-                            <p class="col-2 m-1">Price: @product.Price</p>
-                            <p class="col-2 m-1">Color: @product.Color.Name</p>
-                            <p class="col-3 m-1">Category: @product.Category.Title</p>
-                            <p class="col-4 m-1">Brand: @product.Brand.Name</p>
-                            @*<p class="col-2 m-1">User: @product.User.UserName</p>*@
-                            <hr class="bg-white" />
-                            <button class="btn btn-primary btn-sm" @onclick="() => NavigateToProductPage(product.Id)">Detail</button>
-                        </div>
-                        <hr>
-                    }
-
+                <div class="row text-center">
+                    <h4>Offers</h4>
                 </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Color</th>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in @item.Products)
+                        {
+                            <tr>
+                                <td>@product.Id</td>
+                                <td>@product.Name</td>
+                                <td>@product.Price</td>
+                                <td>@product.Category.Title</td>
+                                <td>@product.Color.Name</td>
+                                <td>@product.Brand.Name</td>
+
+                                <td>
+                                    <button class="btn btn-primary btn-sm" @onclick="() => NavigateToProductPage(product.Id)">Detail</button>
+                                    <button @onclick="()=>DeleteProduct(product.Id)" class="btn btn-danger btn-sm mr-1">Delete</button>
+                                </td>
+                            </tr>
+
+                        }
+
+
+                    </tbody>
+                </table>
+                <hr class="bg-dark"/>
             }
-            <hr class="bg-dark" />
+
+
 
         }
 
@@ -58,6 +76,7 @@ else
 
     HttpClient client = new HttpClient();
 
+    public DeleteProductViewModel deleteProductViewModel { get; set; }
     //public async void Callme()
     //{
     //    var category = await client.GetAsync("http://localhost:19383/api/Categories/");
@@ -73,10 +92,80 @@ else
 
     public void NavigateToProductPage(int id)
     {
-         NavManager.NavigateTo($"/products/{id}"); 
+        NavManager.NavigateTo($"/products/{id}");
     }
     //System.Text.Encoding.UTF8.GetString(await category.Content.ReadAsByteArrayAsync())
+
+    public async void DeleteProduct(int id)
+    {
+        deleteProductViewModel = new DeleteProductViewModel() { Id = id };
+        var request = new HttpRequestMessage();
+        request.RequestUri = new Uri($"http://localhost:19383/api/Products/{id}");
+        request.Method = HttpMethod.Delete;
+
+        request.Headers.Add("Accept", "*/*");
+
+
+        var bodyString = System.Text.Json.JsonSerializer.Serialize(deleteProductViewModel);
+
+        var content = new StringContent(bodyString, System.Text.Encoding.UTF8, "application/json");
+        request.Content = content;
+
+        var response = await client.SendAsync(request);
+        var responseMessage = await response.Content.ReadAsStringAsync();
+        Response result = JsonConvert.DeserializeObject<Response>(responseMessage);
+        if (result.Status == "Success")
+        {
+            await JsRuntime.InvokeVoidAsync("alert", result.Message);
+
+        }
+        var category = await client.GetAsync("http://localhost:19383/api/Categories");
+        categories = JsonConvert.DeserializeObject<List<CategoryModelView>>(await category.Content.ReadAsStringAsync()).ToList();
+        StateHasChanged();
+    }
 }
 
 
 
+
+
+
+
+@*else
+{
+<hr />
+
+<div class="col">
+    @foreach (var item in categories)
+    {
+        <div class="row bg-light"><h5 class="m-auto">@item.Title</h5></div>
+        @if (@item.Products.Count > 0)
+        {
+
+            <div class="container-fluid">
+
+                @foreach (var product in @item.Products)
+                {
+                    <div class="row bg-white mt-2 mb-2">
+                        <p class="col-1 m-1">Id: @product.Id</p>
+                        <p class="col-2 m-1">Name: @product.Name</p>
+                        <p class="col-2 m-1">Price: @product.Price</p>
+                        <p class="col-2 m-1">Color: @product.Color.Name</p>
+                        <p class="col-3 m-1">Category: @product.Category.Title</p>
+                        <p class="col-4 m-1">Brand: @product.Brand.Name</p>
+
+                        <hr class="bg-white" />
+                        <button class="btn btn-primary btn-sm" @onclick="() => NavigateToProductPage(product.Id)">Detail</button>
+                        <button @onclick="()=>DeleteProduct(product.Id)" class="btn btn-danger btn-sm mr-1">Delete</button>
+                    </div>
+                    <hr>
+                }
+
+            </div>
+        }
+        <hr class="bg-dark" />
+
+    }
+
+</div>
+}*@

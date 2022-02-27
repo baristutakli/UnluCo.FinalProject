@@ -19,33 +19,47 @@
 else
 {
     <button @onclick="() => NavigateToCreateProductPage()" class="btn btn-primary">Create a product</button>
-    <div class="col">
+
+    <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
+
         @foreach (var product in Products)
         {
-            <div class="row bg-light mt-2">
-                @if (product.UploadedFile is not null)
-                {
-                    <img class="col-2" src="data:image;base64,@System.Convert.ToBase64String(product.UploadedFile.FileContent)" asp-append-version="true" style="height:100px;width:100px">
-                }
-                <div class="col-10">
-                    <div class="row">
-                        <span class="col-1 m-1">Id: @product.Id</span>
-                        <span class="col-3 m-1">Name: @product.Name</span>
-                        <span class="col-2 m-1">Price: @product.Price</span>
-                        <span class="col-2 m-1">Color: @product.Color.Name</span>
-                        <span class="col-3 m-1">Category: @product.Category.Title</span>
-                        <span class="col-3 m-1">Brand: @product.Brand.Name</span>
+            <div class="row mx-auto" style=" display: inline-block;">
+                <div class="col">
+                    <div class="card h-100 shadow-sm" style=" display: inline-block;">
+                        @if (product.UploadedFile is not null)
+                        {
+                            <img class="col mt-2" src="data:image;base64,@System.Convert.ToBase64String(product.UploadedFile.FileContent)" asp-append-version="true" style="height:160px;width:220px">
+                        }
+                    <div class="card-body">
+                        <div class="clearfix mb-3"> <span class="float-start badge rounded-pill .bg-info text-dark">Available: @product.IsOfferable</span></div>
+                        <h5 class="card-title">@product.Name</h5>
+                        @if (@product.Description.Length > 120)
+                        {
+                            <p class="text-body text-justify" style="max-width:180px">@product.Description.Substring(0, 120)</p>
+                        }
+                        else
+                        {
+                            <p class="text-body text-justify" style="max-width:180px">@product.Description</p>
+                        }
+
+                        <ul class="list-group list-group-flush mb-2">
+                            <li class="list-group-item">Price: @product.Price</li>
+                            <li class="list-group-item">Color: @product.Color.Name</li>
+                            <li class="list-group-item">Category: @product.Category.Title</li>
+                            <li class="list-group-item">Brand: @product.Brand.Name</li>
+                        </ul>
                         <button @onclick="() => NavigateToProductPage(product.Id)" class="btn btn-primary btn-sm">Detail</button>
-                        <button  @onclick="() => NavigateToCreateOfferPage(product.Id)" class="btn btn-warning btn-sm">Offer</button>
+                        <button @onclick="() => NavigateToCreateOfferPage(product.Id)" class="btn btn-warning btn-sm">Offer</button>
+
+                    </div>
                     </div>
                 </div>
-
-                @*<p class="col-2 m-1">User: @product.User.UserName</p>*@
-
 
             </div>
         }
     </div>
+
 }
 
 @code {
@@ -85,4 +99,12 @@ else
     }
 
 }
+
+
+
+
+
+
+
+
 

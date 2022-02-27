@@ -16,21 +16,42 @@
 }
 else
 {
-    <EditForm Model="@Model" OnValidSubmit="@LoginAccount">
-        <DataAnnotationsValidator />
 
-        <div class="mb-3">
-            <label for="Email">Email</label>
-            <InputText id="Email" @bind-Value="Model.Email" class="form-control" />
-            <ValidationMessage For="() => Model.Email" />
+    <section class="vh-100 bg-light">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+
+                            <h3 class="mb-5">Sign in</h3>
+
+                            <EditForm Model="@Model" OnValidSubmit="@LoginAccount">
+                                <DataAnnotationsValidator />
+
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="Email">Email</label>
+                                    <InputText type="email" id="Email" @bind-Value="Model.Email" class="form-control form-control-lg" />
+                                    <ValidationMessage For="() => Model.Email" />
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" for="Password">Password</label>
+                                    <InputText id="Password" @bind-Value="Model.Password" type="password" class="form-control form-control-lg" />
+                                    <ValidationMessage For="() => Model.Password" />
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                            </EditForm>
+
+
+                            <hr class="my-4">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="Password">Password</label>
-            <InputText id="Password" @bind-Value="Model.Password" type="password" class="form-control" />
-            <ValidationMessage For="() => Model.Password" />
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </EditForm>
+    </section>
+
 
 
 }
@@ -74,14 +95,32 @@ else
         var claims = JwtParser.ParseClaimsFromJwt(MyToken);
         @foreach (var item in claims)
         {
-           await  JsRuntime.InvokeVoidAsync("alert", item.Type+item.Value+item.Issuer+item.OriginalIssuer);
+            await JsRuntime.InvokeVoidAsync("alert", item.Type + item.Value + item.Issuer + item.OriginalIssuer);
         }
 
         await Storage.SetAsync("token", MyToken);
 
-    await response.Content.ReadAsStringAsync();
-    await JsRuntime.InvokeVoidAsync("alert", "Success");
-}
+        await response.Content.ReadAsStringAsync();
+        await JsRuntime.InvokeVoidAsync("alert", "Success");
+    }
 
 }
 
+
+
+
+@*<EditForm Model="@Model" OnValidSubmit="@LoginAccount">
+    <DataAnnotationsValidator />
+
+    <div class="mb-3">
+        <label for="Email">Email</label>
+        <InputText id="Email" @bind-Value="Model.Email" class="form-control" />
+        <ValidationMessage For="() => Model.Email" />
+    </div>
+    <div class="mb-3">
+        <label for="Password">Password</label>
+        <InputText id="Password" @bind-Value="Model.Password" type="password" class="form-control" />
+        <ValidationMessage For="() => Model.Password" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>*@

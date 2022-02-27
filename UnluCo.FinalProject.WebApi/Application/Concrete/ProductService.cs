@@ -50,24 +50,6 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             _unitOfwork.Products.Add(product);
             _unitOfwork.Complete();
         }
-        private string UploadedFile(CreateProductViewModel model)
-        {
-            string uniqueFileName = null;
-
-            //if (model.ProductImage != null)
-            //{
-
-            //    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "images");
-            //    uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProductImage.FileName;
-            //    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-            //    using (var fileStream = new FileStream(filePath, FileMode.Create))
-            //    {
-            //        model.ProductImage.CopyTo(fileStream);
-            //    }
-            //}
-            return uniqueFileName;
-        }
-
 
 
         public void Delete(DeleteProductViewModel deleteProductViewModel)
