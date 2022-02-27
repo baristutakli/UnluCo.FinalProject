@@ -75,7 +75,14 @@ User sayfasından tüm kullanıcılara ait offerlar ürünler listelenmektedir. 
 
 
 <hr>
+<image src="https://github.com/Patika-dev-Unlu-Co-Net-Bootcamp/UnluCo.FinalProject/blob/master/Screenshots/ProductsPageScreenshot.png?raw=true" alt="Products" style="height:100%;width:100%">
 
+<image src="https://github.com/Patika-dev-Unlu-Co-Net-Bootcamp/UnluCo.FinalProject/blob/master/Screenshots/CategoriesPageScreenshot.png?raw=true" alt="Categories" style="height:100%;width:100%">
+
+<image src="https://github.com/Patika-dev-Unlu-Co-Net-Bootcamp/UnluCo.FinalProject/blob/master/Screenshots/UsersPageScreenshot.png?raw=true" alt="UsersPage" style="height:100%;width:100%">
+
+<image src="https://github.com/Patika-dev-Unlu-Co-Net-Bootcamp/UnluCo.FinalProject/blob/master/Screenshots/LoginPageScreenshot.png?raw=true" alt="LoginPage" style="height:100%;width:100%">
+<image src="https://github.com/Patika-dev-Unlu-Co-Net-Bootcamp/UnluCo.FinalProject/blob/master/Screenshots/SignUpPageScreenshot.png?raw=true" alt="SignUp" style="height:100%;width:100%">
 
 #### Ürün Katalog Projesi
 #### İki ana proje olmalı
