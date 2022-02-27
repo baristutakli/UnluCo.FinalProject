@@ -1,36 +1,35 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Common.Loggers;
 
 namespace UnluCo.FinalProject.WebApi.Common.Middlewares
 {
-    public class CustomExceptionMiddleware
+   
+    public class AuthenticationAndNavigationMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ILoggerService _loggerService;
-        public CustomExceptionMiddleware(RequestDelegate next, ILoggerService loggerService)
+        public AuthenticationAndNavigationMiddleware(RequestDelegate next, ILoggerService loggerService)
         {
             _next = next;
             _loggerService = loggerService;
         }
         public async Task Invoke(HttpContext context)
         {
+
             var watch = Stopwatch.StartNew();
             try
             {
 
                 string message = $"[Request HTTP] {context.Request.Method } -- {context.Request.Path}";
-
                 _loggerService.Write(message);
 
                 var token = "";
@@ -70,28 +69,18 @@ namespace UnluCo.FinalProject.WebApi.Common.Middlewares
             {
 
                 watch.Stop();
-                await HandleException(context, ex, watch);
+                _loggerService.Write(ex.Message);
             }
 
 
         }
 
-        private Task HandleException(HttpContext context, Exception ex, Stopwatch watch)
-        {
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            string message = $"[Error] HTTP {context.Request.Method} -- {context.Response.StatusCode} Error Message: {ex.Message} in {watch.Elapsed.TotalMilliseconds}ms";
-            _loggerService.Write(message);
-            var result = JsonConvert.SerializeObject(new { error = ex.Message }, Formatting.None);
-            return context.Response.WriteAsync(result);
-        }
     }
-    public static class CustomExceptionMiddlewareExctension
+    public static class AuthenticationAndNavigationMiddlewareExtension
     {
-        public static IApplicationBuilder UseCustomExceptionMiddleware(this IApplicationBuilder builder)
+        public static IApplicationBuilder UseAuthenticationAndNavigationMiddleware(this IApplicationBuilder builder)
         {
             return builder.UseMiddleware<CustomExceptionMiddleware>();
         }
     }
 }
-

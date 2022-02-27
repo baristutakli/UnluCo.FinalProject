@@ -26,6 +26,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             _productService = productService;
         }
         // GET: api/<ProductsController>
+        [Authorize(Roles = Roles.Admin)]
         [HttpGet]
         public IActionResult Get()
         {

@@ -20,6 +20,7 @@ using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.Concrete;
 using UnluCo.FinalProject.WebApi.Common.DependencyResolver;
 using UnluCo.FinalProject.WebApi.Common.Loggers;
+using UnluCo.FinalProject.WebApi.Common.Middlewares;
 using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
 using UnluCo.FinalProject.WebApi.DataAccess.Concrete;
 using UnluCo.FinalProject.WebApi.Models;
@@ -105,6 +106,12 @@ namespace UnluCo.FinalProject.WebApi
             }
 
             app.UseRouting();
+
+            // Verify the given token and navigate
+            //app.UseAuthenticationAndNavigationMiddleware();
+
+            // Logging
+            app.UseCustomExceptionMiddleware();
 
             app.UseAuthentication();
 

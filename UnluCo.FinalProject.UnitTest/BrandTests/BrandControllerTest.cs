@@ -13,19 +13,28 @@ using UnluCo.FinalProject.WebApi.Models;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 
+using FluentAssertions;
+
 namespace UnluCo.FinalProject.UnitTest.BrandTests
 {
     public class BrandControllerTest
     {
+        private readonly HttpClient _client;
+
+        public BrandControllerTest()
+        {
+            _client = new HttpClient();
+        }
         [Fact]
         public void Get_IActionResult()
         {
+
             //Arrange
             var brandService = new Mock<IBrandService>();
-         
+
             //2
             brandService
-                 .Setup(x => x.GetAll(b=>b.Id>0).Result)
+                 .Setup(x => x.GetAll(b => b.Id > 0).Result)
                 .Returns(new List<BrandViewModel>()
                 {
             new BrandViewModel(){Id=1},
@@ -36,9 +45,9 @@ namespace UnluCo.FinalProject.UnitTest.BrandTests
             //3
             var controller = new BrandsController(brandService.Object);
 
-           
+
             IActionResult actionResult = controller.Get();
-           var response = actionResult as OkObjectResult;
+            var response = actionResult as OkObjectResult;
 
             Assert.NotNull(response);
             Assert.Equal(200, response.StatusCode);
