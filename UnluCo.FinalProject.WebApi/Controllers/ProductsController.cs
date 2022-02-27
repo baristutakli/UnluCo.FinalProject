@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
+using UnluCo.FinalProject.WebApi.Application.Validators.Brands;
 using UnluCo.FinalProject.WebApi.Application.Validators.Products;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel;
 using UnluCo.FinalProject.WebApi.Models;
@@ -50,7 +51,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             CreateProductViewModelValidator validator = new CreateProductViewModelValidator();
             validator.ValidateAndThrow(createProductViewModel);
             _productService.Add(createProductViewModel);
-            return Ok(new Response { Status = "Success", Message = "Created successfully!" });
+            return Ok(new Response { Status = "Success", Message = "Added  successfully!" });
         }
 
        
@@ -59,8 +60,11 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         public IActionResult Put(int id, [FromBody] UpdateProductViewModel updateProductViewModel)
         {
             updateProductViewModel.Id = id;
-            _productService.Update(updateProductViewModel);
-            return Ok();
+            UpdateProductViewModelValidator validator = new UpdateProductViewModelValidator();
+            validator.ValidateAndThrow(updateProductViewModel);
+
+            return _productService.Update(updateProductViewModel) == true ? Ok(new Response { Status = "Success", Message = "Updated  successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
+   
         }
 
         // DELETE api/<ProductsController>/5
@@ -68,8 +72,10 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         public IActionResult Delete(int id)
         {
             DeleteProductViewModel deleteProduct = new DeleteProductViewModel() { Id = id };
+            DeleteProductViewValidator validator = new DeleteProductViewValidator();
+            validator.ValidateAndThrow(deleteProduct);
             _productService.Delete(deleteProduct);
-            return Ok(new Response { Status = "Success", Message = "Created successfully!" });
+            return _productService.Delete(deleteProduct) == true ? Ok(new Response { Status = "Success", Message = "Deleted successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

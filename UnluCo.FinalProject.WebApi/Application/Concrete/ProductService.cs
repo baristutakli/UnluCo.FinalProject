@@ -24,7 +24,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             _mapper = mapper;
             _hostingEnvironment = hostingEnvironment;
         }
-        public void Add(CreateProductViewModel productViewModel)
+        public bool Add(CreateProductViewModel productViewModel)
         {
             var uniqueFileName = productViewModel.ProductImage;
 
@@ -43,20 +43,19 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             product.Brand = _unitOfwork.Brands.GetById(productViewModel.Brand.Id).Result;
             product.User = _unitOfwork.Users.Get(u => u.Id == productViewModel.UserId).Result;
             product.ProductPicture = productViewModel.ProductImage;
-            //if (uniqueFileName is not null)
-            //{
-            //    product.ProductPicture = uniqueFileName;
-            //}
+        
             _unitOfwork.Products.Add(product);
-            _unitOfwork.Complete();
+           var affectedRows =_unitOfwork.Complete();
+            return affectedRows > 0 ? true : false;
         }
 
 
-        public void Delete(DeleteProductViewModel deleteProductViewModel)
+        public bool Delete(DeleteProductViewModel deleteProductViewModel)
         {
             var product = _unitOfwork.Products.GetProductDetails(p=>p.Id==deleteProductViewModel.Id).Result;
             _unitOfwork.Products.Delete(product);
-            _unitOfwork.Complete();
+           var affectedRows =_unitOfwork.Complete();
+            return affectedRows > 0 ? true : false;
 
         }
 
@@ -82,7 +81,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             return Task.FromResult(productViewModel);
         }
 
-        public void Update(UpdateProductViewModel productViewModel)
+        public bool Update(UpdateProductViewModel productViewModel)
         {
             Product product = new Product()
             {
@@ -99,7 +98,8 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             product.User = _unitOfwork.Users.Get(u => u.Id == productViewModel.UserId).Result;
            
             _unitOfwork.Products.Update(product);
-            _unitOfwork.Complete();
+           var affectedRows =_unitOfwork.Complete();
+            return affectedRows > 0 ? true : false;
         }
     }
 }

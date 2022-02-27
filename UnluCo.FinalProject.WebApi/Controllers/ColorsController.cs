@@ -43,8 +43,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CreateColorViewModel createColorViewModel)
         {
-            _colorService.Add(createColorViewModel);
-            return Ok();
+            
+            return _colorService.Add(createColorViewModel) == true ? Ok() : StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         // PUT api/<ColorsController>/5
@@ -52,8 +52,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         public IActionResult Put(int id, [FromBody] UpdateColorViewModel updateColorViewModel)
         {
             updateColorViewModel.Id = id;
-            _colorService.Update(updateColorViewModel);
-            return Ok();
+            
+            return _colorService.Update(updateColorViewModel) == true ? Ok() : StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         // DELETE api/<ColorsController>/5
@@ -61,8 +61,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         public IActionResult Delete(int id)
         {
             DeleteColorViewModel deleteColor = new DeleteColorViewModel() { Id = id };
-            _colorService.Delete(deleteColor);
-            return Ok();
+
+            return _colorService.Delete(deleteColor) == true ? Ok() : StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

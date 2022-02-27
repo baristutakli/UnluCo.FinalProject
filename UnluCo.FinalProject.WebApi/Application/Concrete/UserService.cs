@@ -20,19 +20,20 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             _unitOfwork = unitOfwork;
             _mapper = mapper;
         }
-        public void Add(UserViewModel userViewModel)
+        public bool Add(UserViewModel userViewModel)
         {
             var user = _mapper.Map<User>(userViewModel);
             _unitOfwork.Users.Add(user);
-            _unitOfwork.Complete();
+           var affectedRows = _unitOfwork.Complete();
+            return affectedRows > 0 ? true : false;
         }
 
-        public void Delete(DeleteUserViewModel deleteUserViewModel)
+        public bool Delete(DeleteUserViewModel deleteUserViewModel)
         {
             var user = _unitOfwork.Users.GetById(deleteUserViewModel.Id).Result;
             _unitOfwork.Users.Delete(user);
-            _unitOfwork.Complete();
-
+           var affectedRows = _unitOfwork.Complete();
+            return affectedRows > 0 ? true : false;
         }
 
         public Task<UserViewModel> Get(Expression<Func<User, bool>> filter)
@@ -57,11 +58,12 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             return Task.FromResult(userViewModel);
         }
         // Düzenlenecek
-        public void Update(UserViewModel updateUserViewModel)
+        public bool Update(UserViewModel updateUserViewModel)
         {
             var user = _mapper.Map<User>(updateUserViewModel);
             _unitOfwork.Users.Update(user);
-            _unitOfwork.Complete();
+           var affectedRows = _unitOfwork.Complete();
+            return affectedRows > 0 ? true : false;
         }
     }
 }

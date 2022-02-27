@@ -11,9 +11,9 @@ namespace UnluCo.FinalProject.WebApi.Application.Abstract
 {
     public interface ICategoryService
     {
-        void Add(CreateCategoryViewModel categoryViewModel);
-        void Delete(DeleteCategoryViewModel deleteCategoryViewModel);
-        void Update(int id,CreateCategoryViewModel updateCategoryViewModel);
+        bool Add(CreateCategoryViewModel categoryViewModel);
+        bool Delete(DeleteCategoryViewModel deleteCategoryViewModel);
+        bool Update(int id, CreateCategoryViewModel updateCategoryViewModel);
         Task<List<CategoryViewModel>> GetAll(Expression<Func<CategoryViewModel, bool>> filter = null);
         Task<CategoryViewModel> Get(Expression<Func<Category, bool>> filter);
         Task<CategoryViewModel> GetById(int id);

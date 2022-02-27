@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -52,8 +53,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         {
             CreateBrandViewValidator validator = new CreateBrandViewValidator();
             validator.ValidateAndThrow(createBrandViewModel);
-            _brandService.Add(createBrandViewModel);
-            return Ok();
+            return _brandService.Add(createBrandViewModel) == true ? Ok() : StatusCode(StatusCodes.Status500InternalServerError);
+
         }
 
         // PUT api/<BrandsController>/5
@@ -62,8 +63,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         {
             UpdateBrandViewValidator validator = new UpdateBrandViewValidator();
             validator.ValidateAndThrow(updateBrandViewModel);
-            _brandService.Update(id,updateBrandViewModel);
-            return Ok();
+            
+            return _brandService.Update(id, updateBrandViewModel) == true ? Ok() : StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         // DELETE api/<BrandsController>/5
@@ -73,8 +74,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             DeleteBrandViewModel deleteBrand = new DeleteBrandViewModel() { Id = id };
             DeleteBrandViewValidator validator = new DeleteBrandViewValidator();
             validator.ValidateAndThrow(deleteBrand);
-            _brandService.Delete(deleteBrand);
-            return Ok();
+
+            return _brandService.Delete(deleteBrand) == true ? Ok() : StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

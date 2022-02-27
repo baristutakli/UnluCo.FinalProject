@@ -11,9 +11,9 @@ namespace UnluCo.FinalProject.WebApi.Application.Abstract
 {
     public interface IBrandService
     {
-        void Add(CreateBrandViewModel brandViewModel);
-        void Delete(DeleteBrandViewModel deleteBrandViewModel);
-        void Update(int id,UpdateBrandViewModel updateBrandViewModel);
+        bool Add(CreateBrandViewModel brandViewModel);
+        bool Delete(DeleteBrandViewModel deleteBrandViewModel);
+        bool Update(int id,UpdateBrandViewModel updateBrandViewModel);
         Task<List<BrandViewModel>> GetAll(Expression<Func<BrandViewModel, bool>> filter = null);
         Task<BrandViewModel> Get(Expression<Func<Brand, bool>> filter);
         Task<BrandViewModel> GetById(int id);

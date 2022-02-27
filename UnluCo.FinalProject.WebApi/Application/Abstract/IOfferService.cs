@@ -11,13 +11,13 @@ namespace UnluCo.FinalProject.WebApi.Application.Abstract
 {
     public interface IOfferService
     {
-        void Add(CreateOfferViewModel offerViewModel);
-        void Delete(DeleteOfferViewModel deleteOfferViewModel);
-        void Update(UpdateOfferViewModel updateOfferViewModel);
+        bool Add(CreateOfferViewModel offerViewModel);
+        bool Delete(DeleteOfferViewModel deleteOfferViewModel);
+        bool Update(UpdateOfferViewModel updateOfferViewModel);
         Task<List<OfferViewModel>> GetAll(Expression<Func<Offer, bool>> filter = null);
         Task<OfferViewModel> Get(Expression<Func<Offer, bool>> filter);
         Task<OfferViewModel> GetById(int id);
-        void Update(UpdateOfferActivityViewModel offerViewModel);
+        bool Update(UpdateOfferActivityViewModel offerViewModel);
 
     }
 }

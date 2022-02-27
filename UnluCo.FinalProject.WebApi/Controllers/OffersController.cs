@@ -45,9 +45,9 @@ namespace UnluCo.FinalProject.WebApi.Controllers
 
             CreateOfferViewModelValidator validator = new CreateOfferViewModelValidator();
             validator.ValidateAndThrow(createOfferViewModel);
-            _offerService.Add(createOfferViewModel);
-            return Ok(new Response { Status = "Success", Message = "Created successfully!" });
-
+            
+            return _offerService.Add(createOfferViewModel) == true ? Ok(new Response { Status = "Success", Message = "Created successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
+        
         }
 
         [HttpPut("{id}/Active")]
@@ -56,8 +56,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             UpdateOfferActivityViewModelValidator validator = new UpdateOfferActivityViewModelValidator();
             updateOfferActivityViewModel.Id = id;
             validator.ValidateAndThrow(updateOfferActivityViewModel);
-            _offerService.Update(updateOfferActivityViewModel);
-            return Ok(new Response { Status = "Success", Message = "Accepted!" });
+            
+            return _offerService.Update(updateOfferActivityViewModel) == true ? Ok(new Response { Status = "Success", Message = "Updated successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
         }
 
 
@@ -68,8 +68,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             UpdateOfferViewModelValidator validator = new UpdateOfferViewModelValidator();
             updateOfferViewModel.Id = id;
             validator.ValidateAndThrow(updateOfferViewModel);
-            _offerService.Update(updateOfferViewModel);
-            return Ok();
+            
+            return _offerService.Update(updateOfferViewModel) == true ? Ok(new Response { Status = "Success", Message = "Updated successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         // DELETE api/<OffersController>/5
@@ -79,8 +79,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             DeleteOfferViewModelValidator validator = new DeleteOfferViewModelValidator();
             DeleteOfferViewModel deleteOffer = new DeleteOfferViewModel() { Id = deleteOfferViewModel.Id };
             validator.ValidateAndThrow(deleteOffer);
-            _offerService.Delete(deleteOffer);
-            return Ok(new Response { Status = "Success", Message = "Deleted!" });
+            
+            return _offerService.Delete(deleteOffer) == true ? Ok(new Response { Status = "Success", Message = "Deleted  successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

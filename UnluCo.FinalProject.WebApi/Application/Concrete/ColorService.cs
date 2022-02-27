@@ -21,19 +21,20 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             _unitOfwork = unitOfwork;
             _mapper = mapper;
         }
-        public void Add(CreateColorViewModel colorViewModel)
+        public bool Add(CreateColorViewModel colorViewModel)
         {
             var color = _mapper.Map<Color>(colorViewModel);
             _unitOfwork.Colors.Add(color);
-            _unitOfwork.Complete();
+            var result =_unitOfwork.Complete();
+            return result > 0 ? true : false;
         }
 
-        public void Delete(DeleteColorViewModel deleteColorViewModel)
+        public bool Delete(DeleteColorViewModel deleteColorViewModel)
         {
             var color = _unitOfwork.Colors.GetById(deleteColorViewModel.Id).Result;
             _unitOfwork.Colors.Delete(color);
-            _unitOfwork.Complete();
-
+            var result =_unitOfwork.Complete();
+            return result > 0 ? true : false;
         }
 
         public Task<ColorViewModel> Get(Expression<Func<Color, bool>> filter)
@@ -58,12 +59,13 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             return Task.FromResult(colorViewModel);
         }
 
-        public void Update(UpdateColorViewModel updateColorViewModel)
+        public bool Update(UpdateColorViewModel updateColorViewModel)
         {
             var color = _mapper.Map<Color>(updateColorViewModel);
             
             _unitOfwork.Colors.Update(color);
-            _unitOfwork.Complete();
+            var result =_unitOfwork.Complete();
+            return result > 0 ? true : false;
         }
     }
 }

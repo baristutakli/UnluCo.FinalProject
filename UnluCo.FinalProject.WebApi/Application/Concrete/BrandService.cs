@@ -22,18 +22,20 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             _unitOfwork = unitOfwork;
             _mapper = mapper;
         }
-        public void Add(CreateBrandViewModel brandViewModel)
+        public bool Add(CreateBrandViewModel brandViewModel)
         {
             var brand =_mapper.Map<Brand>(brandViewModel);
             _unitOfwork.Brands.Add(brand);
-            _unitOfwork.Complete();
+            var result =_unitOfwork.Complete();
+            return result > 0 ? true : false;
         }
 
-        public void Delete(DeleteBrandViewModel deleteBrandViewModel)
+        public bool Delete(DeleteBrandViewModel deleteBrandViewModel)
         {
             var brand =_unitOfwork.Brands.GetById(deleteBrandViewModel.Id).Result;
             _unitOfwork.Brands.Delete(brand);
-            _unitOfwork.Complete();
+            var result =_unitOfwork.Complete();
+            return result > 0 ? true : false;
 
         }
 
@@ -60,12 +62,13 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             return Task.FromResult(brandViewModel);
         }
 
-        public void Update(int id,UpdateBrandViewModel updateBrandViewModel)
+        public bool Update(int id,UpdateBrandViewModel updateBrandViewModel)
         {
             var selectedBrand = _unitOfwork.Brands.GetById(id).Result;
            var brand= _mapper.Map(updateBrandViewModel,selectedBrand);
             _unitOfwork.Brands.Update(brand);
-            _unitOfwork.Complete();
+            var result =_unitOfwork.Complete();
+            return result > 0 ? true : false;
         }
     }
 }

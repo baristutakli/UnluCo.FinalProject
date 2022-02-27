@@ -22,7 +22,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             _unitOfwork = unitOfwork;
             _mapper = mapper;
         }
-        public void Add(CreateOfferViewModel offerViewModel)
+        public bool Add(CreateOfferViewModel offerViewModel)
         {
             var product= _unitOfwork.Products.GetById(offerViewModel.ProductId).Result;
             if (product is not null)
@@ -42,14 +42,16 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             var offer = _mapper.Map<Offer>(offerViewModel);
             offer.Product = product;
             _unitOfwork.Offers.Add(offer);
-            _unitOfwork.Complete();
+           var affectedRows =  _unitOfwork.Complete();
+            return affectedRows > 0 ? true : false;
         }
 
-        public void Delete(DeleteOfferViewModel deleteOfferViewModel)
+        public bool Delete(DeleteOfferViewModel deleteOfferViewModel)
         {
             var offer = _unitOfwork.Offers.GetById(deleteOfferViewModel.Id).Result;
             _unitOfwork.Offers.Delete(offer);
-            _unitOfwork.Complete();
+           var affectedRows =  _unitOfwork.Complete();
+            return affectedRows > 0 ? true : false;
 
         }
 
@@ -76,7 +78,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             return Task.FromResult(offerViewModel);
         }
 
-        public void Update(UpdateOfferViewModel offerViewModel)
+        public bool Update(UpdateOfferViewModel offerViewModel)
         {
             var product = _unitOfwork.Products.GetById(offerViewModel.ProductId).Result;
             if (product is not null)
@@ -96,11 +98,12 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             var offer = _mapper.Map<Offer>(offerViewModel);
             offer.Product = product;
             _unitOfwork.Offers.Add(offer);
-            _unitOfwork.Complete();
+           var affectedRows =  _unitOfwork.Complete();
+            return affectedRows > 0 ? true : false;
         }
 
         // Changes offer status
-        public void Update(UpdateOfferActivityViewModel offerViewModel)
+        public bool Update(UpdateOfferActivityViewModel offerViewModel)
         {
             var offer = _unitOfwork.Offers.GetById(offerViewModel.Id).Result;
             var product = _unitOfwork.Products.GetById(offerViewModel.Id).Result;
@@ -114,7 +117,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
 
             _unitOfwork.Offers.Update(offer);
 
-            _unitOfwork.Complete();
+           var affectedRows =  _unitOfwork.Complete();
 
             var offersToDelete = _unitOfwork.Offers.GetOffers(o => o.Product.Id == offerViewModel.ProductId).Result;
             foreach (var selectedOffer in offersToDelete)
@@ -125,7 +128,8 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
                 }
             
             }
-            _unitOfwork.Complete();
+           var result=  _unitOfwork.Complete();
+            return result> 0 ? true : false;
         }
     }
 }

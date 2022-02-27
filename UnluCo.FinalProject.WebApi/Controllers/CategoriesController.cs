@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -60,16 +61,15 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CreateCategoryViewModel createCategoryViewModel)
         {
-            _categoryService.Add(createCategoryViewModel);
-            return Ok();
+            return _categoryService.Add(createCategoryViewModel) == true ? Ok() : StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         // PUT api/<CategoriesController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] CreateCategoryViewModel updateCategoryViewModel)
         {
-            _categoryService.Update(id,updateCategoryViewModel);
-            return Ok();
+            
+            return _categoryService.Update(id, updateCategoryViewModel) == true ? Ok() : StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         // DELETE api/<CategoriesController>/5
@@ -77,8 +77,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         public IActionResult Delete(int id)
         {
             DeleteCategoryViewModel deleteCategory = new DeleteCategoryViewModel() { Id=id};  
-            _categoryService.Delete(deleteCategory);
-            return Ok();
+            return _categoryService.Delete(deleteCategory) == true ? Ok() : StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

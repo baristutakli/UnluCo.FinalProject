@@ -12,9 +12,9 @@ namespace UnluCo.FinalProject.WebApi.Application.Abstract
     public interface IProductService
     {
 
-        void Add(CreateProductViewModel createProductViewModel);
-        void Delete(DeleteProductViewModel deleteProductViewModel);
-        void Update(UpdateProductViewModel updateProductViewModel);
+        bool Add(CreateProductViewModel createProductViewModel);
+        bool Delete(DeleteProductViewModel deleteProductViewModel);
+        bool Update(UpdateProductViewModel updateProductViewModel);
         Task<List<ProductViewModel>> GetAll(Expression<Func<Product, bool>> filter = null);
         Task<ProductViewModel> Get(Expression<Func<Product, bool>> filter);
         Task<ProductViewModel> GetById(int id);

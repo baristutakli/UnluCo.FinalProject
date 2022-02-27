@@ -23,19 +23,20 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             _unitOfwork = unitOfwork;
             _mapper = mapper;
         }
-        public void Add(CreateCategoryViewModel categoryViewModel)
+        public bool Add(CreateCategoryViewModel categoryViewModel)
         {
             var category =_mapper.Map<Category>(categoryViewModel);
             _unitOfwork.Categories.Add(category);
-            _unitOfwork.Complete();
+            var result =_unitOfwork.Complete();
+            return result > 0 ? true : false;
         }
 
-        public void Delete(DeleteCategoryViewModel deleteCategoryViewModel)
+        public bool Delete(DeleteCategoryViewModel deleteCategoryViewModel)
         {
             var category =_unitOfwork.Categories.GetById(deleteCategoryViewModel.Id).Result;
             _unitOfwork.Categories.Delete(category);
-            _unitOfwork.Complete();
-
+            var result =_unitOfwork.Complete();
+            return result > 0 ? true : false;
         }
 
         public Task<CategoryViewModel> Get(Expression<Func<Category, bool>> filter)
@@ -67,11 +68,12 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             return Task.FromResult(categoryViewModel);
         }
 
-        public void Update(int id,CreateCategoryViewModel updateCategoryViewModel)
+        public bool Update(int id,CreateCategoryViewModel updateCategoryViewModel)
         {
            var category= _mapper.Map<Category>(updateCategoryViewModel);
             _unitOfwork.Categories.Update(category);
-            _unitOfwork.Complete();
+            var result =_unitOfwork.Complete();
+            return result > 0 ? true : false;
         }
     }
 }
