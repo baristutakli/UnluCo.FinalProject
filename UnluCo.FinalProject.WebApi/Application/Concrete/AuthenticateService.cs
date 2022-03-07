@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
-using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.Application.Concrete
@@ -14,13 +10,13 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-       
+
         public AuthenticateService(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
-          
-           
+
+
         }
 
         public async Task<IdentityResult> CreateUser(RegisterUserModel model)
@@ -50,7 +46,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         public async Task<User> FindByEmailAsync(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
-           
+
             return user;
         }
 

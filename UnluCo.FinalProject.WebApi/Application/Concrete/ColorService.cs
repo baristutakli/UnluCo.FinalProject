@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.ColorsViewModel;
-using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
 using UnluCo.FinalProject.WebApi.DataAccess.UnitOfWorks;
 using UnluCo.FinalProject.WebApi.Models;
 
@@ -25,7 +23,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var color = _mapper.Map<Color>(colorViewModel);
             _unitOfwork.Colors.Add(color);
-            var result =_unitOfwork.Complete();
+            var result = _unitOfwork.Complete();
             return result > 0 ? true : false;
         }
 
@@ -33,7 +31,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var color = _unitOfwork.Colors.GetById(deleteColorViewModel.Id).Result;
             _unitOfwork.Colors.Delete(color);
-            var result =_unitOfwork.Complete();
+            var result = _unitOfwork.Complete();
             return result > 0 ? true : false;
         }
 
@@ -62,9 +60,9 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         public bool Update(UpdateColorViewModel updateColorViewModel)
         {
             var color = _mapper.Map<Color>(updateColorViewModel);
-            
+
             _unitOfwork.Colors.Update(color);
-            var result =_unitOfwork.Complete();
+            var result = _unitOfwork.Complete();
             return result > 0 ? true : false;
         }
     }

@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
@@ -24,7 +23,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var user = _mapper.Map<User>(userViewModel);
             _unitOfwork.Users.Add(user);
-           var affectedRows = _unitOfwork.Complete();
+            var affectedRows = _unitOfwork.Complete();
             return affectedRows > 0 ? true : false;
         }
 
@@ -32,7 +31,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var user = _unitOfwork.Users.GetById(deleteUserViewModel.Id).Result;
             _unitOfwork.Users.Delete(user);
-           var affectedRows = _unitOfwork.Complete();
+            var affectedRows = _unitOfwork.Complete();
             return affectedRows > 0 ? true : false;
         }
 
@@ -62,7 +61,7 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var user = _mapper.Map<User>(updateUserViewModel);
             _unitOfwork.Users.Update(user);
-           var affectedRows = _unitOfwork.Complete();
+            var affectedRows = _unitOfwork.Complete();
             return affectedRows > 0 ? true : false;
         }
     }

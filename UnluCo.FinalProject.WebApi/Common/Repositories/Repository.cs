@@ -31,7 +31,7 @@ namespace UnluCo.FinalProject.WebApi.Common.Repositories
             return await _dbcontext.Set<TEntity>().Where(filter).SingleOrDefaultAsync();
         }
 
-        public virtual async  Task<List<TEntity>> GetAll(Expression<Func<TEntity, bool>> filter = null)
+        public virtual async Task<List<TEntity>> GetAll(Expression<Func<TEntity, bool>> filter = null)
         {
             return filter == null ? await _dbcontext.Set<TEntity>().ToListAsync() : await _dbcontext.Set<TEntity>().Where(filter).ToListAsync();
         }

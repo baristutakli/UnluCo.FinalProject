@@ -3,14 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Common.Tools;
 using UnluCo.FinalProject.WebApi.Models;
-using Newtonsoft.Json.Converters;
 namespace UnluCo.FinalProject.WebApi.Controllers
 {
     [Route("api/[controller]")]
@@ -42,10 +38,10 @@ namespace UnluCo.FinalProject.WebApi.Controllers
 
                 if (await _userService.CheckUser(user, model))
                 {
-                    
+
                     TokenGenerator generator = new TokenGenerator(_userManager, _configuration);
                     var token = await generator.GenerateToken(user);
-                    
+
                     HttpContext.Response.Headers["token"] = JsonConvert.SerializeObject(token.Token);
                     return Ok();
                 }
@@ -54,7 +50,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
 
             await _userManager.SetLockoutEnabledAsync(user, true);
             await _userManager.AccessFailedAsync(user);
-          
+
             if (await _userManager.GetAccessFailedCountAsync(user) >= 3)
             {
                 MailRequest mail2 = new MailRequest() { Body = "Blocked", Status = false, Subject = "Access denied", ToEmail = user.Email };

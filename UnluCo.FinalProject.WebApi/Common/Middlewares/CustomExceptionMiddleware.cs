@@ -1,14 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Common.Loggers;
 
@@ -33,29 +28,27 @@ namespace UnluCo.FinalProject.WebApi.Common.Middlewares
 
                 _loggerService.Write(message);
 
-                var token = "";
-                if (context.Request.Headers["Authorization"].ToString().Length > 20)
-                {
+                //var token = "";
 
-                    token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-                    var mySecret = Encoding.UTF8.GetBytes("ByYM000OLlMQG6VVVp1OH7Xzyr7gHuw1qvUC5dcGt3SNM");
-                    var mySecurityKey = new SymmetricSecurityKey(mySecret);
-                    var tokenHandler = new JwtSecurityTokenHandler();
+                //if (context.Request.Headers["Authorization"].ToString() is not null)
+                //{
+                //    token = context.Request.Headers["Authorization"].Last().ToString();
+                //    //token = context.Request.Headers["Authorization"].Last().ToString().Replace("Bearer ","");
+                //    var mySecret = Encoding.UTF8.GetBytes("ByYM000OLlMQG6VVVp1OH7Xzyr7gHuw1qvUC5dcGt3SNM");
+                //    var mySecurityKey = new SymmetricSecurityKey(mySecret);
+                //    var tokenHandler = new JwtSecurityTokenHandler();
 
-                    tokenHandler.ValidateToken(token,
-                    new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidIssuer = "http://localhost:5000/",
-                        ValidAudience = "http://localhost:5000/",
-                        IssuerSigningKey = mySecurityKey,
-                    }, out SecurityToken validatedToken);
-                }
-
-
-
+                //    tokenHandler.ValidateToken(token,
+                //    new TokenValidationParameters
+                //    {
+                //        ValidateIssuerSigningKey = true,
+                //        ValidateIssuer = true,
+                //        ValidateAudience = true,
+                //        ValidIssuer = "http://localhost:5000/",
+                //        ValidAudience = "http://localhost:5000/",
+                //        IssuerSigningKey = mySecurityKey,
+                //    }, out SecurityToken validatedToken);
+                //}
 
 
 

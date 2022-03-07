@@ -1,13 +1,7 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.Validators.Brands;
 using UnluCo.FinalProject.WebApi.Application.Validators.Products;
@@ -20,13 +14,13 @@ namespace UnluCo.FinalProject.WebApi.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private IProductService _productService;
+        private readonly IProductService _productService;
         public ProductsController(IProductService productService)
         {
             _productService = productService;
         }
         // GET: api/<ProductsController>
-        [Authorize(Roles = Roles.Admin)]
+        //  [Authorize(Roles = Roles.Admin)]
         [HttpGet]
         public IActionResult Get()
         {
@@ -55,7 +49,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             return Ok(new Response { Status = "Success", Message = "Added  successfully!" });
         }
 
-       
+
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UpdateProductViewModel updateProductViewModel)
@@ -64,8 +58,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             UpdateProductViewModelValidator validator = new UpdateProductViewModelValidator();
             validator.ValidateAndThrow(updateProductViewModel);
 
-            return _productService.Update(updateProductViewModel) == true ? Ok(new Response { Status = "Success", Message = "Updated  successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
-   
+            return _productService.Update(updateProductViewModel) ? Ok(new Response { Status = "Success", Message = "Updated  successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
+
         }
 
         // DELETE api/<ProductsController>/5
@@ -76,7 +70,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             DeleteProductViewValidator validator = new DeleteProductViewValidator();
             validator.ValidateAndThrow(deleteProduct);
             _productService.Delete(deleteProduct);
-            return _productService.Delete(deleteProduct) == true ? Ok(new Response { Status = "Success", Message = "Deleted successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
+            return _productService.Delete(deleteProduct) ? Ok(new Response { Status = "Success", Message = "Deleted successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

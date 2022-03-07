@@ -1,10 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.Validators.Brands;
 using UnluCo.FinalProject.WebApi.Application.Validators.Offers;
@@ -17,7 +13,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
     [ApiController]
     public class OffersController : ControllerBase
     {
-        private IOfferService _offerService;
+        private readonly IOfferService _offerService;
         public OffersController(IOfferService offerService)
         {
             _offerService = offerService;
@@ -34,7 +30,7 @@ namespace UnluCo.FinalProject.WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var offer = _offerService.Get(p=>p.Id==id);
+            var offer = _offerService.Get(p => p.Id == id);
             return Ok(offer);
         }
 
@@ -45,9 +41,9 @@ namespace UnluCo.FinalProject.WebApi.Controllers
 
             CreateOfferViewModelValidator validator = new CreateOfferViewModelValidator();
             validator.ValidateAndThrow(createOfferViewModel);
-            
-            return _offerService.Add(createOfferViewModel) == true ? Ok(new Response { Status = "Success", Message = "Created successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
-        
+
+            return _offerService.Add(createOfferViewModel) ? Ok(new Response { Status = "Success", Message = "Created successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
+
         }
 
         [HttpPut("{id}/Active")]
@@ -56,8 +52,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             UpdateOfferActivityViewModelValidator validator = new UpdateOfferActivityViewModelValidator();
             updateOfferActivityViewModel.Id = id;
             validator.ValidateAndThrow(updateOfferActivityViewModel);
-            
-            return _offerService.Update(updateOfferActivityViewModel) == true ? Ok(new Response { Status = "Success", Message = "Updated successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
+
+            return _offerService.Update(updateOfferActivityViewModel) ? Ok(new Response { Status = "Success", Message = "Updated successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
         }
 
 
@@ -68,8 +64,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             UpdateOfferViewModelValidator validator = new UpdateOfferViewModelValidator();
             updateOfferViewModel.Id = id;
             validator.ValidateAndThrow(updateOfferViewModel);
-            
-            return _offerService.Update(updateOfferViewModel) == true ? Ok(new Response { Status = "Success", Message = "Updated successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
+
+            return _offerService.Update(updateOfferViewModel) ? Ok(new Response { Status = "Success", Message = "Updated successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         // DELETE api/<OffersController>/5
@@ -79,8 +75,8 @@ namespace UnluCo.FinalProject.WebApi.Controllers
             DeleteOfferViewModelValidator validator = new DeleteOfferViewModelValidator();
             DeleteOfferViewModel deleteOffer = new DeleteOfferViewModel() { Id = deleteOfferViewModel.Id };
             validator.ValidateAndThrow(deleteOffer);
-            
-            return _offerService.Delete(deleteOffer) == true ? Ok(new Response { Status = "Success", Message = "Deleted  successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
+
+            return _offerService.Delete(deleteOffer) ? Ok(new Response { Status = "Success", Message = "Deleted  successfully!" }) : StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
 }

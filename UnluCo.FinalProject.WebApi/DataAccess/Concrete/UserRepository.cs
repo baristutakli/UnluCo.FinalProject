@@ -10,7 +10,7 @@ using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.WebApi.DataAccess.Concrete
 {
-    public class UserRepository: Repository<User>, IUserRepository
+    public class UserRepository : Repository<User>, IUserRepository
     {
         public UserRepository(UserDbContext context) : base(context)
         {
@@ -24,7 +24,7 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Concrete
                 .Include(c => c.Products).ThenInclude(p => p.Brand)
                 .Include(c => c.Products).ThenInclude(p => p.User)
                 .Include(c => c.Products).ThenInclude(p => p.Offers)
-                .ToListAsync() 
+                .ToListAsync()
                 : await _dbcontext.Set<User>()
                 .Include(c => c.Products).ThenInclude(p => p.Color)
                 .Include(c => c.Products).ThenInclude(p => p.Category)

@@ -1,9 +1,13 @@
 ﻿@page "/products"
-@inherits ProductViewModel
-@inject NavigationManager NavManager
 @using UnluCo.FinalProject.BlazorUI.ViewModels;
 @using Newtonsoft.Json
 @using System.Net.Http.Headers;
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inherits ProductViewModel
+@inject NavigationManager NavManager
+@inject IJSRuntime JsRuntime
+
+@inject ProtectedLocalStorage Storage
 
 
 
@@ -31,28 +35,28 @@ else
                         {
                             <img class="col mt-2" src="data:image;base64,@System.Convert.ToBase64String(product.UploadedFile.FileContent)" asp-append-version="true" style="height:160px;width:220px">
                         }
-                    <div class="card-body">
-                        <div class="clearfix mb-3"> <span class="float-start badge rounded-pill .bg-info text-dark">Available: @product.IsOfferable</span></div>
-                        <h5 class="card-title">@product.Name</h5>
-                        @if (@product.Description.Length > 120)
-                        {
-                            <p class="text-body text-justify" style="max-width:180px">@product.Description.Substring(0, 120)</p>
-                        }
-                        else
-                        {
-                            <p class="text-body text-justify" style="max-width:180px">@product.Description</p>
-                        }
+                        <div class="card-body">
+                            <div class="clearfix mb-3"> <span class="float-start badge rounded-pill .bg-info text-dark">Available: @product.IsOfferable</span></div>
+                            <h5 class="card-title">@product.Name</h5>
+                            @if (@product.Description.Length > 120)
+                            {
+                                <p class="text-body text-justify" style="max-width:180px">@product.Description.Substring(0, 120)</p>
+                            }
+                            else
+                            {
+                                <p class="text-body text-justify" style="max-width:180px">@product.Description</p>
+                            }
 
-                        <ul class="list-group list-group-flush mb-2">
-                            <li class="list-group-item">Price: @product.Price</li>
-                            <li class="list-group-item">Color: @product.Color.Name</li>
-                            <li class="list-group-item">Category: @product.Category.Title</li>
-                            <li class="list-group-item">Brand: @product.Brand.Name</li>
-                        </ul>
-                        <button @onclick="() => NavigateToProductPage(product.Id)" class="btn btn-primary btn-sm">Detail</button>
-                        <button @onclick="() => NavigateToCreateOfferPage(product.Id)" class="btn btn-warning btn-sm">Offer</button>
+                            <ul class="list-group list-group-flush mb-2">
+                                <li class="list-group-item">Price: @product.Price</li>
+                                <li class="list-group-item">Color: @product.Color.Name</li>
+                                <li class="list-group-item">Category: @product.Category.Title</li>
+                                <li class="list-group-item">Brand: @product.Brand.Name</li>
+                            </ul>
+                            <button @onclick="() => NavigateToProductPage(product.Id)" class="btn btn-primary btn-sm">Detail</button>
+                            <button @onclick="() => NavigateToCreateOfferPage(product.Id)" class="btn btn-warning btn-sm">Offer</button>
 
-                    </div>
+                        </div>
                     </div>
                 </div>
 
@@ -70,6 +74,18 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+
+        var client = new HttpClient();
+        var request = new HttpRequestMessage();
+        //request.RequestUri = new Uri("http://localhost:19383/api/products");
+        //request.Method = HttpMethod.Get;
+
+
+        //request.Headers.Add("Accept", "*/*");
+
+        //var token = await Storage.GetAsync<string>("token");
+        //request.Headers.Authorization = new AuthenticationHeaderValue(token.Value.ToString());
+
 
         var products = await client.GetAsync("http://localhost:19383/api/products");
         Products = JsonConvert.DeserializeObject<List<ProductViewModel>>(await products.Content.ReadAsStringAsync()).ToList();

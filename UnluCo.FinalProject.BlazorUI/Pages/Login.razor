@@ -73,6 +73,8 @@ else
     public async void LoginAccount()
     {
 
+
+
         var request = new HttpRequestMessage();
         request.RequestUri = new Uri("http://localhost:19383/api/Authenticate/login");
         request.Method = HttpMethod.Post;
@@ -90,12 +92,6 @@ else
             var result = response.Headers.GetValues("token").First();
             MyToken = JsonConvert.DeserializeObject<string>(result);
 
-        }
-
-        var claims = JwtParser.ParseClaimsFromJwt(MyToken);
-        @foreach (var item in claims)
-        {
-            await JsRuntime.InvokeVoidAsync("alert", item.Type + item.Value + item.Issuer + item.OriginalIssuer);
         }
 
         await Storage.SetAsync("token", MyToken);

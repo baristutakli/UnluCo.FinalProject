@@ -1,22 +1,11 @@
-using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Tewr.Blazor.FileReader;
 using UnluCo.FinalProject.BlazorUI.Data;
-using UnluCo.FinalProject.BlazorUI.Services;
 using UnluCo.FinalProject.WebApi.Models;
 
 namespace UnluCo.FinalProject.BlazorUI
@@ -38,21 +27,21 @@ namespace UnluCo.FinalProject.BlazorUI
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddDbContext<UserDbContext>(options => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=FinalProject;Integrated Security=True;Trusted_Connection=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
-          //  services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5011/api/") });
+            //  services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5011/api/") });
             services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
-         
 
-     
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-           
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                
+
             }
             else
             {
@@ -62,7 +51,7 @@ namespace UnluCo.FinalProject.BlazorUI
             app.UseStaticFiles();
 
             app.UseRouting();
- 
+
 
             app.UseEndpoints(endpoints =>
             {

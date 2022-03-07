@@ -12,8 +12,8 @@ namespace UnluCo.FinalProject.WebApi.DataAccess.Concrete
 {
     public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-       
-        public CategoryRepository(UserDbContext context):base(context)
+
+        public CategoryRepository(UserDbContext context) : base(context)
         {
 
         }//.Include(p => p.Color).Include(p => p.Brand).Include(p => p.Category).Include(p => p.User).Include(p => p.Offers)

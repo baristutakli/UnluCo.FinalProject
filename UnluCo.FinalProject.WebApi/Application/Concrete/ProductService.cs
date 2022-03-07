@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
@@ -43,18 +41,18 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             product.Brand = _unitOfwork.Brands.GetById(productViewModel.Brand.Id).Result;
             product.User = _unitOfwork.Users.Get(u => u.Id == productViewModel.UserId).Result;
             product.ProductPicture = productViewModel.ProductImage;
-        
+
             _unitOfwork.Products.Add(product);
-           var affectedRows =_unitOfwork.Complete();
+            var affectedRows = _unitOfwork.Complete();
             return affectedRows > 0 ? true : false;
         }
 
 
         public bool Delete(DeleteProductViewModel deleteProductViewModel)
         {
-            var product = _unitOfwork.Products.GetProductDetails(p=>p.Id==deleteProductViewModel.Id).Result;
+            var product = _unitOfwork.Products.GetProductDetails(p => p.Id == deleteProductViewModel.Id).Result;
             _unitOfwork.Products.Delete(product);
-           var affectedRows =_unitOfwork.Complete();
+            var affectedRows = _unitOfwork.Complete();
             return affectedRows > 0 ? true : false;
 
         }
@@ -96,9 +94,9 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             product.Category = _unitOfwork.Categories.GetById(productViewModel.Category.Id).Result;
             product.Brand = _unitOfwork.Brands.GetById(productViewModel.Brand.Id).Result;
             product.User = _unitOfwork.Users.Get(u => u.Id == productViewModel.UserId).Result;
-           
+
             _unitOfwork.Products.Update(product);
-           var affectedRows =_unitOfwork.Complete();
+            var affectedRows = _unitOfwork.Complete();
             return affectedRows > 0 ? true : false;
         }
     }

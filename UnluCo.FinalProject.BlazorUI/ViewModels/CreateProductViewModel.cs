@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using UnluCo.FinalProject.WebApi.Application.ViewModels.BrandsViewModel;
-using UnluCo.FinalProject.WebApi.Application.ViewModels.ColorsViewModel;
-using UnluCo.FinalProject.WebApi.Application.ViewModels.OffersViewModel;
-using UnluCo.FinalProject.WebApi.Models;
+﻿using Microsoft.AspNetCore.Components;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using UnluCo.FinalProject.WebApi.Application.ViewModels.CategoriesViewModel;
-using System.Net.Http;
-using UnluCo.FinalProject.BlazorUI.ViewModels;
 using UploadedFile = UnluCo.FinalProject.BlazorUI.ViewModels.UploadedFile;
 
 namespace UnluCo.FinalProject.BlazorUI

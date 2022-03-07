@@ -2,17 +2,15 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Common.Loggers;
 
 namespace UnluCo.FinalProject.WebApi.Common.Middlewares
 {
-   
+
     public class AuthenticationAndNavigationMiddleware
     {
         private readonly RequestDelegate _next;

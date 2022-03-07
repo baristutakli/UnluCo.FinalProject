@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using UnluCo.FinalProject.WebApi.Application.Abstract;
 using UnluCo.FinalProject.WebApi.Application.ViewModels.OffersViewModel;
-using UnluCo.FinalProject.WebApi.Application.ViewModels.ProductsViewModel;
-using UnluCo.FinalProject.WebApi.DataAccess.Abstract;
 using UnluCo.FinalProject.WebApi.DataAccess.UnitOfWorks;
 using UnluCo.FinalProject.WebApi.Models;
 
@@ -24,10 +21,10 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         }
         public bool Add(CreateOfferViewModel offerViewModel)
         {
-            var product= _unitOfwork.Products.GetById(offerViewModel.ProductId).Result;
+            var product = _unitOfwork.Products.GetById(offerViewModel.ProductId).Result;
             if (product is not null)
             {
-                if (offerViewModel.Percentage != 0 && offerViewModel.Amount ==0)
+                if (offerViewModel.Percentage != 0 && offerViewModel.Amount == 0)
                 {
                     offerViewModel.Amount = Convert.ToInt32((offerViewModel.Percentage * product.Price) / 100);
                 }
@@ -38,20 +35,20 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
                 }
 
             }
-       
+
             var offer = _mapper.Map<Offer>(offerViewModel);
             offer.Product = product;
             _unitOfwork.Offers.Add(offer);
-           var affectedRows =  _unitOfwork.Complete();
-            return affectedRows > 0 ? true : false;
+            var affectedRows = _unitOfwork.Complete();
+            return affectedRows > 0;
         }
 
         public bool Delete(DeleteOfferViewModel deleteOfferViewModel)
         {
             var offer = _unitOfwork.Offers.GetById(deleteOfferViewModel.Id).Result;
             _unitOfwork.Offers.Delete(offer);
-           var affectedRows =  _unitOfwork.Complete();
-            return affectedRows > 0 ? true : false;
+            var affectedRows = _unitOfwork.Complete();
+            return affectedRows > 0;
 
         }
 
@@ -98,8 +95,8 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
             var offer = _mapper.Map<Offer>(offerViewModel);
             offer.Product = product;
             _unitOfwork.Offers.Add(offer);
-           var affectedRows =  _unitOfwork.Complete();
-            return affectedRows > 0 ? true : false;
+            var affectedRows = _unitOfwork.Complete();
+            return affectedRows > 0;
         }
 
         // Changes offer status
@@ -107,29 +104,29 @@ namespace UnluCo.FinalProject.WebApi.Application.Concrete
         {
             var offer = _unitOfwork.Offers.GetById(offerViewModel.Id).Result;
             var product = _unitOfwork.Products.GetById(offerViewModel.Id).Result;
-            if (product is not null && offerViewModel.IsActive==false)
+            if (product is not null && !offerViewModel.IsActive)
             {
-                    product.IsSold = true;
-                    product.IsOfferable = false;
+                product.IsSold = true;
+                product.IsOfferable = false;
             }
 
             offer.Product = product;
 
             _unitOfwork.Offers.Update(offer);
 
-           var affectedRows =  _unitOfwork.Complete();
+            var affectedRows = _unitOfwork.Complete();
 
             var offersToDelete = _unitOfwork.Offers.GetOffers(o => o.Product.Id == offerViewModel.ProductId).Result;
             foreach (var selectedOffer in offersToDelete)
             {
-                if (selectedOffer.Id!=offer.Id)
+                if (selectedOffer.Id != offer.Id)
                 {
                     _unitOfwork.Offers.Delete(selectedOffer);
                 }
-            
+
             }
-           var result=  _unitOfwork.Complete();
-            return result> 0 ? true : false;
+            var result = _unitOfwork.Complete();
+            return result > 0;
         }
     }
 }

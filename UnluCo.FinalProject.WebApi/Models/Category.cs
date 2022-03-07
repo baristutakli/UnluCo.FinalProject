@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using UnluCo.FinalProject.WebApi.Common.Entity;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using UnluCo.FinalProject.WebApi.Common.Entity;
 
 namespace UnluCo.FinalProject.WebApi.Models
 {
-    public class Category: BaseEntity
+    public class Category : BaseEntity
     {
         [Required]
         public string Title { get; set; }
